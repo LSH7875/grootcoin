@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3003;
 const bodyParser = require('body-parser')
 const cors = require('cors')
 const router = require('./routers/index');
@@ -18,7 +18,7 @@ const mysql = require('mysql')
 let connection = mysql.createConnection({
     host:'localhost',
     user:'root',
-    password:'0000',
+    password:'root',
     database:'grootcoin'
 })
 connection.connect();
@@ -26,7 +26,7 @@ connection.connect();
 const pool = mysql.createPool ({
     host:'localhost',
     user:'root',
-    password:'0000',
+    password:'root',
     database:'grootcoin',
     connectionLimit:100
 })

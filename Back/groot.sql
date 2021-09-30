@@ -1,5 +1,5 @@
 create database grootcoin;
-
+use grootcoin;
 CREATE TABLE `user` (
   `userid` varchar(50) NOT NULL,
   `username` varchar(30) NOT NULL,
@@ -42,3 +42,6 @@ CREATE TABLE `transaction` (
   `regdate` datetime NOT NULL,
   PRIMARY KEY (`id`,`a_orderid`,`a_amount`,`b_orderid`,`b_amount`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+insert into user (userid, username, userpw, account, wallet) values ('do', 'do', 'do', 5, 'do');
+insert into user (userid, username, userpw, account, wallet) values ('da', 'do', 'do', 5, 'do');
