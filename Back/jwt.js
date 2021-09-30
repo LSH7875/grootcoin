@@ -10,7 +10,7 @@ function createToken(userid){
                         .replace('==','').replace('=','');
     const encodingPayload = Buffer.from(JSON.stringify(payload)).toString('base64')
                         .replace('==','').replace('=','');
-    const signature = crypto.createHmac('sha256', Buffer.from(process.env.salt))
+    const signature = crypto.createHmac('sha256', Buffer.from('grootcoin'))
                         .update(encodingHeader+'.'+encodingPayload)
                         .digest('base64').replace('==','').replace('=','');
                         
@@ -20,7 +20,7 @@ function createToken(userid){
 
 function createPW(userpw){
 
-    const cryptoPassword = crypto.createHmac('sha256', Buffer.from(process.env.salt))
+    const cryptoPassword = crypto.createHmac('sha256', Buffer.from('grootcoin'))
                         .update(userpw)
                         .digest('base64')
                         .replace('==', '').replace('=','');
