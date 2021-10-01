@@ -98,6 +98,11 @@ CREATE TABLE IF NOT EXISTS `user` (
 INSERT INTO `user` (`userid`, `username`, `userpw`, `account`, `wallet`) VALUES
 	('da', 'do', 'do', 5, 'do'),
 	('do', 'do', 'do', 5, 'do');
+
+INSERT INTO `coin` (`coin_id`,`coinname`,`commission`)
+VALUES ('1','GRT','0.01'),
+('2','AGT','0.03'),
+('3','CCI','0.03');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
