@@ -2,6 +2,8 @@
 import {join_success} from '../api/api'
 import {useState} from 'react'
 import { user_url } from '../store/Allurl'
+import Link from 'next/link'
+
 
 const index = ()=>{
 
@@ -77,6 +79,10 @@ const index = ()=>{
                     <div>{loginresult}</div>
                 </form>
             </div>   
+
+            <Link href={`/joinAgree`}><a>회원가입</a></Link>
+       
+            <Link href={`/login`}><a>로그인</a></Link>
         </>
     )
 }
