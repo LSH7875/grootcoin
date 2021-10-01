@@ -30,6 +30,7 @@ CREATE TABLE IF NOT EXISTS `cash_transaction` (
   `qty` float NOT NULL,
   `ordertype` int(1) NOT NULL,
   `rest` float NOT NULL,
+  `regdate` datetime NOT NULL,
   PRIMARY KEY (`pk`),
   KEY `FK_order_user` (`userid`),
   CONSTRAINT `FK_order_user` FOREIGN KEY (`userid`) REFERENCES `user` (`userid`)
@@ -67,6 +68,10 @@ CREATE TABLE IF NOT EXISTS `user` (
   PRIMARY KEY (`userid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+
+CREATE TABLE IF NOT EXISTS `` (
+  
+)
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
 INSERT INTO `user` (`userid`, `username`, `userpw`, `account`, `wallet`) VALUES
 	('da', 'do', 'do', 5, 'do'),
