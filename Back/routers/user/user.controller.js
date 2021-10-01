@@ -1,15 +1,15 @@
 const { createToken, createPW } = require("../../jwt");
 const mysql = require('mysql');
-const pool = mysql.createPool(config);
 
 const config = {
-
+    
     host:'localhost',
     user:'root',
     password:'root',
     database:'exchange',
-
+    
 }
+const pool = mysql.createPool(config);
 
 
 

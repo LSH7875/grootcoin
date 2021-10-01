@@ -31,16 +31,6 @@ const pool = mysql.createPool ({
     connectionLimit:100
 })
 
-app.get('/',(req,res)=>{
-    connection.query('create table success ( ID int not null)',(error,result)=>{
-        if(error){
-            console.log(error);
-        }else{
-            console.log(result);
-        }
-    })
-})
-
 app.listen(PORT,()=>{
     console.log(`server port ${PORT}`)
 })
