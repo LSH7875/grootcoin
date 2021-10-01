@@ -1,24 +1,252 @@
-const join = ()=>{
+import Link from 'next/link'
+import Styled from 'styled-components'
+import useInput from '../hooks/useInput'
+import {useState} from 'react'
+
+const Box = Styled.div`
+    margin: 0 auto;
+    width:480px;
+    height:485px;
+    padding: 16px 24px 32px;
+    margin-top:80px;
+    padding-top:40px;
+    text-align:center;
+
+    ul,li{
+        list-style:none;
+        
+    }
+    a{
+        text-decoration:none;
+        width:100%;
+    }
+
+    &>h1{
+        margin-bottom: 24px;
+        font-size: 34px;
+    }
+
+    &>.bigCheck>li{
+        display:inline-block;
+        font-weight:bold;
+        font-size:14px;
+    }
+
+    &>.bigCheck>.bigCheck1{
+        font-weight:bold;
+        color:#1772f8;
+    }
+
+    &>.bigCheck>.bigCheck2{
+        margin-right:5px;
+    }
+    
+    &>.a>.margin24{
+        margin: 24px 0 5px 0;    
+    }
+    
+    &>.a>.inputFont{
+        float:left;
+        font-size: 14px;
+        font-weight: bold;
+        color: #484d55;
+        text-align:left;
+    }
+
+    &>.a>.inputBox{
+        box-sizing: border-box;
+        display: block;
+        padding-left: 16px;
+        padding-right: 16px;
+        width: 100%;
+        height: 48px;
+        border-radius: 3px;
+        border: 1px solid #c9ccd2;
+        background-color: #fff;
+        font-size: 14px;
+        color: #18191c;
+        -webkit-appearance: none;
+        margin-top: 5px;
+    }
+    
+    &>.a>.passwordBox1{
+        margin: 8px 0 24px;
+        padding: 12px 16px;
+        border: 1px solid #e4e5e8;
+        margin-left: 0;
+        background-color: #f8f8f9;
+    
+    }
+
+    &>.a>.passwordBox1>.passwordBox2{
+        text-align:left;
+        color: #18191c;
+        font-size:12px;
+        font-weight:bold;
+        box-sizing: border-box;     
+        position: relative;
+        padding-left: 9px;
+        font-size: 12px;
+        color: #79818f;
+        height: 50px;
+    }
+
+    &>.a>.passwordBox1>.passwordBox2>li{
+    line-height:17px;
+    
+    }
+    
+    &>.a>.passwordBox1>.passwordBox2>li:before{
+        content:"* ";
+        text-indent: 10px;
+    }
+    
+    &>.a>.bigBtn{
+        background-color: #c9ccd2;
+        color: #79818f;
+        opacity: .5;
+        cursor: not-allowed;
+        width: 100%;
+        padding: 0 16px;
+        height: 48px;
+        font-size: 16px;
+        display: inline-flex;
+        flex: 0 0 auto;
+        justify-content: center;
+        align-items: center;
+        border-radius: 3px;
+        line-height: normal;
+        font-weight: 400;
+        font-style: normal;
+        transition: background .25s,border .25s;
+        text-align: center;
+        white-space: nowrap;
+        cursor: pointer;
+        touch-action: manipulation;
+        outline: 0;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+    &>.a>.bigBtn:hover{
+        background:#1772f8;
+        color:#fff;
+    }
+    &>.a>.bigBtn>a:hover{
+        color:#fff;
+    }
+
+    &>.a>.error{
+        text-align:left;
+    }
+
+`
+
+const join = () => {
+    
+    const userid = useInput('')
+    const userpw = useInput('')
+    const username = useInput('')
+    const accountNo = useInput('')
+
+    const [pwChk,setPwChk] = useState('')
+    const [pwError,setPwError] = useState(false)
+    const [accountError,setAccountError] = useState(false)
+
+    const handleId = e => {
+        const {value} = {...e.target}
+        setPwError(userpw.value !== value) // 1234 === 1234 ture
+        setPwChk(value)
+    }
+
+    const handleName = e => {
+        const {value} = {...e.target}
+        setPwError(userpw.value !== value) // 1234 === 1234 ture
+        setPwChk(value)
+    }
+
+    const handlePassword = e => {
+        const {value} = {...e.target}
+        setPwError(userpw.value !== value) // 1234 === 1234 ture
+        setPwChk(value)
+    }
+
+
+    const handleAccount = e => {
+        const {value} = {...e.target}
+        setAccountError(accountNo.value.length !== 11)
+    }
+    const [term,setTerm] = useState(false)
+    const [termError,setTermError] = useState(false)
+
+    const handleTerm = e => {
+        setTermError(e.target.checked !== true) 
+        setTerm(e.target.checked)
+    }   
+
+    const handleSubmit = e => {
+        e.preventDefault()
+
+        if(userpw.value !== pwChk) {
+            setPwError(true)
+            return
+        } else {
+            setPwError(false)
+        }
+
+        if(!term) {
+            setTermError(true)
+            return; 
+        }
+
+        console.log({
+            userid:userid.value,
+            username:username.value,
+            userpw:userpw.value,
+            accountNo:accountNo.value
+        })
+    }
+
+
     return (
-        <>
+        <Box>
             <h1>회원가입</h1>
-            <h6>① 약관동의 ------------- ② 정보입력</h6>
+            <ul className="bigCheck">
+                <li className="bigCheck2">① 약관동의</li><li> ------------- </li> <li className="bigCheck1">② 정보입력</li>
+            </ul>
 
-            <h2>이메일</h2>
-            <input type="text" name="userid" placeholder="아이디로 사용할 이메일 입력" />
-            
-            <h2>비밀번호</h2>
-            <input type="text" name="userpw" placeholder="아이디로 사용할 이메일 입력" />
-            
-            <input type="checkbox" name="agree1" required/> 코인원 이용약관
-            <input type="checkbox" name="agree2" required/> 개인정보 수집 및 이용
-            <input type="checkbox" name="agree3"/> 이벤트 및 정보 안내 수신(선택)
+            <form onSubmit={handleSubmit} className="a">
+                <label className="margin24 inputFont" label for="userid" >이메일</label>
+                <input type="email" {...userid} className="inputBox" name="userid" id="userid" placeholder="아이디로 사용할 이메일 입력" />
+
+                <label className="margin24 inputFont" label for="userpw" >비밀번호</label>
+                <input type="password" {...userpw} className="inputBox" name="userpw" id="userpw" placeholder="비밀번호 입력" />
+                <div className="passwordBox1" >
+                    <ul className="passwordBox2">
+                        <li>영문 대문자 포함</li>
+                        <li>영문 소문자 포함</li>
+                        <li>숫자 포함</li>
+                        <li>10자 이상</li>
+                    </ul>
+                </div>
+                <label className="margin24 inputFont" label for="pwChk" >비밀번호 확인</label>
+                <input type="password" value={pwChk} id="pwChk" onChange={handlePassword} className="inputBox" placeholder="비밀번호 확인" />
+                { pwError && <div className="error" style={{color:'red'}}>비밀번호가 일치하지 않습니다.</div> }
+
+                <label className="margin24 inputFont" label for="username" >이름<br /></label>
+                <input type="text" {...username} id="username" name="username" className="inputBox" placeholder="이름" />
+
+                <label className="margin24 inputFont" label for="accountNo" onChange={handleAccount}>계좌번호<br /> </label>
+                <input type="text" {...accountNo} className="inputBox" name="accountNo" id="accountNo" placeholder="계좌번호 입력" maxlength="11" />
+                { accountError && <div className="error" style={{color:'red'}}>계좌번호 11자리를 입력해주세요.</div> }
+                
+                <br />
 
 
-            <h5>- 19세 미만은 회원 자격이 없으며, 서비스 이용이 제한됩니다.</h5>
-
-            <input type="submit" name="joinBtn" value="다음"/>
-        </>
+                <p type="submit" className="bigBtn"><Link href={`/`}><a>다음</a></Link> </p>
+            </form>
+        </Box>
     )
 }
 
