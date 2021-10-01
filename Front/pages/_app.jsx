@@ -2,6 +2,11 @@ import Store from '../store/context'
 import {useReducer,useContext} from 'react'
 import reducer from '../store/reducer'
 import Head from 'next/head'
+import '../css/history.css'
+import '../css/orderBook.css'
+import '../css/main.css'
+import '../css/chart.css'
+import '../css/buyAndSell.css'
 
 const App=({Component,pageProps})=>{
     const globalContext=useContext(Store)

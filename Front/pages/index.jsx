@@ -3,6 +3,7 @@ import {join_success} from '../api/api'
 import {useState} from 'react'
 import { user_url } from '../store/Allurl'
 import Link from 'next/link'
+import Main from './main'
 
 
 const index = ()=>{
@@ -62,7 +63,7 @@ const index = ()=>{
 
     return (
         <>
-            <div>
+            {/* <div>
                 <form onSubmit = {handleSubmit}>
                     <input type = "text" onChange = {changeUserid}/>
                     <input type = "text" onChange = {changeUsername}/>
@@ -78,11 +79,24 @@ const index = ()=>{
                     <input type = "submit" value = "로그인"/>
                     <div>{loginresult}</div>
                 </form>
-            </div>   
-
-            <Link href={`/joinAgree`}><a>회원가입</a></Link>
-       
-            <Link href={`/login`}><a>로그인</a></Link>
+            </div>     */}
+            <div id="header">
+                <div>
+                    <img className="logo" src="/grootcoin.png"/>
+                </div>
+                <div>
+                    <ul id="nav">
+                        <li>Home</li>
+                        <li>코인정보</li>
+                        <li>자산</li>
+                        <li>ⓘgrootcoin</li>
+                    </ul>
+                </div>
+                <Link href={`/login`}><a className="login Btn">로그인</a></Link>
+                <Link href={`/joinAgree`}><a className="join Btn">회원가입</a></Link>
+            </div>
+            
+            <Main/>
         </>
     )
 }
