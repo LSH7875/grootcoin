@@ -1,18 +1,11 @@
-const mysql = require('mysql');
-
-const config = {
-    host:'localhost',
-    user:'root',
-    password:'0000',
-    database:'grootcoin',
-}
-const pool = mysql.createPool(config);
+const {pool} = require('../../pool')
 
 let buy_order = (req,res)=>{
-    let {userid,price,qty,ordertype,active} = req.body;
+    let {userid,price,qty,ordertype,rest} = req.body;
     pool.getConnection((err,connection)=>{
         if(err) throw err;
-        connection.query(`insert into order_detail (userid,price,qty,ordertype,active,regdate) values('${userid}','${price}','${qty}','${ordertype}','${active}',NOW())`, (error,results,fields)=>{
+     connection.query(`insert into cash_transaction (userid,price,qty,ordertype,rest,regdate) values('${userid}','${price}','${qty}','${ordertype}','${rest}',NOW())`,
+         (error,results,fields)=>{
             connection.release(); //반환하는 부분
             if(error) throw error;
 
@@ -28,10 +21,10 @@ let buy_order = (req,res)=>{
 
 }
 let sell_order = (req,res)=>{
-    let {userid,price,qty,ordertype,active} = req.body;
+    let {userid,price,qty,ordertype,rest} = req.body;
     pool.getConnection((err,connection)=>{
         if(err) throw err;
-        connection.query(`insert into order_detail (userid,price,qty,ordertype,active,regdate) values('${userid}','${price}','${qty}','${ordertype}','${active}',NOW())`, (error,results,fields)=>{
+        connection.query(`insert into cash_transaction (userid,price,qty,ordertype,rest,regdate) values('${userid}','${price}','${qty}','${ordertype}','${rest}',NOW())`, (error,results,fields)=>{
             connection.release();
             if(error) throw error;
 
@@ -83,5 +76,6 @@ let transaction =(req,res)=>{
 module.exports={
     buy_order,
     sell_order,
-    start_price
+    start_price,
+    transaction
 }

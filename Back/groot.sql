@@ -1,15 +1,6 @@
 create database grootcoin;
 
 use grootcoin;
-CREATE TABLE `user` (
-  `userid` varchar(50) NOT NULL,
-  `username` varchar(30) NOT NULL,
-  `userpw` varchar(50) NOT NULL,
-  `account` int(11) NOT NULL,
-  `wallet` varchar(100) NOT NULL,
-  PRIMARY KEY (`userid`),
-  UNIQUE KEY `userid_UNIQUE` (`userid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE `assert` (
   `pk` int(11) NOT NULL AUTO_INCREMENT,
