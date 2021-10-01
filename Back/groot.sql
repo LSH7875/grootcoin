@@ -1,6 +1,15 @@
 create database grootcoin;
 
 use grootcoin;
+CREATE TABLE `user` (
+  `userid` varchar(50) NOT NULL,
+  `username` varchar(30) NOT NULL,
+  `userpw` varchar(50) NOT NULL,
+  `account` int(11) NOT NULL,
+  `wallet` varchar(100) NOT NULL,
+  PRIMARY KEY (`userid`),
+  UNIQUE KEY `userid_UNIQUE` (`userid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE `assert` (
   `pk` int(11) NOT NULL AUTO_INCREMENT,
@@ -47,5 +56,7 @@ CREATE TABLE `order_detail` (
   FOREIGN KEY (`pk`) REFERENCES transaction(`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-alter table user
-add foreign key (userid) REFERENCES assert(userid);
+-- alter table user
+-- add foreign key (userid) REFERENCES assert(userid);
+insert into user (userid, username, userpw, account, wallet) values ('do', 'do', 'do', 5, 'do');
+insert into user (userid, username, userpw, account, wallet) values ('da', 'do', 'do', 5, 'do');
