@@ -1,0 +1,11 @@
+#chartBox{
+    padding: 30px;
+    margin: 0 auto;
+}
+
+#chart{
+    width:1200px;
+    height:600px;
+    border:1px solid rgba(153, 153, 153, 0.342);
+    border-radius: 5px;
+}

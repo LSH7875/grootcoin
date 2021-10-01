@@ -12,11 +12,7 @@ const Box =Styled.div`
     padding-top:40px;
   
 &{
-    
     text-align:center
-    
-    
-
 }
 &> h1{
     margin: 0;
