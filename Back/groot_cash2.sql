@@ -8,39 +8,42 @@
 CREATE DATABASE IF NOT EXISTS `grootcoin` /*!40100 DEFAULT CHARACTER SET latin1 */;
 USE `grootcoin`;
 
-CREATE TABLE IF NOT EXISTS `assert` (
+CREATE TABLE IF NOT EXISTS `assets` (
   `pk` int(11) NOT NULL AUTO_INCREMENT,
   `userid` varchar(50) NOT NULL,
   `input` int(30) DEFAULT NULL,
   `output` int(30) DEFAULT NULL,
-  `regdate` datetime NOT NULL,
+  `regdate` timestamp NOT NULL,
   `sum` int(50) NOT NULL,
+  `reservation` int(1) DEFAULT 1 NOT NULL,
   PRIMARY KEY (`pk`),
-  KEY `FK_assert_user` (`userid`),
-  CONSTRAINT `FK_assert_user` FOREIGN KEY (`userid`) REFERENCES `user` (`userid`)
+  KEY `FK_assets_user` (`userid`),
+  CONSTRAINT `FK_assets_user` FOREIGN KEY (`userid`) REFERENCES `user` (`userid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-/*!40000 ALTER TABLE `assert` DISABLE KEYS */;
-/*!40000 ALTER TABLE `assert` ENABLE KEYS */;
+/*!40000 ALTER TABLE `assets` DISABLE KEYS */;
+/*!40000 ALTER TABLE `assets` ENABLE KEYS */;
 
-CREATE TABLE IF NOT EXISTS `cash_orderbook` (
+CREATE TABLE IF NOT EXISTS `coin_orderbook` (
   `pk` int(11) NOT NULL AUTO_INCREMENT,
   `userid` varchar(50) NOT NULL,
   `price` int(50) NOT NULL,
   `qty` float NOT NULL,
   `ordertype` int(1) NOT NULL,
   `rest` float NOT NULL,
-  `time` datetime DEFAULT NULL,
+  `time` timestamp NULL,
   `coin_id` varchar(4) CHARACTER SET latin1 NOT NULL,
+  `cash_id` int(11) NOT NULL,
   PRIMARY KEY (`pk`),
   KEY `FK_order_user` (`userid`),
-  KEY `FK_cash_orderbook_coin` (`coin_id`),
-  CONSTRAINT `FK_cash_orderbook_coin` FOREIGN KEY (`coin_id`) REFERENCES `coin` (`coin_id`),
-  CONSTRAINT `FK_order_user` FOREIGN KEY (`userid`) REFERENCES `user` (`userid`)
+  KEY `FK_coin_orderbook_coin` (`coin_id`),
+  CONSTRAINT `FK_coin_orderbook_coin` FOREIGN KEY (`coin_id`) REFERENCES `coin` (`coin_id`),
+  CONSTRAINT `FK_order_user` FOREIGN KEY (`userid`) REFERENCES `user` (`userid`),
+  CONSTRAINT `FK_coin_orderbook_user` FOREIGN KEY (`cash_id`) REFERENCES `assets` (`pk`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-/*!40000 ALTER TABLE `cash_orderbook` DISABLE KEYS */;
-/*!40000 ALTER TABLE `cash_orderbook` ENABLE KEYS */;
+/*!40000 ALTER TABLE `coin_orderbook` DISABLE KEYS */;
+/*!40000 ALTER TABLE `coin_orderbook` ENABLE KEYS */;
 
 CREATE TABLE IF NOT EXISTS `coin` (
   `coin_id` varchar(4) NOT NULL,
@@ -73,13 +76,13 @@ CREATE TABLE IF NOT EXISTS `transaction` (
   `b_amount` float NOT NULL,
   `b_commission` float NOT NULL,
   `txid` varchar(100) NOT NULL,
-  `regdate` datetime NOT NULL,
+  `regdate` timestamp NOT NULL,
   `coin_id` varchar(4) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_transaction_order` (`a_orderid`),
   KEY `FK_transaction_order_2` (`b_orderid`),
-  CONSTRAINT `FK_transaction_order` FOREIGN KEY (`a_orderid`) REFERENCES `cash_orderbook` (`pk`),
-  CONSTRAINT `FK_transaction_order_2` FOREIGN KEY (`b_orderid`) REFERENCES `cash_orderbook` (`pk`)
+  CONSTRAINT `FK_transaction_order` FOREIGN KEY (`a_orderid`) REFERENCES `coin_orderbook` (`pk`),
+  CONSTRAINT `FK_transaction_order_2` FOREIGN KEY (`b_orderid`) REFERENCES `coin_orderbook` (`pk`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 /*!40000 ALTER TABLE `transaction` DISABLE KEYS */;
@@ -98,12 +101,12 @@ CREATE TABLE IF NOT EXISTS `user` (
 INSERT INTO `user` (`userid`, `username`, `userpw`, `account`, `wallet`) VALUES
 	('da', 'do', 'do', 5, 'do'),
 	('do', 'do', 'do', 5, 'do');
+/*!40000 ALTER TABLE `user` ENABLE KEYS */;
 
 INSERT INTO `coin` (`coin_id`,`coinname`,`commission`)
 VALUES ('1','GRT','0.01'),
 ('2','AGT','0.03'),
 ('3','CCI','0.03');
-/*!40000 ALTER TABLE `user` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IFNULL(@OLD_FOREIGN_KEY_CHECKS, 1) */;
