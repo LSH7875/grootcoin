@@ -1,0 +1,7 @@
+#contractBox{
+    width: 350px;
+    height: 380px;
+    margin-top: 20px;
+    border:1px solid rgba(153, 153, 153, 0.342);
+    border-radius: 5px;
+}
