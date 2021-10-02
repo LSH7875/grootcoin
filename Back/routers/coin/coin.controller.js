@@ -39,10 +39,10 @@ let sell_order = (req, res) => {
 
 }
 
-let start_price = (req, res) => {
+let start_price = async (req, res) => {
     let today = new Date();
-    pool.getConnection((err, conection) => {
-        connection.query(`select price from transaction where time,coin_id = '${today}`, (error, result, fields) => {
+    const serch = await pool.getConnection((err, conection) => {
+      connection.query(`select price from transaction where time,coin_id = '${today}`, (error, result, fields) => {
             connection.release();
             if (errpr) throw error;
 
