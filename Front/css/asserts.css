@@ -1,0 +1,329 @@
+.wasserts{
+    width:100%;
+    margin:0px;
+    padding:0px;
+}
+
+.w1200asserts{
+    width:1400px;
+    margin:0 auto;
+    padding:0;
+}
+.asserts_navi_left, .asserts_navi_right{
+    display: inline-block;
+    float: left;
+}
+
+.asserts_navi_left{
+    margin-left: 150px;
+    width:150px;
+    font-size: 20px;
+}
+
+.Navi_height{
+    margin-top: 50px;
+}
+
+.Navi_height:hover{
+    color:blue;
+}
+
+
+
+/**/
+
+.li{
+    margin-left: 10px;
+    margin-top: 10px;
+    font-size: 14px;
+}
+.clear{
+    clear: both;
+    color:grey;
+    margin-top: 5px;
+}
+.black{
+    font-weight: bold;
+    color:black;
+}
+.green{
+    color:green;
+}
+.blue{
+    font-weight: bold;
+    color:blue;
+}
+.text-center{
+    text-align: center;
+}
+.margin_bottom{
+    margin-bottom: 100px;
+}
+.margin_left{
+    margin-top: 7px;
+    font-size: 18px;
+    margin-left: 20px;
+}
+.padding{
+    box-sizing: border-box;
+    padding:50px 50px;
+}
+.float_left{
+    display: inline-block;
+    float:left;
+}
+.marign{
+    margin-top: 10px;
+    margin-left: 10px;
+}
+.marign2{
+    margin-top: 20px;
+    margin-left: 20px;
+}
+.margin_top{
+    margin-top: 80px;
+}
+.margin_top2{
+    margin-top:10px;
+}
+.bold{
+    font-weight: bold;
+    font-size: 20px;
+}
+.bold2{
+    font-size: 25px;
+}
+.bold3{
+    font-size: 25px;
+    font-weight: bold;
+    margin-right: 130px;
+}
+.bold4{
+    font-size: 23px;
+    margin-bottom: 50px;
+    margin-top: 100px;
+    font-weight: bold;
+}
+.big_font{
+    font-weight: bold;
+    font-size: 20px;
+}
+.small_font{
+    font-size: 10px;
+    color:grey;
+    margin-top: 2px;
+}
+.big_font1{
+    font-size: 15px;
+}
+.small_font1{
+    font-size: 13px;
+    color:grey;
+}
+.margin_top{
+    margin-top: 100px;
+}
+.margin_top0{
+    margin-top:10px;
+}
+.margin_top1{
+    margin-left: 10px;
+    margin-top:10px;
+}
+.float_right{
+    display: inline-block;
+    float: right;
+}
+
+.wassert{
+    padding:50px 100px;
+    box-sizing: border-box;
+}
+
+.assert_info_subject{
+    margin-bottom: 50px;
+}
+
+.assert_info1{
+    display: inline-block;
+    float: left;
+    text-align: center;
+    width: 250px;
+}
+
+.assert_info2{
+    display: inline-block;
+    float: left;
+    width:350px;
+}
+
+.assert_info3{
+    display: inline-block;
+    float: left;
+    width: 300px;
+}
+
+.assert_info2>ul>li{
+    margin-bottom: 30px;
+}
+.assert_info3>ul>li{
+    margin-bottom: 5px;
+}
+
+.notice{
+    margin-top: 30px;
+    clear: both;
+    color:grey;
+}
+
+.table{
+    margin-top: 10px;
+}
+
+.start_row{
+    background-color:rgba(0, 0, 0, 0.05);
+    height: 45px;
+}
+.content_row{
+    height:70px;
+    border: 1px solid bottom grey;
+}
+.content_row2{
+    height:50px;
+    border: 1px solid bottom grey;
+}
+
+/**/
+
+.deposit_assert{
+    margin-left: 20px;
+    height:50px;
+    margin-top: 50px;
+
+}
+.deposit_search{
+    clear: both;
+    width:480px;
+    margin-left: 20px;
+    margin-top: 60px;
+}
+
+.deposit_search_text{
+    border: 1px solid grey;
+    width:400px;
+    height: 40px;
+    border-radius: 3px;
+    display: inline-block;
+}
+
+.deposit_search_button{
+    color:grey;
+    border: 1px solid grey;
+    width:40px;
+    height: 40px;
+    border-radius: 3px;
+    display: inline-block;
+}
+.history_margin{
+    margin-left: 50px;
+    width:460px;
+    
+}
+.Grey{
+    background-color:rgba(0, 0, 0, 0.05);
+    height:30px;
+}
+.Grey2{
+    background-color:rgba(0, 0, 0, 0.03);
+    color:grey;
+    margin-top: 50px;
+    height:40px;
+    margin-left: 50px;
+}
+.top70{
+    padding:2px 0px;
+    box-sizing: border-box;
+    clear: both;
+    margin-top: 5px;
+    margin-left: 50px;
+}
+.top70>div>select, .select{
+    height: 40px;
+    color:grey;
+    box-sizing: border-box;
+    padding:7px;
+}
+.width_100{
+    width:70px;
+}
+.width_120{
+    width:100px;
+}
+.grey{
+    color:grey;
+}
+.grey2{
+    color:grey;
+    margin-left: 50px;
+    clear: both;
+}
+
+.deposit_graph_width{
+    width:250px;
+    text-align: left;
+    padding:20px 20px;
+    box-sizing: border-box;
+}
+
+.deposit_graph1_width{
+    width: 120px;
+
+}
+
+
+.income_text{
+    margin-top: 10px;
+    display: inline-block;
+    height:43px;
+    width:439px;
+}
+.income_text2{
+    margin-top: 10px;
+    display: inline-block;
+    height:43px;
+    width:500px;
+}
+.income_button{
+    margin-top: 10px;
+    display: inline-block;
+    height:43px;
+    width:60px;
+}
+.Warn{
+    clear: both;
+    margin-top: 70px;
+    padding: 20px;
+    box-sizing: border-box;
+    background-color:rgba(0, 0, 0, 0.05);
+    width:500px;
+}
+
+.Warn_subject{
+    font-size: 17px;
+    color:orange;
+
+}
+
+.Warn>ul>li{
+    display: block;
+}
+
+.block{
+    display: block;
+}
+
+
+.hover_black:hover{
+    color:black;
+    text-decoration: underline;
+}
