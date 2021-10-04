@@ -67,5 +67,17 @@ a{
     transform: translateX(-50%);
 }
 
+.mainCon3{
+    position:absolute;
+    top: 400px;
+    left: 882px;
+}
+
+.lastCon{
+    width:100%;
+    position:absolute;
+    top: 1600px;
+}
+
 
 
