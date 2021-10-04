@@ -2,8 +2,8 @@
 import {join_success} from '../api/api'
 import {useState} from 'react'
 import { user_url } from '../store/Allurl'
-import Link from 'next/link'
 import Main from './main'
+import Header from '../components/header'
 
 
 const index = ()=>{
@@ -63,39 +63,7 @@ const index = ()=>{
 
     return (
         <>
-            {/* <div>
-                <form onSubmit = {handleSubmit}>
-                    <input type = "text" onChange = {changeUserid}/>
-                    <input type = "text" onChange = {changeUsername}/>
-                    <input type = "text" onChange = {changeUserpw}/>
-                    <input type = "text" onChange = {changeaccount}/>
-                    <input type = "text" onChange = {changewallet}/>
-                    <input type = "submit" value = "회원가입"/>
-                </form>
-
-                <form onSubmit = {handlelogin}>
-                    <input type = "text" onChange = {login}/>
-                    <input type = "text" onChange = {loginpw}/>
-                    <input type = "submit" value = "로그인"/>
-                    <div>{loginresult}</div>
-                </form>
-            </div>     */}
-            <div id="header">
-                <div>
-                    <img className="logo" src="/grootcoin.png"/>
-                </div>
-                <div>
-                    <ul id="nav">
-                        <li>Home</li>
-                        <li>코인정보</li>
-                        <li>자산</li>
-                        <li>ⓘgrootcoin</li>
-                    </ul>
-                </div>
-                <Link href={`/login`}><a className="login Btn">로그인</a></Link>
-                <Link href={`/joinAgree`}><a className="join Btn">회원가입</a></Link>
-            </div>
-            
+            <Header />
             <Main/>
         </>
     )

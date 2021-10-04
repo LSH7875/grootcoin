@@ -2,6 +2,41 @@
     width: 350px;
     height: 380px;
     margin-top: 20px;
-    border:1px solid rgba(153, 153, 153, 0.342);
+    border-left:1px solid rgba(153, 153, 153, 0.342);
+    border-right:1px solid rgba(153, 153, 153, 0.342);
+    border-bottom:1px solid rgba(153, 153, 153, 0.342);
     border-radius: 5px;
+    box-shadow: 5px 5px 5px -2px rgb(0, 0, 0,.07) ;
+}
+
+#contractBox div button:hover{
+    color:#333;
+}
+
+.preContract{
+    width:173px;
+    height:50px;
+    background-color: rgb(255,255,255);
+    border-top:1px solid rgba(153, 153, 153, 0.342);
+    border-left: 1px solid rgba(255,255,255);
+    border-right: 1px solid rgba(153, 153, 153, 0.342);
+    border-bottom:1px solid rgba(153, 153, 153, 0.342);
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    color: rgba(170,170,170);
+    font-weight:bold;
+}
+
+.contracted{
+    width:172px;
+    height:50px;
+    background-color: rgb(255,255,255);
+    border-top:1px solid rgba(153, 153, 153, 0.342);
+    border-bottom:1px solid rgba(153, 153, 153, 0.342);
+    border-left: 1px solid rgba(255,255,255);
+    border-right: 1px solid rgba(255,255,255);
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    color: rgba(170,170,170);
+    font-weight:bold;
 }
