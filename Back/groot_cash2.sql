@@ -11,8 +11,8 @@ USE `grootcoin`;
 CREATE TABLE IF NOT EXISTS `assets` (
   `pk` int(11) NOT NULL AUTO_INCREMENT,
   `userid` varchar(50) NOT NULL,
-  `input` int(30) DEFAULT NULL,
-  `output` int(30) DEFAULT NULL,
+  `input` int(20) DEFAULT NULL,
+  `output` int(20) DEFAULT NULL,
   `regdate` int(11) NOT NULL DEFAULT unix_timestamp(),
   `reservation` int(1) DEFAULT 1 NOT NULL,
   PRIMARY KEY (`pk`),
@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS `assets` (
 CREATE TABLE IF NOT EXISTS `coin_orderbook` (
   `pk` int(11) NOT NULL AUTO_INCREMENT,
   `userid` varchar(50) NOT NULL,
-  `price` int(50) NOT NULL,
+  `price` int(20) NOT NULL,
   `qty` float NOT NULL,
   `ordertype` int(1) NOT NULL,
   `rest` float NOT NULL,
@@ -75,6 +75,7 @@ CREATE TABLE IF NOT EXISTS `transaction` (
   `b_orderid` int(11) NOT NULL,
   `b_amount` float NOT NULL,
   `b_commission` float NOT NULL,
+  `payment` int(20) NOT NULL,
   `txid` varchar(100) NULL,
   `regdate` int(11) NOT NULL DEFAULT unix_timestamp(),
   `coin_id` int(11) DEFAULT NULL,

@@ -37,7 +37,7 @@ let buy_order = async (req, res) => {
                     //   console.log('++++++++++++++++++++++++++++=',serch_this);
                     if (use_rest == serch_buy_law[i].rest && use_rest !== 0) {
                         //매수 물량 과 매도 물량이 같을때 (transaction 만들어주고 coin_orderbook 2개 수정 후 매도하는 쪽에 assets 추가)
-                        await connection.query(`insert into transaction (a_orderid,a_amount,a_commission,b_orderid,b_amount,b_commission,coin_id) values('${buy_pk}','${use_rest}','0','${serch_buy_law[i].pk}','${serch_buy_law[i].rest}','0','${coin_id}')`)
+                        await connection.query(`insert into transaction (a_orderid,a_amount,a_commission,b_orderid,b_amount,b_commission,coin_id,payment) values('${buy_pk}','${use_rest}','0','${serch_buy_law[i].pk}','${serch_buy_law[i].rest}','0','${coin_id}','${serch_buy_law[i].price}')`)
                         await connection.query(`update coin_orderbook set rest = 0 where pk = ${buy_pk}`)
                         await connection.query(`update coin_orderbook set rest = 0 where pk = ${serch_buy_law[i].pk}`)
                         await connection.query(`update assets set reservation = 0 where pk = ${buy_assets.insertId}`)
@@ -47,7 +47,7 @@ let buy_order = async (req, res) => {
                         //매수 물량이 매도 물량보다 많을때 
                         let minus_rest = use_rest - serch_buy_law[i].rest
 
-                        await connection.query(`insert into transaction (a_orderid,a_amount,a_commission,b_orderid,b_amount,b_commission,coin_id) values('${buy_pk}','${serch_buy_law[i].rest}','0','${serch_buy_law[i].pk}','${serch_buy_law[i].rest}','0','${coin_id}')`)
+                        await connection.query(`insert into transaction (a_orderid,a_amount,a_commission,b_orderid,b_amount,b_commission,coin_id,payment) values('${buy_pk}','${serch_buy_law[i].rest}','0','${serch_buy_law[i].pk}','${serch_buy_law[i].rest}','0','${coin_id}','${serch_buy_law[i].price}')`)
                         await connection.query(`update coin_orderbook set rest = ${minus_rest} where pk = ${buy_pk}`)
                         await connection.query(`update coin_orderbook set rest = 0 where pk = ${serch_buy_law[i].pk}`)
                         //await connection.query(`update assets set reservation = 0 where pk = ${buy_assets.insertId}`)
@@ -60,7 +60,7 @@ let buy_order = async (req, res) => {
                         let minus_rest = serch_buy_law[i].rest - use_rest
                         console.log(`매수 물량이 매도 물량보다 적을때 :${serch_buy_law[i].rest} - ${use_rest} `, minus_rest);
 
-                        await connection.query(`insert into transaction (a_orderid,a_amount,a_commission,b_orderid,b_amount,b_commission,coin_id) values('${buy_pk}','${use_rest}','0','${serch_buy_law[i].pk}','${use_rest}','0','${coin_id}')`)
+                        await connection.query(`insert into transaction (a_orderid,a_amount,a_commission,b_orderid,b_amount,b_commission,coin_id,payment) values('${buy_pk}','${use_rest}','0','${serch_buy_law[i].pk}','${use_rest}','0','${coin_id}','${serch_buy_law[i].price}')`)
                         await connection.query(`update coin_orderbook set rest = 0 where pk = ${buy_pk}`)
                         await connection.query(`update coin_orderbook set rest = ${minus_rest} where pk = ${serch_buy_law[i].pk}`)
                         await connection.query(`update assets set reservation = 0 where pk = ${buy_assets.insertId}`)
@@ -73,7 +73,7 @@ let buy_order = async (req, res) => {
                 //맞는게 1개일 경우
                 if (rest == serch_buy_law[0].rest && rest !== 0) {
                     //매수 물량 과 매도 물량이 같을때 (transaction 만들어주고 coin_orderbook 2개 수정 후 매도하는 쪽에 assets 추가)
-                    await connection.query(`insert into transaction (a_orderid,a_amount,a_commission,b_orderid,b_amount,b_commission,coin_id) values('${buy_pk}','${rest}','0','${resserch_buy_lawults[0].pk}','${serch_buy_law[0].rest}','0','${coin_id}')`)
+                    await connection.query(`insert into transaction (a_orderid,a_amount,a_commission,b_orderid,b_amount,b_commission,coin_id,payment) values('${buy_pk}','${rest}','0','${resserch_buy_lawults[0].pk}','${serch_buy_law[0].rest}','0','${coin_id}','${serch_buy_law[0].price}')`)
                     await connection.query(`update coin_orderbook set rest = 0 where pk = ${buy_pk}`)
                     await connection.query(`update coin_orderbook set rest = 0 where pk = ${serch_buy_law[0].pk}`)
                     await connection.query(`update assets set reservation = 0 where pk = ${buy_assets.insertId}`)
@@ -85,7 +85,7 @@ let buy_order = async (req, res) => {
                     //매수 물량이 매도 물량보다 많을때 
                     let minus_rest = rest - serch_buy_law[0].rest
 
-                    await connection.query(`insert into transaction (a_orderid,a_amount,a_commission,b_orderid,b_amount,b_commission,coin_id) values('${buy_pk}','${serch_buy_law[0].rest}','0','${serch_buy_law[0].pk}','${serch_buy_law[0].rest}','0','${coin_id}')`)
+                    await connection.query(`insert into transaction (a_orderid,a_amount,a_commission,b_orderid,b_amount,b_commission,coin_id,payment) values('${buy_pk}','${serch_buy_law[0].rest}','0','${serch_buy_law[0].pk}','${serch_buy_law[0].rest}','0','${coin_id},'${serch_buy_law[0].price}'')`)
                     await connection.query(`update coin_orderbook set rest = ${minus_rest} where pk = ${buy_pk}`)
                     await connection.query(`update coin_orderbook set rest = 0 where pk = ${serch_buy_law[0].pk}`)
                     //await connection.query(`update assets set reservation = 0 where pk = ${buy_assets.insertId}`)
@@ -98,7 +98,7 @@ let buy_order = async (req, res) => {
                     let minus_rest = serch_buy_law[0].rest - rest
                     console.log(`매수 물량이 매도 물량보다 적을때 :${serch_buy_law[0].rest} - ${rest} `, minus_rest);
 
-                    await connection.query(`insert into transaction (a_orderid,a_amount,a_commission,b_orderid,b_amount,b_commission,coin_id) values('${buy_pk}','${rest}','0','${serch_buy_law[0].pk}','${rest}','0','${coin_id}')`)
+                    await connection.query(`insert into transaction (a_orderid,a_amount,a_commission,b_orderid,b_amount,b_commission,coin_id,payment) values('${buy_pk}','${rest}','0','${serch_buy_law[0].pk}','${rest}','0','${coin_id}','${serch_buy_law[0].price}')`)
                     await connection.query(`update coin_orderbook set rest = 0 where pk = ${buy_pk}`)
                     await connection.query(`update coin_orderbook set rest = ${minus_rest} where pk = ${serch_buy_law[0].pk}`)
                     await connection.query(`update assets set reservation = 0 where pk = ${buy_assets.insertId}`)
@@ -148,7 +148,7 @@ let sell_order = async (req, res) => {
                     let use_rest = check_rest[0][0].rest
                     if (use_rest == serch_sell_law[i].rest && use_rest !== 0) {
                         //매도 물량 과 매수 물량이 같을때 (transaction 만들어주고 coin_orderbook 2개 수정 후 매도하는 쪽에 assets 추가)
-                        await connection.query(`insert into transaction (a_orderid,a_amount,a_commission,b_orderid,b_amount,b_commission,coin_id) values('${serch_sell_law[i].pk}','${serch_sell_law[i].rest}','0','${sell_pk}','${serch_sell_law[i].rest}','0','${coin_id}')`)
+                        await connection.query(`insert into transaction (a_orderid,a_amount,a_commission,b_orderid,b_amount,b_commission,coin_id,payment) values('${serch_sell_law[i].pk}','${serch_sell_law[i].rest}','0','${sell_pk}','${serch_sell_law[i].rest}','0','${coin_id}','${serch_sell_law[i].price}')`)
                         await connection.query(`update coin_orderbook set rest = 0 where pk = ${sell_pk}`)
                         await connection.query(`update coin_orderbook set rest = 0 where pk = ${serch_sell_law[i].pk}`)
                         await connection.query(`update assets set reservation = 0 where pk = ${sell_assets.insertId}`)
@@ -158,7 +158,7 @@ let sell_order = async (req, res) => {
                         //매도 물량이 매수 물량보다 많을때 
                         let minus_rest = use_rest - serch_sell_law[i].rest
 
-                        await connection.query(`insert into transaction (a_orderid,a_amount,a_commission,b_orderid,b_amount,b_commission,coin_id) values('${serch_sell_law[i].pk}','${serch_sell_law[i].rest}','0','${sell_pk}','${serch_sell_law[i].rest}','0','${coin_id}')`)
+                        await connection.query(`insert into transaction (a_orderid,a_amount,a_commission,b_orderid,b_amount,b_commission,coin_id,payment) values('${serch_sell_law[i].pk}','${serch_sell_law[i].rest}','0','${sell_pk}','${serch_sell_law[i].rest}','0','${coin_id},'${serch_sell_law[i].price}')`)
                         await connection.query(`update coin_orderbook set rest = ${minus_rest} where pk = ${sell_pk}`)
                         await connection.query(`update coin_orderbook set rest = 0 where pk = ${serch_sell_law[i].pk}`)
                         await connection.query(`update assets set reservation = 0 where pk = ${serch_sell_law[i].pk}`)
@@ -171,7 +171,7 @@ let sell_order = async (req, res) => {
                         let minus_rest = serch_sell_law[i].rest - use_rest
                         console.log(`매도 물량이 매수 물량보다 적을때 :${serch_sell_law[i].rest} - ${use_rest} `, minus_rest);
 
-                        await connection.query(`insert into transaction (a_orderid,a_amount,a_commission,b_orderid,b_amount,b_commission,coin_id) values('${serch_sell_law[i].pk}','${use_rest}','0','${sell_pk}','${use_rest}','0','${coin_id}')`)
+                        await connection.query(`insert into transaction (a_orderid,a_amount,a_commission,b_orderid,b_amount,b_commission,coin_id,payment) values('${serch_sell_law[i].pk}','${use_rest}','0','${sell_pk}','${use_rest}','0','${coin_id},'${serch_sell_law[i].price}'')`)
                         await connection.query(`update coin_orderbook set rest = 0 where pk = ${sell_pk}`)
                         await connection.query(`update coin_orderbook set rest = ${minus_rest} where pk = ${serch_sell_law[i].pk}`)
                         await connection.query(`update assets set reservation = 0 where pk = ${sell_assets.insertId}`)
@@ -184,7 +184,7 @@ let sell_order = async (req, res) => {
                 //맞는게 1개일 경우
                 if (rest == serch_sell_law[0].rest && rest !== 0) {
                     //매도 물량 과 매수 물량이 같을때 (transaction 만들어주고 coin_orderbook 2개 수정 후 매도하는 쪽에 assets 추가)
-                    await connection.query(`insert into transaction (a_orderid,a_amount,a_commission,b_orderid,b_amount,b_commission,coin_id) values('${serch_sell_law[0].pk}','${serch_sell_law[0].rest}','0','${sell_pk}','${serch_sell_law[0].rest}','0','${coin_id}')`)
+                    await connection.query(`insert into transaction (a_orderid,a_amount,a_commission,b_orderid,b_amount,b_commission,coin_id,payment) values('${serch_sell_law[0].pk}','${serch_sell_law[0].rest}','0','${sell_pk}','${serch_sell_law[0].rest}','0','${coin_id}','${serch_sell_law[0].price}')`)
                     await connection.query(`update coin_orderbook set rest = 0 where pk = ${sell_pk}`)
                     await connection.query(`update coin_orderbook set rest = 0 where pk = ${serch_sell_law[0].pk}`)
                     await connection.query(`update assets set reservation = 0 where pk = ${sell_assets.insertId}`)
@@ -194,7 +194,7 @@ let sell_order = async (req, res) => {
                     //매도 물량이 매수 물량보다 많을때 
                     let minus_rest = rest - serch_sell_law[i].rest
 
-                    await connection.query(`insert into transaction (a_orderid,a_amount,a_commission,b_orderid,b_amount,b_commission,coin_id) values('${serch_sell_law[0].pk}','${serch_sell_law[0].rest}','0','${sell_pk}','${serch_sell_law[0].rest}','0','${coin_id}')`)
+                    await connection.query(`insert into transaction (a_orderid,a_amount,a_commission,b_orderid,b_amount,b_commission,coin_id,payment) values('${serch_sell_law[0].pk}','${serch_sell_law[0].rest}','0','${sell_pk}','${serch_sell_law[0].rest}','0','${coin_id}','${serch_sell_law[0].price}')`)
                     await connection.query(`update coin_orderbook set rest = ${minus_rest} where pk = ${sell_pk}`)
                     await connection.query(`update coin_orderbook set rest = 0 where pk = ${serch_sell_law[0].pk}`)
                     await connection.query(`update assets set reservation = 0 where pk = ${serch_sell_law[0].pk}`)
@@ -207,7 +207,7 @@ let sell_order = async (req, res) => {
                     let minus_rest = serch_sell_law[0].rest - rest
                     console.log(`매도 물량이 매수 물량보다 적을때 :${serch_sell_law[i].rest} - ${rest} `, minus_rest);
 
-                    await connection.query(`insert into transaction (a_orderid,a_amount,a_commission,b_orderid,b_amount,b_commission,coin_id) values('${serch_sell_law[0].pk}','${rest}','0','${sell_pk}','${rest}','0','${coin_id}')`)
+                    await connection.query(`insert into transaction (a_orderid,a_amount,a_commission,b_orderid,b_amount,b_commission,coin_id,payment) values('${serch_sell_law[0].pk}','${rest}','0','${sell_pk}','${rest}','0','${coin_id}','${serch_sell_law[0].price}')`)
                     await connection.query(`update coin_orderbook set rest = 0 where pk = ${sell_pk}`)
                     await connection.query(`update coin_orderbook set rest = ${minus_rest} where pk = ${serch_sell_law[0].pk}`)
                     await connection.query(`update assets set reservation = 0 where pk = ${sell_assets.insertId}`)
