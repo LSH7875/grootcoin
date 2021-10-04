@@ -1,6 +1,6 @@
-import Header from "../components/header"
-import AssertNavi from "../components/assert/assertNavi"
-import AssertContent from "../components/assert/assertContent"
+import Header from "../../components/header"
+import AssertNavi from "../../components/assert/assertNavi"
+import AssertContent from "../../components/assert/assertContent"
 
 const assets = () =>{
     return(
