@@ -8,7 +8,7 @@ a{
 }
 
 #header{
-    width:1200px;
+    width:1400px;
     margin:0 auto;
     display:flex;
 }
@@ -19,22 +19,41 @@ a{
 }
 
 #nav{
-    font-size: 20px;
+    font-size: 30px;
     margin-left:50px;
 }
 
 #nav li{
-    line-height:200px;
-    margin-right: 100px;
+    margin-top: 50px;
+    line-height:100px;
+    margin-right: 110px;
     vertical-align:center;
+}
+
+#nav li a{
     color:#333;
 }
 
+#nav li a:after{
+    display: block;
+    content: '';
+    border-bottom: solid 3px rgba(32,201,151);
+    transform: scaleX(0);
+    transition: transform 250ms ease-in-out;
+}
+
+#nav li a:hover:after { 
+    transform: scaleX(1); 
+}
+
+
 .Btn{
     width: 100px;
-    height: 30px;
-    margin-top: 85px;
+    height:50px;
+    line-height:50px;
+    margin-top: 75px;
     text-align: center;
+    font-size: 20px;
     border: 1px solid rgba(153, 153, 153, 0.342);
     border-radius: 5px;
     color:black;
