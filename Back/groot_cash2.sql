@@ -106,9 +106,9 @@ INSERT INTO `user` (`userid`, `username`, `userpw`, `account`, `wallet`) VALUES
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 
 INSERT INTO `coin` (`coin_id`,`coinname`,`commission`,`coinunit`)
-VALUES ('1','groot','0.01','GRT'),
-('2','acu','0.013','AGT'),
-('3','choco','0.013','CCI');
+VALUES ('1','groot','0.001','GRT'),
+('2','acu','0.0013','AGT'),
+('3','choco','0.0013','CCI');
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IFNULL(@OLD_FOREIGN_KEY_CHECKS, 1) */;

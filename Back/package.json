@@ -14,15 +14,8 @@
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
-<<<<<<< HEAD
     "mysql": "^2.18.1",
     "mysql2": "^2.3.0",
     "sync-mysql": "^3.0.1"
   }
-=======
-    "mysql": "^2.18.1"
-  },
-  "keywords": [],
-  "description": ""
->>>>>>> b4a445585e9fa590ef679b576f1e5176fc7f1f56
 }
