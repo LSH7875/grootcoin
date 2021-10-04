@@ -9,6 +9,7 @@ import '../css/chart.css'
 import '../css/buyAndSell.css'
 import '../css/contract.css'
 import '../css/footer.css'
+import '../css/coinNews.css'
 
 const App=({Component,pageProps})=>{
     const globalContext=useContext(Store)
