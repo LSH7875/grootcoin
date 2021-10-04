@@ -81,7 +81,7 @@ const login = ()=>{
             <h5>소중한 정보를 위해 주소창을 체크해주세요.</h5>
             <input type="text" className="inputBox" name="userid" id="userid" placeholder="E-Mail" /> <br />
             <input type="password" className="inputBox" name="userpw" id="userpw" placeholder="Password" /> <br />
-            <input type="submit" class="bigBtn" value="로그인" disabled></input> <br />
+            <input type="submit" className="bigBtn" value="로그인" disabled></input> <br />
 
             <Link href={`/joinAgree`}><a>회원가입</a></Link>
         </Box>

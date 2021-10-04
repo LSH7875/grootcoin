@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import Styled from 'styled-components'
+import React,{useState} from 'react'
 
 const Box =Styled.div`
     margin: 0 auto;
@@ -92,18 +93,39 @@ const Box =Styled.div`
 
 
 const joinAgree = ()=>{
+    const [checked,setChecked] = useState(false)
+    let { checked0,checked1,checked2 } = false;
+
+    const handleAllChecked = e =>{
+        const {allChecked} = false
+      
+        setChecked({
+            allChecked:!allChecked, 
+            checked0:!allChecked,
+            checked1:!allChecked,
+            checked2:!allChecked
+        })
+    }
     return (
         <Box>
             <h1>회원가입</h1>
             <ul className="bigCheck">
             <li className="bigCheck1">① 약관동의</li><li> ------------- ② 정보입력</li>
             </ul>
-            <h3> 모든 항목에 동의하기</h3>
+            <label className="checkedAll">
+                <input 
+                    type="checkbox"
+                    onClick={handleAllChecked} 
+                    checked={checked}
+               
+                />
+                모든 항목에 동의하기
+            </label>
            
             <ul className="smallCheck">
-            <li><input type="checkbox" name="agree1" required/> 코인원 이용약관</li>
-            <li><input type="checkbox" name="agree2" required/> 개인정보 수집 및 이용</li>
-            <li><input type="checkbox" name="agree3"/> 이벤트 및 정보 안내 수신(선택)</li>
+            <li><input type="checkbox" value={checked0} name="checked0" id="checked0" required/> 코인원 이용약관</li>
+            <li><input type="checkbox" value={checked1} name="checked1" id="checked1" required/> 개인정보 수집 및 이용</li>
+            <li><input type="checkbox" value={checked2} name="checked2" id="checked2" /> 이벤트 및 정보 안내 수신(선택)</li>
             </ul>
             
         `
