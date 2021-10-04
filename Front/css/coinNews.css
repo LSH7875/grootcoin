@@ -1,0 +1,33 @@
+#newsBox{
+    width:1200px;
+    margin: 50px auto;
+    box-shadow: 5px 5px 5px -2px rgb(0, 0, 0,.07) ;
+}
+
+#news{
+    width:1200px;
+    height: 200px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    text-align: center;
+    padding:60px;
+    font-size:60px;
+    background-color:rgba(32, 201, 150);
+}
+
+.newsTitle{
+    width: 1200px;
+    height:100px;
+    padding:30px;
+    border:1px solid rgba(153, 153, 153, 0.342);
+    text-align: center;
+    font-size: 30px;
+}
+
+.newsTitle a {
+    color: #000;
+}
+
+.newsTitle a:hover{
+    font-weight: bold;
+}

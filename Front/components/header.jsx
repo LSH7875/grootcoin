@@ -9,9 +9,9 @@ const header = ()=>{
             <div>
                 <ul id="nav">
                     <li><Link href={`/`}><a>Home</a></Link></li>
-                    <li><Link href={`/coinNews`}><a>코인뉴스</a></Link></li>
-                    <li><Link href={`/assets`}><a>자산</a></Link></li>
-                    <li><Link href={`/coinInfo`}><a>ⓘgrootcoin</a></Link></li>
+                    <li><Link href={`/coin/coinNews`}><a>코인뉴스</a></Link></li>
+                    <li><Link href={`/coin/assets`}><a>자산</a></Link></li>
+                    <li><Link href={`/coin/coinInfo`}><a>ⓘgrootcoin</a></Link></li>
                 </ul>
             </div>
             <Link href={`/login`}><a className="login Btn">로그인</a></Link>
