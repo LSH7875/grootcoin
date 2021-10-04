@@ -15,13 +15,6 @@ const mysql = require('mysql')
 
 
 
-// let connection = mysql.createConnection({
-//     host:'localhost',
-//     user:'root',
-//     password:'0000',
-//     database:'grootcoin'
-// })
-// connection.connect();
 
 app.listen(PORT,()=>{
     console.log(`server port ${PORT}`)
