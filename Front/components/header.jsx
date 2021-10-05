@@ -4,7 +4,7 @@ const header = ()=>{
     return(
         <div id="header">
             <div>
-                <img className="logo" src="/grootcoin.png"/>
+                <Link href={`/`}><a><img className="logo" src="/grootcoin.png"/></a></Link>
             </div>
             <div>
                 <ul id="nav">
