@@ -49,7 +49,7 @@ const Box =Styled.div`
     margin-top: 8px;
     height: 48px;
     font-size: 16px;
-    background-color: #1772f8;
+    background-color: rgba(32, 201, 150);;
     color: #fff;
     padding: .875em 1em;
     border-radius: 3px;
@@ -68,7 +68,7 @@ const Box =Styled.div`
 &>a{
     font-weight:bold;
     float:right;
-    color:#1772f8;
+    color:rgba(32, 201, 150);;
     margin: 24px 0 0 24px;
 }
 `
@@ -81,7 +81,7 @@ const login = ()=>{
             <h5>소중한 정보를 위해 주소창을 체크해주세요.</h5>
             <input type="text" className="inputBox" name="userid" id="userid" placeholder="E-Mail" /> <br />
             <input type="password" className="inputBox" name="userpw" id="userpw" placeholder="Password" /> <br />
-            <input type="submit" class="bigBtn" value="로그인" disabled></input> <br />
+            <input type="submit" className="bigBtn" value="로그인" disabled></input> <br />
 
             <Link href={`/joinAgree`}><a>회원가입</a></Link>
         </Box>
