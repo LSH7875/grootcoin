@@ -1,11 +1,11 @@
-const AssertContent = () =>{
+const AssetContent = () =>{
     return(
             <div>
                 <div>
-                    <assertNavi />
+                    <assetNavi />
                 </div>
             </div>
     )
 }
 
-export default AssertContent;
+export default AssetContent;

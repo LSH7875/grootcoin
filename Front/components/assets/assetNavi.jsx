@@ -1,9 +1,9 @@
 import { useState } from 'react'
-import Asset from './content/assert'
+import Asset from './content/asset'
 import Deposit from './content/deposit'
 import Usehistory from './content/usehistory'
 
-const AssertNavi = ()=>{
+const AssetNavi = ()=>{
         const [tabBtn, setTabBtn] = useState(1)
 
         const btn1 = () => {
@@ -46,4 +46,4 @@ const AssertNavi = ()=>{
         )
 }
 
-export default AssertNavi;
+export default AssetNavi;
