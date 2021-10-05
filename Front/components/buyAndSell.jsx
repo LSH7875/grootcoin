@@ -1,39 +1,38 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useContext} from 'react'
 import Link from 'next/link'
+import axios from 'axios';
+import Store from '../store/context'
 
 const buycolor = { "background": "rgba(225,35,67)", "color": "#fff" }
 const sellcolor = { "background": "rgba(23,99,182)", "color": "#fff" }
 
+
 const Buy = () => {
     const [buyPrice,setBuyPrice] = useState(0)
     const [volume,setVolume] = useState(0)
-    const [login,setlogin] = useState(false)
-    const [data, setData] = useState([]);
-    useEffect(async () => {
-        const response = await fetch("http://localhost:3003/api/coin/buy_order",{
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                userid: "Test",
-                price: buyPrice,
-                qty: volume,
-                ordertype: 0,
-                rest: buyPrice,
-                coin_id: 1
-            }),
+    const {state,dispatch} = useContext(Store)
+    console.log(state.login_boolean == false)
+
+    const buyApi = () =>{
+        axios.post("http://localhost:3003/api/coin/buy_order", {
+            userid: "da",
+            price: buyPrice,
+            qty: volume,
+            ordertype: 0,
+            rest: volume,
+            coin_id: 1
+        },{ 
+            headers:{ 
+            'Content-type': 'application/json', 
+            'Accept': 'application/json' 
+            } 
         })
         .then((response)=>console.log(response))
         .catch(error => {
-            // this.setData({errorMessage: error.toString()});
-            console.error('there was an error!',error)
+            console.log('실패났음',error)
         })
-        // const data = await response.json()
-        // setData(data);
-      }, []);
-
-
+    }
+    
     const priceUp = () =>{
         setBuyPrice((price)=>price+1)
     }
@@ -93,11 +92,18 @@ const Buy = () => {
                 <li>매수 수량</li>
                 <li>0 GRT</li>
             </ul>
-            <Link href={login == false ? `/login`:`/login`}>
-                <button className="buy Btn2">
-                    {login == false ? "로그인":"매수"}
-                </button>
-            </Link>
+            { state.login_boolean === 0 ? 
+                <Link href={`/login`}>
+                    <button className="buy Btn2">
+                        로그인
+                    </button>
+                </Link>
+                : 
+                    <button onClick={buyApi} className="buy Btn2">
+                        매수
+                    </button>
+            }
+
         </div>
     )
 }
@@ -105,7 +111,28 @@ const Buy = () => {
 const Sell = () =>{
     const [sellPrice,setSellPrice] = useState(0)
     const [volume,setVolume] = useState(0)
-    const [login,setlogin] = useState(false)
+    const {state,dispatch} = useContext(Store)
+    console.log(state.login_boolean == false)
+
+    const sellApi = () =>{
+        axios.post("http://localhost:3003/api/coin/buy_order", {
+            userid: "do",
+            price: sellPrice,
+            qty: volume,
+            ordertype: 1,
+            rest: volume,
+            coin_id: 1
+        },{ 
+            headers:{ 
+            'Content-type': 'application/json', 
+            'Accept': 'application/json' 
+            } 
+        })
+        .then((response)=>console.log(response))
+        .catch(error => {
+            console.log('실패났음',error)
+        })
+    }
 
     const onUp = () =>{
         setSellPrice((price)=>price+1)
@@ -166,7 +193,17 @@ const Sell = () =>{
                 <li>매도 금액</li>
                 <li>0 KRW</li>
             </ul>
-            <button className="sell Btn2">{login == false ? "로그인":"매도"}</button>
+            { state.login_boolean === 0 ? 
+                <Link href={`/login`}>
+                    <button className="sell Btn2">
+                        로그인
+                    </button>
+                </Link>
+                : 
+                    <button onClick={sellApi} className="sell Btn2">
+                        매도
+                    </button>
+            }
         </div>
     )
 }

@@ -13,7 +13,6 @@ router.post('/coin_cancle',controller.coin_cancle);
 router.get('/coinNews',coinNews.main);
 
 
-
 router.get('/mainpage',controller2.mainpage);
 
 module.exports = router;

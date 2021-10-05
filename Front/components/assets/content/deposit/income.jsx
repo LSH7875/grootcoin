@@ -1,9 +1,15 @@
+import React, { useContext } from 'react'
+import Store from '../../../../store/context'
+
 const income = () =>{
+
+    const {state,dispatch} = useContext(Store)
+
     return(
         <>
             <div className = "text-center bold4">KRW 입금하기</div>
             <div className = "text-center margin_bottom">
-                은행 계좌 등록으로 인증된 <span className = "black">실명 계좌</span> <span className = "blue">신한은행 김서영 110<br/>*******555</span>에서
+                은행 계좌 등록으로 인증된 <span className = "black">실명 계좌</span> <span className = "blue">신한은행 {state.username} 110<br/>{state.account}</span>에서
                 코인원 <span className = "black">입금전용 가상계좌</span>로 이체하시면 <br/>
                 원화(KRW)가 충전됩니다.
             </div>
