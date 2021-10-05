@@ -1,39 +1,37 @@
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
+import axios from 'axios';
 
 const buycolor = { "background": "rgba(225,35,67)", "color": "#fff" }
 const sellcolor = { "background": "rgba(23,99,182)", "color": "#fff" }
+
 
 const Buy = () => {
     const [buyPrice,setBuyPrice] = useState(0)
     const [volume,setVolume] = useState(0)
     const [login,setlogin] = useState(false)
     const [data, setData] = useState([]);
-    useEffect(async () => {
-        const response = await fetch("http://localhost:3003/api/coin/buy_order",{
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                userid: "Test",
-                price: buyPrice,
-                qty: volume,
-                ordertype: 0,
-                rest: buyPrice,
-                coin_id: 1
-            }),
+
+    const buysellApi = () =>{
+        axios.post("http://localhost:3003/api/coin/buy_order", {
+            userid: "Test",
+            price: buyPrice,
+            qty: volume,
+            ordertype: 0,
+            rest: buyPrice,
+            coin_id: 1
+        },{ 
+            headers:{ 
+            'Content-type': 'application/json', 
+            'Accept': 'application/json' 
+            } 
         })
         .then((response)=>console.log(response))
         .catch(error => {
-            // this.setData({errorMessage: error.toString()});
-            console.error('there was an error!',error)
+            console.log('실패났음',error)
         })
-        // const data = await response.json()
-        // setData(data);
-      }, []);
-
-
+    }
+    
     const priceUp = () =>{
         setBuyPrice((price)=>price+1)
     }
@@ -93,11 +91,11 @@ const Buy = () => {
                 <li>매수 수량</li>
                 <li>0 GRT</li>
             </ul>
-            <Link href={login == false ? `/login`:`/login`}>
-                <button className="buy Btn2">
+            {/* <Link href={login == false ? `/login`:`/login`}> */}
+                <button onClick={buysellApi} className="buy Btn2">
                     {login == false ? "로그인":"매수"}
                 </button>
-            </Link>
+            {/* </Link> */}
         </div>
     )
 }

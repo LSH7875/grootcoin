@@ -3,6 +3,7 @@ import Styled from 'styled-components'
 import useInput from '../hooks/useInput'
 import {useState} from 'react'
 
+
 const Box = Styled.div`
     margin: 0 auto;
     width:480px;
@@ -247,6 +248,7 @@ const join = () => {
 
                 {check() ? <Link href={`/`}><a className="bigBtn">다음</a></Link> : console.log('false') }
             </form>
+            <Scroll />
         </Box>
     )
 }

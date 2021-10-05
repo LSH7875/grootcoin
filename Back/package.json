@@ -17,7 +17,8 @@
     "mysql": "^2.18.1",
     "mysql2": "^2.3.0",
     "request": "^2.88.2",
-    "sync-mysql": "^3.0.1"
+    "sync-mysql": "^3.0.1",
+    "ws": "^8.2.3"
   },
   "keywords": [],
   "description": ""
