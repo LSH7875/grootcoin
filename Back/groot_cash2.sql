@@ -93,8 +93,8 @@ CREATE TABLE IF NOT EXISTS `transaction` (
 CREATE TABLE IF NOT EXISTS `user` (
   `userid` varchar(50) NOT NULL,
   `username` varchar(30) NOT NULL,
-  `userpw` varchar(50) NOT NULL,
-  `account` int(11) NOT NULL,
+  `userpw` varchar(200) NOT NULL,
+  `account` varchar(200) NOT NULL,
   `wallet` varchar(100) NOT NULL,
   PRIMARY KEY (`userid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

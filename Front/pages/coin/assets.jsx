@@ -1,6 +1,6 @@
 import Header from "../../components/header"
-import AssertNavi from "../../components/assert/assertNavi"
-import AssertContent from "../../components/assert/assertContent"
+import AssetNavi from "../../components/assets/assetNavi"
+import AssetContent from "../../components/assets/assetContent"
 
 const assets = () =>{
     return(
@@ -8,10 +8,10 @@ const assets = () =>{
             <Header/>
             <div>
                 <div>
-                    <AssertNavi />
+                    <AssetNavi />
                 </div>
                 <div>
-                    <AssertContent />
+                    <AssetContent />
                 </div>
             </div>
         </>

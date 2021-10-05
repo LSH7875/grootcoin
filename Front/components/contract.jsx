@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
-const preContractcolor = { "border-bottom": "3px solid rgba(32, 201, 150)", "color": "#333" }
-const contractedcolor = { "border-bottom": "3px solid rgba(32, 201, 150)", "color": "#333" }
+const preContractcolor = { "borderBottom": "3px solid rgba(32, 201, 150)", "color": "#333" }
+const contractedcolor = { "borderBottom": "3px solid rgba(32, 201, 150)", "color": "#333" }
 
 const PreContract = () => {
 
