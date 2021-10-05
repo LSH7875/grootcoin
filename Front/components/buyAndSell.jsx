@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useContext} from 'react'
 import Link from 'next/link'
 import axios from 'axios';
+import Store from '../store/context'
 
 const buycolor = { "background": "rgba(225,35,67)", "color": "#fff" }
 const sellcolor = { "background": "rgba(23,99,182)", "color": "#fff" }
@@ -9,8 +10,8 @@ const sellcolor = { "background": "rgba(23,99,182)", "color": "#fff" }
 const Buy = () => {
     const [buyPrice,setBuyPrice] = useState(0)
     const [volume,setVolume] = useState(0)
-    const [login,setlogin] = useState(false)
-    const [data, setData] = useState([]);
+    const {state,dispatch} = useContext(Store)
+    console.log(state.login_boolean == false)
 
     const buyApi = () =>{
         axios.post("http://localhost:3003/api/coin/buy_order", {
@@ -91,11 +92,18 @@ const Buy = () => {
                 <li>매수 수량</li>
                 <li>0 GRT</li>
             </ul>
-            {/* <Link href={login == false ? `/login`:`/login`}> */}
-                <button onClick={buyApi} className="buy Btn2">
-                    {login == false ? "로그인":"매수"}
-                </button>
-            {/* </Link> */}
+            { state.login_boolean === 0 ? 
+                <Link href={`/login`}>
+                    <button className="buy Btn2">
+                        로그인
+                    </button>
+                </Link>
+                : 
+                    <button onClick={buyApi} className="buy Btn2">
+                        매수
+                    </button>
+            }
+
         </div>
     )
 }
@@ -103,7 +111,8 @@ const Buy = () => {
 const Sell = () =>{
     const [sellPrice,setSellPrice] = useState(0)
     const [volume,setVolume] = useState(0)
-    const [login,setlogin] = useState(false)
+    const {state,dispatch} = useContext(Store)
+    console.log(state.login_boolean == false)
 
     const sellApi = () =>{
         axios.post("http://localhost:3003/api/coin/buy_order", {
@@ -184,11 +193,17 @@ const Sell = () =>{
                 <li>매도 금액</li>
                 <li>0 KRW</li>
             </ul>
-            {/* <Link href={login == false ? `/login`:`/login`}> */}
-            <button onClick={sellApi} className="sell Btn2">
-                    {login == false ? "로그인":"매수"}
-                </button>
-            {/* </Link> */}
+            { state.login_boolean === 0 ? 
+                <Link href={`/login`}>
+                    <button className="sell Btn2">
+                        로그인
+                    </button>
+                </Link>
+                : 
+                    <button onClick={sellApi} className="sell Btn2">
+                        매도
+                    </button>
+            }
         </div>
     )
 }
