@@ -8,8 +8,8 @@ const coinNews = require('./coinNews');
 
 router.post('/buy_order',controller.buy_order);
 router.post('/sell_order',controller.sell_order);
-router.get('/start_price',controller.start_price);
-router.post('/transaction',controller.transaction);
+router.post('/coin_cancle',controller.coin_cancle);
+
 router.get('/coinNews',coinNews.main);
 
 

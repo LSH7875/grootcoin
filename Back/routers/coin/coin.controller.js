@@ -16,9 +16,8 @@ let buy_order = async (req, res) => {
     let add_buy = await connection.query(`insert into coin_orderbook (userid,price,qty,ordertype,rest,coin_id,state) values('${userid}','${price}','${qty}','${ordertype}','${rest}','${coin_id}','0')`)
     let buy_pk = add_buy[0].insertId;
     //매수 가격에 맞는게 있는지 검색 (ordertype 이 매도면서 수량이 0이 아니고 가격이 낮은 수 부터 체결하기 위해서 낮은값이 같은게 있를경우 등록 먼저한 순서대로)
-    let serch_buy = await connection.query(`select * from coin_orderbook where coin_id = ${coin_id} AND ordertype = 1 AND rest != 0 AND price <= ${price} ORDER BY price ASC, time ASC`)
+    let serch_buy = await connection.query(`select * from coin_orderbook where state = 0 AND coin_id = ${coin_id} AND ordertype = 1 AND rest != 0 AND price <= ${price} ORDER BY price ASC, time ASC`)
     let serch_buy_law = serch_buy[0].filter((law) => { return law })
-
 
     if (serch_buy[0] !== undefined) {
         // 매수 가격과 맞는게 있을경우
@@ -66,7 +65,6 @@ let buy_order = async (req, res) => {
         sell_rest = use_rest >= serch_buy_law[i].rest ? 0 : serch_buy_law[i].rest - use_rest
         this_order_update = use_rest > serch_buy_law[0].rest ? `update coin_orderbook set rest = ${minus_rest} where pk = ${buy_pk}` : `update coin_orderbook set rest = 0 where pk = ${buy_pk}`
 
-    
         let transaction_pk = await connection.query(`insert into assets (userid,input,output,transaction) values('${userid}','0','${total_price}','${transaction_pk[0].insertId}')`)
         console.log(transaction_pk);
         await connection.query(`insert into transaction (a_orderid,a_amount,a_commission,b_orderid,b_amount,b_commission,coin_id,payment) values('${buy_pk}','${signed_amount}','${sum_commission}','${serch_buy_law[0].pk}','${signed_amount}','${sum_commission}','${coin_id}','${serch_buy_law[0].price}')`)
@@ -83,11 +81,8 @@ let buy_order = async (req, res) => {
 
 
 
-
-
 let sell_order = async (req, res) => {
     let { userid, price, qty, ordertype, rest, coin_id } = req.body;
-    let connection;
     let sum_commission;
     let signed_amount;
     let total_price;
@@ -95,14 +90,14 @@ let sell_order = async (req, res) => {
     let minus_rest;
     let buy_rest;
     let this_order_update;
+    let connection;
     connection = await pool.getConnection(async conn => conn);
     // 매도주문 coin_orderbook 에 등록
     let add_sell = await connection.query(`insert into coin_orderbook (userid,price,qty,ordertype,rest,coin_id,state) values('${userid}','${price}','${qty}','${ordertype}','${rest}','${coin_id}','0')`)
     let sell_pk = add_sell[0].insertId;
     //매도 가격에 맞는게 있는지 검색 (ordertype 이 매도면서 수량이 0이 아니고 가격이 낮은 수 부터 체결하기 위해서 낮은값이 같은게 있를경우 등록 먼저한 순서대로)
-    let serch_buy = await connection.query(`select * from coin_orderbook where coin_id = ${coin_id} AND ordertype = 0 AND rest != 0 AND price >= ${price} ORDER BY price DESC, time ASC`)
+    let serch_buy = await connection.query(`select * from coin_orderbook where state = 0 AND coin_id = ${coin_id} AND ordertype = 0 AND rest != 0 AND price >= ${price} ORDER BY price DESC, time ASC`)
     let serch_buy_law = serch_buy[0].filter((law) => { return law })
-
 
     if (serch_buy[0] !== undefined) {
         // 매도 가격과 맞는게 있을경우
@@ -158,46 +153,25 @@ let sell_order = async (req, res) => {
         // 매도가격과 맞는게 없을경우
         res.json({ 'msg': '거래에 맞는 가격이 없음으로 대기' })
     }
+}
+
+let coin_cancle = async (req,res) =>{
+    let connection;
+    connection = await pool.getConnection(async conn => conn);
+ let {pk} = req.body 
+
+await connection.query(`update coin_orderbook set state = '1' where pk = ${pk}`)
+
+res.json({msg:'정상 취소 되셨습니다.'})
 
 }
 
 
-let start_price = async (req, res) => {
-    let today = new Date();
-    const serch = await pool.getConnection((err, conection) => {
-        connection.query(`select price from transaction where time,coin_id = '${today}`, (error, result, fields) => {
-            connection.release();
-            if (errpr) throw error;
-
-            if (results == undefined) {
-                res.json({ 'msg': '시가가 조회되지 않습니다' })
-            } else {
-                res.json({ 'msg': '시가가 정상 조회 되었습니다' })
-            }
-        })
-    })
-}
-
-let transaction = (req, res) => {
-    pool.getConnection((err, conection) => {
-        connection.query(`select price from transaction where time,coin_id = '${today}`, (error, result, fields) => {
-            connection.release();
-            if (errpr) throw error;
-
-            if (results == undefined) {
-                res.json({ 'msg': '시가가 조회되지 않습니다' })
-            } else {
-                res.json({ 'msg': '시가가 정상 조회 되었습니다' })
-            }
-        })
-    })
-}
 
 
 
 module.exports = {
     buy_order,
     sell_order,
-    start_price,
-    transaction
+    coin_cancle,
 }
