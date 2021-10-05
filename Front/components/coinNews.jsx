@@ -8,7 +8,6 @@ const coinNews = () =>{
         const response = await fetch("http://localhost:3003/api/coin/coinNews");
         const data = await response.json()
         setData(data.data);
-        console.log(data.data)
       }, []);
 
     const News = data.map((v,k)=>{
