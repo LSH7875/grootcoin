@@ -14,10 +14,11 @@ CREATE TABLE IF NOT EXISTS `assets` (
   `input` int(20) DEFAULT NULL,
   `output` int(20) DEFAULT NULL,
   `regdate` int(11) NOT NULL DEFAULT unix_timestamp(),
-  `reservation` int(1) DEFAULT 1 NOT NULL,
+  `transaction` int(11) NOT NULL,
   PRIMARY KEY (`pk`),
   KEY `FK_assets_user` (`userid`),
-  CONSTRAINT `FK_assets_user` FOREIGN KEY (`userid`) REFERENCES `user` (`userid`)
+  CONSTRAINT `FK_assets_user` FOREIGN KEY (`userid`) REFERENCES `user` (`userid`),
+  CONSTRAINT `FK_assets_transaction` FOREIGN KEY (`transaction`) REFERENCES `transaction` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 /*!40000 ALTER TABLE `assets` DISABLE KEYS */;
@@ -32,13 +33,12 @@ CREATE TABLE IF NOT EXISTS `coin_orderbook` (
   `rest` float NOT NULL,
   `time` int(11) NOT NULL DEFAULT unix_timestamp(),
   `coin_id` int(11) NOT NULL,
-  `cash_id` int(11) NULL,
+  `state` int(1) NOT NULL,
   PRIMARY KEY (`pk`),
   KEY `FK_order_user` (`userid`),
   KEY `FK_coin_orderbook_coin` (`coin_id`),
   CONSTRAINT `FK_coin_orderbook_coin` FOREIGN KEY (`coin_id`) REFERENCES `coin` (`coin_id`),
-  CONSTRAINT `FK_order_user` FOREIGN KEY (`userid`) REFERENCES `user` (`userid`),
-  CONSTRAINT `FK_coin_orderbook_assets` FOREIGN KEY (`cash_id`) REFERENCES `assets` (`pk`)
+  CONSTRAINT `FK_order_user` FOREIGN KEY (`userid`) REFERENCES `user` (`userid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 /*!40000 ALTER TABLE `coin_orderbook` DISABLE KEYS */;
