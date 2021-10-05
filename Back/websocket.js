@@ -14,7 +14,7 @@ function wsinit(){
 }
 
 function socketSend(data,func){
-    const message=func? {data,func} : {data}
+    const message=func? {func,data} : {data}
     wss.send(message);
 }
 
