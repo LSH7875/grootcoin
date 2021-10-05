@@ -3,6 +3,11 @@ import dynamic from 'next/dynamic';
 const ReactApexChart = dynamic(() => import('react-apexcharts'), { ssr: false });
 import dayjs from 'dayjs'
 
+const timestamp = ()=>{
+    let localDate = new Date().toLocaleDateString()
+    let unixStartTime = new Date(localDate).getTime()
+}
+
 const chart = () =>{
     const series = [{
         name: 'candle',

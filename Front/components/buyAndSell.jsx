@@ -12,13 +12,13 @@ const Buy = () => {
     const [login,setlogin] = useState(false)
     const [data, setData] = useState([]);
 
-    const buysellApi = () =>{
+    const buyApi = () =>{
         axios.post("http://localhost:3003/api/coin/buy_order", {
-            userid: "Test",
+            userid: "da",
             price: buyPrice,
             qty: volume,
             ordertype: 0,
-            rest: buyPrice,
+            rest: volume,
             coin_id: 1
         },{ 
             headers:{ 
@@ -92,7 +92,7 @@ const Buy = () => {
                 <li>0 GRT</li>
             </ul>
             {/* <Link href={login == false ? `/login`:`/login`}> */}
-                <button onClick={buysellApi} className="buy Btn2">
+                <button onClick={buyApi} className="buy Btn2">
                     {login == false ? "로그인":"매수"}
                 </button>
             {/* </Link> */}
@@ -104,6 +104,26 @@ const Sell = () =>{
     const [sellPrice,setSellPrice] = useState(0)
     const [volume,setVolume] = useState(0)
     const [login,setlogin] = useState(false)
+
+    const sellApi = () =>{
+        axios.post("http://localhost:3003/api/coin/buy_order", {
+            userid: "do",
+            price: sellPrice,
+            qty: volume,
+            ordertype: 1,
+            rest: volume,
+            coin_id: 1
+        },{ 
+            headers:{ 
+            'Content-type': 'application/json', 
+            'Accept': 'application/json' 
+            } 
+        })
+        .then((response)=>console.log(response))
+        .catch(error => {
+            console.log('실패났음',error)
+        })
+    }
 
     const onUp = () =>{
         setSellPrice((price)=>price+1)
@@ -164,7 +184,11 @@ const Sell = () =>{
                 <li>매도 금액</li>
                 <li>0 KRW</li>
             </ul>
-            <button className="sell Btn2">{login == false ? "로그인":"매도"}</button>
+            {/* <Link href={login == false ? `/login`:`/login`}> */}
+            <button onClick={sellApi} className="sell Btn2">
+                    {login == false ? "로그인":"매수"}
+                </button>
+            {/* </Link> */}
         </div>
     )
 }
