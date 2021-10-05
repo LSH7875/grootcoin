@@ -4,6 +4,7 @@ const PORT = process.env.PORT || 3003;
 const bodyParser = require('body-parser')
 const cors = require('cors')
 const router = require('./routers/index');
+const ws = require('./websocket');
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false, }))
@@ -13,9 +14,9 @@ app.use('/api', router)
 require('dotenv');
 const mysql = require('mysql')
 
-
-
-
 app.listen(PORT,()=>{
     console.log(`server port ${PORT}`)
 })
+
+ws.wsInit();
+
