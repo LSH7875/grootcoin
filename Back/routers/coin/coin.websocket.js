@@ -33,7 +33,7 @@ const check_unexecuted=()=>{
 //내 예약금 조회
 const check_reservation=()=>{
     const {id}= req.params;
-    await connection.query(`SELECT * FROM assets WHERE userid =${id} reservation=1`)
+    await connection.query(`SELECT * FROM assets WHERE userid = ${id} reservation=1`)
 }
 //내 자산 조회
 const check_balance =async()=>{
@@ -43,4 +43,5 @@ const check_balance =async()=>{
     //내 현금
         await connection.query(`SELECT a.in-a.out from (select userid,SUM(input),reservation as in,SUM(output) as out FROM assets GROUP BY userid) as a WHERE userid=${id} AND reservation=0`)
 }
+
 module.exports={check_balance,check_reservation,check_unexecuted,check_executed}

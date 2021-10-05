@@ -2,7 +2,7 @@ const { pool } = require('../../pool')
 
 // 매수 
 let buy_order = async (req, res) => {
-    let { userid, price, qty, ordertype, rest, coin_id} = req.body;
+    let { userid, price, qty, ordertype, rest, coin_id } = req.body;
     let connection;
     let sum_commission;
     let signed_amount;
@@ -38,9 +38,9 @@ let buy_order = async (req, res) => {
                 minus_rest = use_rest > serch_buy_law[i].rest ? use_rest - serch_buy_law[i].rest : serch_buy_law[i].rest - use_rest
                 this_order_update = use_rest > serch_buy_law[i].rest ? `update coin_orderbook set rest = ${minus_rest} where pk = ${buy_pk}` : `update coin_orderbook set rest = 0 where pk = ${buy_pk}`
 
-               let transaction_pk = await connection.query(`insert into transaction (a_orderid,a_amount,a_commission,b_orderid,b_amount,b_commission,coin_id,payment) values('${buy_pk}','${signed_amount}','${sum_commission}','${serch_buy_law[i].pk}','${signed_amount}','${sum_commission}','${coin_id}','${serch_buy_law[i].price}')`)
-               console.log(transaction_pk[0].insertId); 
-               await connection.query(`insert into assets (userid,input,output,transaction) values('${userid}','0','${total_price}','${transaction_pk[0].insertId}')`)
+                let transaction_pk = await connection.query(`insert into transaction (a_orderid,a_amount,a_commission,b_orderid,b_amount,b_commission,coin_id,payment) values('${buy_pk}','${signed_amount}','${sum_commission}','${serch_buy_law[i].pk}','${signed_amount}','${sum_commission}','${coin_id}','${serch_buy_law[i].price}')`)
+                console.log(transaction_pk[0].insertId);
+                await connection.query(`insert into assets (userid,input,output,transaction) values('${userid}','0','${total_price}','${transaction_pk[0].insertId}')`)
                 await connection.query(this_order_update)
                 await connection.query(`update coin_orderbook set rest = ${sell_rest} where pk = ${serch_buy_law[i].pk}`)
                 await connection.query(`insert into assets (userid,input,output,transaction) values('${serch_buy_law[i].userid}','${total_price}','0','${transaction_pk[0].insertId}')`)
@@ -74,7 +74,6 @@ let buy_order = async (req, res) => {
         res.json('거래완료')
     } else {
         // 매수가격과 맞는게 없을경우
-
         res.json({ 'msg': '거래에 맞는 가격이 없음으로 대기' })
     }
 }
@@ -155,17 +154,30 @@ let sell_order = async (req, res) => {
     }
 }
 
-let coin_cancle = async (req,res) =>{
+let coin_cancle = async (req, res) => {
     let connection;
     connection = await pool.getConnection(async conn => conn);
- let {pk} = req.body 
+    let { pk } = req.body
 
-await connection.query(`update coin_orderbook set state = '1' where pk = ${pk}`)
+    await connection.query(`update coin_orderbook set state = '1' where pk = ${pk}`)
 
-res.json({msg:'정상 취소 되셨습니다.'})
-
+    res.json({ 'msg': '정상 취소 되셨습니다.' })
 }
 
+let serch_assets = async (req,res) =>{
+let connection ;
+connection = await pool.getConnection(async conn => conn)
+
+let {userid} = req.body;
+let assets = await connection.query(`select * from assets where userid = ${userid}`)
+let in_out = await connection.query(`select sum(input),sum(output) from where userid = ${userid}`)
+let total = await connection.query(`select (add.a-add.b) as assets from (select sum(input)as a,sum(output)as b from where userid = ${userid}) as add`)
+
+console.log(assets);
+console.log(in_out);
+console.log(total);
+
+}
 
 
 
@@ -174,4 +186,5 @@ module.exports = {
     buy_order,
     sell_order,
     coin_cancle,
+    serch_assets
 }
