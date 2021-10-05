@@ -2,6 +2,7 @@
 const express = require('express');
 const router = express.Router();
 const controller = require('./coin.controller');
+const controller2= require('./coin.controller2')
 const coinNews = require('./coinNews');
 
 
@@ -13,6 +14,6 @@ router.get('/coinNews',coinNews.main);
 
 
 
-
+router.get('/mainpage',controller2.mainpage);
 
 module.exports = router;
