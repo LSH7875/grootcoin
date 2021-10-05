@@ -13,8 +13,8 @@ function wsinit(){
       });
 }
 
-function socketSend(func,data){
-    const message={func,data}
+function socketSend(data,func){
+    const message=func? {data,func} : {data}
     wss.send(message);
 }
 
