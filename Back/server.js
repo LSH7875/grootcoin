@@ -18,5 +18,5 @@ app.listen(PORT,()=>{
     console.log(`server port ${PORT}`)
 })
 
-ws.wsInit();
+ws.wsinit();
 
