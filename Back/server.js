@@ -31,13 +31,13 @@ app.use('/api', router)
 require('dotenv');
 const mysql = require('mysql')
 
-let connection = mysql.createConnection({
-    host:'localhost',
-    user:'root',
-    password:'root',
-    database:'grootcoin'
-})
-connection.connect();
+// let connection = mysql.createConnection({
+//     host:'localhost',
+//     user:'root',
+//     password:'root',
+//     database:'grootcoin'
+// })
+// connection.connect();
 
 app.get('/',(req,res)=>{
     // res.cookie('userid', 'userid');

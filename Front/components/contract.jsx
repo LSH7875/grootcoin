@@ -1,9 +1,16 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 const preContractcolor = { "borderBottom": "3px solid rgba(32, 201, 150)", "color": "#333" }
 const contractedcolor = { "borderBottom": "3px solid rgba(32, 201, 150)", "color": "#333" }
 
 const PreContract = () => {
+    const [data, setData] = useState([]);
+    useEffect(async () => {
+        const response = await fetch("http://localhost:3003/api/coin/buy_order");
+        const data = await response.json()
+        setData(data.data);
+        console.log(data.data)
+      }, []);
 
     return (
         <div>
