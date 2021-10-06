@@ -103,7 +103,7 @@ const login = ()=>{
 
         e.preventDefault()
     
-
+        console.log(loginuserid)
         let options = {
             data:{
                 userid:loginuserid,
@@ -117,8 +117,9 @@ const login = ()=>{
         // let result = await response.json()
         let result = response.data;
         setloginresult(result.msg)
+        console.log(result.content)
         if(result.boolean == true){
-            dispatch({ type: 'login_boolean_true', payload: result.boolean, userid:result.content[0].userid, username:result.content[0].username, userpw:result.content[0].userpw, account:result.content[0].account, wallet:result.content[0].wallet})
+            dispatch({ type: 'login_boolean_true', payload: result.boolean, userid:result.content.userid, username:result.content.username, userpw:result.content.userpw, account:result.content.account, wallet:result.content.wallet})
             Router.push('/')
             
         }else{

@@ -3,7 +3,7 @@ import Styled from 'styled-components'
 import useInput from '../hooks/useInput'
 import {useState} from 'react'
 import {join_success} from '../api/api'
-
+import Router from 'next/router'
 
 const Box = Styled.div`
     margin: 0 auto;
@@ -206,6 +206,7 @@ const join = () => {
         //     accountNo:accountNo.value
         // })
         join_success({userid:userid.value, username:username.value, userpw:userpw.value, account:accountNo.value, wallet:"info"})
+        Router.push('/')
     }
 
     const check = e => {
@@ -249,7 +250,6 @@ const join = () => {
                 <br />
                 <input type = "submit" className = "bigBtn" value = "다음" />
             </form>
-            <Scroll />
         </Box>
     )
 }

@@ -1,13 +1,31 @@
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 
 const preContractcolor = { "borderBottom": "3px solid rgba(32, 201, 150)", "color": "#333" }
 const contractedcolor = { "borderBottom": "3px solid rgba(32, 201, 150)", "color": "#333" }
 
 const PreContract = () => {
 
+    const [content, setContent] = useState()
+
+    const ws = useRef(null);
+
+    useEffect(() => {
+        ws.current = new WebSocket("ws://127.0.0.1:8080");
+        ws.current.onopen = () => console.log();
+        ws.current.onclose = () => console.log();
+
+        return () => {
+            ws.current.close();
+        };
+    }, []);
+
+    useEffect(() => {
+        ws.current.onmessage = (e) => setContent([e.data])
+    }, []);
+
     return (
         <div>
-            ddd
+            {content}
         </div>
     )
 }

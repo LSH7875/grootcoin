@@ -29,21 +29,24 @@ app.use('/api', router)
 
 
 require('dotenv');
-const mysql = require('mysql')
+// const mysql = require('mysql')
 
-let connection = mysql.createConnection({
-    host:'localhost',
-    user:'root',
-    password:'root',
-    database:'grootcoin'
-})
-connection.connect();
+// let connection = mysql.createConnection({
+//     host:'localhost',
+//     user:'root',
+//     password:'root',
+//     database:'grootcoin'
+// })
+// connection.connect();
 
 app.get('/',(req,res)=>{
     // res.cookie('userid', 'userid');
     res.send('백 서버')
 })
 
+app.get('/websocket_test', (req,res)=>{
+    ws.wsinit();
+})
 app.listen(PORT,()=>{
     console.log(`server port ${PORT}`)
 })
