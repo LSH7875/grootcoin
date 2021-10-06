@@ -2,6 +2,8 @@ import Link from 'next/link'
 import Styled from 'styled-components'
 import useInput from '../hooks/useInput'
 import {useState} from 'react'
+import {join_success} from '../api/api'
+
 
 const Box = Styled.div`
     margin: 0 auto;
@@ -243,10 +245,10 @@ const join = () => {
         }
 
 
-        if(!term) {
-            setTermError(true)
-            return; 
-        }
+        // if(!term) {
+        //     setTermError(true)
+        //     return; 
+        // }
 
         // console.log({
         //     userid:userid.value,
@@ -254,6 +256,7 @@ const join = () => {
         //     userpw:userpw.value,
         //     accountNo:accountNo.value
         // })
+        join_success({userid:userid.value, username:username.value, userpw:userpw.value, account:accountNo.value, wallet:"info"})
     }
 
    
@@ -265,7 +268,7 @@ const join = () => {
                 <li className="bigCheck2">① 약관동의</li><li> ------------- </li> <li className="bigCheck1">② 정보입력</li>
             </ul>
 
-            <form onSubmit={handleSubmit} className="a">
+            <form onSubmit = {handleSubmit} className="a">
                 <label className="margin24 inputFont" label htmlFor="userid" >이메일</label>
                 <input type="email" {...userid} className="inputBox" name="userid" id="userid" placeholder="아이디로 사용할 이메일 입력" />
 
@@ -290,8 +293,11 @@ const join = () => {
                 
                 <br />
 
+
                 {check() ? <Link href={`/`}><a className="bigBtn">다음</a></Link> : '' }
+
             </form>
+            <Scroll />
         </Box>
     )
 }

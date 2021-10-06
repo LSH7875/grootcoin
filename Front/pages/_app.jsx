@@ -1,7 +1,8 @@
 import Store from '../store/context'
-import {useReducer,useContext} from 'react'
+import {useReducer,useContext,useEffect} from 'react'
 import reducer from '../store/reducer'
 import Head from 'next/head'
+import useLocalStorage from '../store/useLocalStorage'
 import '../css/history.css'
 import '../css/orderBook.css'
 import '../css/main.css'
@@ -9,13 +10,28 @@ import '../css/chart.css'
 import '../css/buyAndSell.css'
 import '../css/contract.css'
 import '../css/footer.css'
-import '../css/asserts.css'
+import '../css/assets.css'
 import '../css/coinNews.css'
+import { usePersistedReducer } from '../store/usePersist'
 
 const App=({Component,pageProps})=>{
-    const globalContext=useContext(Store)
-    const [state,dispatch] = useReducer(reducer,globalContext)
-    
+    // const globalContext=useContext(Store)
+    const localstorageKey = "@initialState"
+    const globalStore = useContext(Store)
+    const [state, dispatch] = usePersistedReducer(
+        useReducer(reducer, globalStore),
+        localstorageKey
+    )
+
+    useEffect(() => {
+        console.log(localStorage.getItem(localstorageKey))
+        if (JSON.parse(localStorage.getItem(localstorageKey))) { 
+            dispatch({ 
+                type: "init_stored", 
+                value: JSON.parse(localStorage.getItem(localstorageKey)),
+            });
+        }
+    }, []);
     return (
         <>
         <Head>
@@ -29,7 +45,7 @@ const App=({Component,pageProps})=>{
                 rel="stylesheet"
                 href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
                 integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
-                crossorigin="anonymous"
+                crossOrigin="anonymous"
             />
         </Head>
         

@@ -22,7 +22,7 @@ const asset = () =>{
                                 100원
                             </li>
                             <li>
-                                100원
+                                100
                             </li>
                         </ul>
                     </div>
