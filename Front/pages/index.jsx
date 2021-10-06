@@ -1,6 +1,6 @@
 
 import {join_success} from '../api/api'
-import { useState, useRef, useEffect } from 'react'
+import React,{ useState, useRef, useEffect } from 'react'
 import { user_url } from '../store/Allurl'
 import Main from './main'
 import Header from '../components/header'
@@ -8,7 +8,7 @@ import Header from '../components/header'
 
 
 const index = ()=>{
-
+   
     const ws = useRef(null);
 
     useEffect(() => {

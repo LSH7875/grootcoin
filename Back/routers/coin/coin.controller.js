@@ -270,10 +270,11 @@ let contract = async (req, res) => {
 
 let data;
     if (id == 0) {
+        //미체결
       data = await connection.query(`select * from coin_orderbook where userid = "${userid}" AND rest != "0" AND state = "0" ORDER BY time DESC`)
     } else {
        data = await connection.query(`select * from coin_orderbook where userid = "${userid}" AND rest = "0" OR state != "0" ORDER BY time DESC`)
-    }
+    }  //취소
 res.json({
     "data":data[0]
 })
