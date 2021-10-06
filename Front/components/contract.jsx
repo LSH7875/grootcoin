@@ -6,24 +6,6 @@ const contractedcolor = { "borderBottom": "3px solid rgba(32, 201, 150)", "color
 
 const PreContract = () => {
 
-    const [content, setContent] = useState()
-
-    const ws = useRef(null);
-
-    useEffect(() => {
-        ws.current = new WebSocket("ws://127.0.0.1:8080");
-        ws.current.onopen = () => console.log();
-        ws.current.onclose = () => console.log();
-
-        return () => {
-            ws.current.close();
-        };
-    }, []);
-
-    useEffect(() => {
-        ws.current.onmessage = (e) => setContent(e.data.replace('[','').replace(']','').split(','))
-    }, []);
-
     return (
         <div id="PreContractBox">
             <ul id="PreContractType">
@@ -47,13 +29,14 @@ const PreContract = () => {
 const Contracted = () =>{
     const [data, setData] = useState([]);
     useEffect(async () => {
-        const response = await fetch("http://localhost:3003/api/coin/serch_deal",{ 
+        const response = await fetch("http://localhost:3003/api/coin/search_deal",{ 
             method: "POST",
             headers: {
             'Content-type': 'application/json'
         }, 
             body: JSON.stringify({
-            userid: "do"
+            userid: "da",
+            id:"1"
           })
         });
         const data = await response.json()
