@@ -171,6 +171,7 @@ let sell_order = async (req, res) => {
     }
 }
 
+// 주문 취소하기 
 let coin_cancle = async (req, res) => {
     let connection;
     connection = await pool.getConnection(async conn => conn);
@@ -183,7 +184,8 @@ let coin_cancle = async (req, res) => {
     }
 }
 
-let serch_assets = async (req, res) => {
+// 내 자산 확인하기 
+let search_assets = async (req, res) => {
     let connection;
     connection = await pool.getConnection(async conn => conn)
     let { userid } = req.body;
@@ -203,8 +205,8 @@ let serch_assets = async (req, res) => {
     }
 }
 
-
-let serch_deal = async (req, res) => {
+// 체결 내역
+let search_deal = async (req, res) => {
     let connection;
     connection = await pool.getConnection(async conn => conn)
     let { userid } = req.body;
@@ -219,10 +221,57 @@ let serch_deal = async (req, res) => {
     }
 }
 
+// 그래프에 필요한 값
+let graph = async (req, res) => {
+    let connection;
+    let one_day = 24 * (60 * 60)
+    let now = Math.floor(+ new Date() / 1000);
+    let search_day = now - one_day
+    connection = await pool.getConnection(async conn => conn)
+
+    let oneday_price = await connection.query(`select max(payment) as max, min(payment) as min from transaction where regdate >= "${search_day}" ORDER BY regdate ASC`)
+    let oneday_data = await connection.query(`select payment,regdate from transaction where regdate >= "${search_day}" ORDER BY regdate ASC`)
+let data = []
+    //하루의 고가 저가 시가 종가
+    data.push( {oneday:{
+        max: oneday_price[0][0].max,
+        min: oneday_price[0][0].min,
+        start: oneday_data[0][0].payment,
+        last: oneday_data[0][oneday_data.length - 1].payment
+    }})
+  
+    for (i = 0; i < 1440; i += 30) {
+        let search_holfhour = now - one_day + i
+        let halfhour_price = await connection.query(`select max(payment) as max, min(payment) as min from transaction where regdate >= "${search_holfhour}" ORDER BY regdate ASC`)
+        let halfhour_data = await connection.query(`select payment,regdate from transaction where regdate >= "${search_holfhour}" ORDER BY regdate ASC`)
+     //30분 마다 고가 저가 시가 종가
+        data.push({halfhour:{
+                half_max: halfhour_price[0][0].max,
+                half_min: halfhour_price[0][0].min,
+                half_start: halfhour_data[0][0].payment,
+                half_last: halfhour_data[0][halfhour_data.length - 1].payment
+        }})
+    }
+    console.log(data);
+    res.json({
+        "data":data
+    })
+}
+
+// 주문내역 
+let contract = async (req,res) =>{
+    let connection;
+    connection = await pool.getConnection(async conn => conn)
+
+
+}
+
 module.exports = {
     buy_order,
     sell_order,
     coin_cancle,
-    serch_assets,
-    serch_deal
+    search_assets,
+    search_deal,
+    graph,
+    contract
 }
