@@ -231,39 +231,52 @@ let graph = async (req, res) => {
 
     let oneday_price = await connection.query(`select max(payment) as max, min(payment) as min from transaction where regdate >= "${search_day}" ORDER BY regdate ASC`)
     let oneday_data = await connection.query(`select payment,regdate from transaction where regdate >= "${search_day}" ORDER BY regdate ASC`)
-let data = []
+    let data = []
     //하루의 고가 저가 시가 종가
-    data.push( {oneday:{
-        max: oneday_price[0][0].max,
-        min: oneday_price[0][0].min,
-        start: oneday_data[0][0].payment,
-        last: oneday_data[0][oneday_data.length - 1].payment
-    }})
-  
+    data.push({
+        oneday: {
+            max: oneday_price[0][0].max,
+            min: oneday_price[0][0].min,
+            start: oneday_data[0][0].payment,
+            last: oneday_data[0][oneday_data.length - 1].payment
+        }
+    })
+
     for (i = 0; i < 1440; i += 30) {
         let search_holfhour = now - one_day + i
         let halfhour_price = await connection.query(`select max(payment) as max, min(payment) as min from transaction where regdate >= "${search_holfhour}" ORDER BY regdate ASC`)
         let halfhour_data = await connection.query(`select payment,regdate from transaction where regdate >= "${search_holfhour}" ORDER BY regdate ASC`)
-     //30분 마다 고가 저가 시가 종가
-        data.push({halfhour:{
+        //30분 마다 고가 저가 시가 종가
+        data.push({
+            halfhour: {
                 half_max: halfhour_price[0][0].max,
                 half_min: halfhour_price[0][0].min,
                 half_start: halfhour_data[0][0].payment,
                 half_last: halfhour_data[0][halfhour_data.length - 1].payment
-        }})
+            }
+        })
     }
     console.log(data);
     res.json({
-        "data":data
+        "data": data
     })
 }
 
 // 주문내역 
-let contract = async (req,res) =>{
+let contract = async (req, res) => {
     let connection;
     connection = await pool.getConnection(async conn => conn)
+    let { userid, id } = req.body;
 
-
+let data;
+    if (id == 0) {
+      data = await connection.query(`select * from coin_orderbook where userid = "${userid}" AND rest != "0" AND state = "0" ORDER BY time DESC`)
+    } else {
+       data = await connection.query(`select * from coin_orderbook where userid = "${userid}" AND rest = "0" OR state != "0" ORDER BY time DESC`)
+    }
+res.json({
+    "data":data[0]
+})
 }
 
 module.exports = {
