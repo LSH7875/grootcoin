@@ -115,27 +115,49 @@ const Box =Styled.div`
     }
 `
 
-
 const joinAgree = ()=>{
     const [allChecked,setAllchecked] = useState(false);
     const [checked1,setChecked1] = useState(false);
     const [checked2,setChecked2] = useState(false);
     const [checked3,setChecked3] = useState(false);
 
-    const handleAllChecked = e =>{
+    const handleAllChecked = () =>{
         setAllchecked(!allChecked);
         setChecked1(!allChecked);
         setChecked2(!allChecked);
         setChecked3(!allChecked);
+       
+     }
+
+    const handleChecked1 = () => {
+    console.log(allChecked,11)
+    console.log(checked1)
+
+        setChecked1(!checked1);
+       
+    }
+    const handleChecked2 = () => {
+        setChecked2(!checked2)
+        
+    }
+    const handleChecked3 = () => {
+        setChecked3(!checked3)
+      
     }
 
-    const handleChecked1 = () => setChecked1(!checked1);
-    const handleChecked2 = () => setChecked2(!checked2)
-    const handleChecked3 = () => setChecked3(!checked3)
-
+    const allChk = () =>{
+        if(checked1 === true  &&  checked2 === true  &&  checked3 === true){
+            return true
+        }else if(checked1 !== true || checked1 !== true || checked1 !== true){
+            return false
+        }else{
+            return
+        }
+    }
     // if( checked1 == true && checked2 == true){
         
     // }
+
     return (
         <Box>
             <h1>회원가입</h1>
@@ -143,11 +165,15 @@ const joinAgree = ()=>{
             <li className="bigCheck1">① 약관동의</li><li> ------------- ② 정보입력</li>
             </ul>
             <label className="checkedAll">
-                <input 
+               {allChk() ? <input 
                     type="checkbox"
-                    checked={allChecked}
+                    checked={true}
                     onChange={handleAllChecked}
-                />
+                /> :  <input 
+                    type="checkbox"
+                    checked={false}
+                    onChange={handleAllChecked}
+                />}
                 모든 항목에 동의하기
             </label>
            

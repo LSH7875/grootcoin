@@ -20,12 +20,12 @@ const PreContract = () => {
     }, []);
 
     useEffect(() => {
-        ws.current.onmessage = (e) => setContent([e.data])
+        ws.current.onmessage = (e) => setContent(e.data.replace('[','').replace(']','').split(','))
     }, []);
 
     return (
         <div>
-            {content}
+            
         </div>
     )
 }

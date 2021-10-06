@@ -22,7 +22,7 @@ const index = ()=>{
     }, []);
 
     useEffect(() => {
-        ws.current.onmessage = (e) => console.log(`websocket data : ${e.data}`)
+        ws.current.onmessage = (e) => console.log(`websocket data : ${e.data.replace('[','').replace(']','').split(',')}`)
     }, []);
 
     const [userid, setUserid] = useState('.')
