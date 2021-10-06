@@ -101,6 +101,13 @@ const Box = Styled.div`
       line-height:17px;
     }
     
+    &>.a>.passwordBox2>.chk{
+        color:rgba(32, 201, 150);
+    }
+    &>.a>.passwordBox2>.chk:before{
+        content:"🗸"
+    }
+    
     &>.a>.passwordBox2>li:before{
         content:"*";
     }
@@ -134,7 +141,7 @@ const Box = Styled.div`
         user-select: none;
     }
     &>.a>.bigBtn:hover{
-        background:rgba(32, 201, 150);;
+        background:rgba(32, 201, 150);
         color:#000;
         font-weight:bold;
         }
@@ -157,8 +164,9 @@ const join = () => {
 
     const [pwChk,setPwChk] = useState('');
     const [pwError,setPwError] = useState(false);
-    const [accountError,setAccountError] = useState(false);
 
+   
+        
     const handlePassword = e => {
         const {value} = {...e.target}
         setPwError(userpw.value !== value) // 1234 === 1234 ture
@@ -173,6 +181,49 @@ const join = () => {
         }
        
     }
+
+    const check = e => {
+        if(userid.value !== '' && userpw.value !=='' && userpw.value === pwChk && pwChk !=='' &&  username.value !== '' && accountNo.value !== '' && accountNo.value.length === 11){
+            return true
+        }else{
+            return false
+        }
+    }
+
+    const pw10Chk = () =>{
+        if({...userpw}.value.length <10){
+            return true
+        }
+        
+
+    }
+
+    const stChk = () =>{
+
+        let st = ["!","@","#","$","%","^","&","*"];
+            let check_st =0;
+            for(var i=0;i<st.length;i++){
+                if({...userpw}.value.indexOf(st[i]) != -1){
+                    check_st = 1;
+                }
+            }
+            if(check_st !== 0){
+                return true;
+            }
+        }  
+        const numChk = () =>{
+
+            let number = ["0","1","2","3","4","5","6","7","8","9"];
+                let check_number =0;
+                for(var i=0;i<number.length;i++){
+                    if({...userpw}.value.indexOf(number[i]) != -1){
+                        check_number = 1;
+                    }
+                }
+                if(check_number !== 0){
+                    return true;
+                }
+            } 
 
     const handleSubmit = e => {
         e.preventDefault()
@@ -205,13 +256,7 @@ const join = () => {
         // })
     }
 
-    const check = e => {
-        if(userid.value !== '' && userpw.value !=='' && username.value !== '' && accountNo.value !== ''){
-            return true
-        }else{
-            return false
-        }
-    }
+   
 
     return (
         <Box>
@@ -228,9 +273,9 @@ const join = () => {
                 <input type="password" {...userpw} className="inputBox" name="userpw" id="userpw" placeholder="비밀번호 입력" />
                     <ul className="passwordBox2">
                         <li>영문 대문자 포함</li>
-                        <li>영문 소문자 포함</li>
-                        <li>숫자 포함</li>
-                        <li>10자 이상</li>
+                        {numChk() ? <li className="chk">숫자 포함</li> : <li>숫자 포함</li> }
+                        {stChk() ? <li className="chk">특수문자 포함</li> : <li>특수문자 포함</li> }
+                        {pw10Chk() ? <li >10자 이상</li> : <li className="chk">10자 이상</li>}
                     </ul>
                 <label className="margin24 inputFont" label htmlFor="pwChk" >비밀번호 확인</label>
                 <input type="password" value={pwChk} id="pwChk" onChange={handlePassword} className="inputBox" placeholder="비밀번호 확인" />
@@ -245,7 +290,7 @@ const join = () => {
                 
                 <br />
 
-                {check() ? <Link href={`/`}><a className="bigBtn">다음</a></Link> : console.log('false') }
+                {check() ? <Link href={`/`}><a className="bigBtn">다음</a></Link> : '' }
             </form>
         </Box>
     )
