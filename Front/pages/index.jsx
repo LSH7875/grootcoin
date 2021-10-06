@@ -1,12 +1,29 @@
 
 import {join_success} from '../api/api'
-import {useState} from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { user_url } from '../store/Allurl'
 import Main from './main'
 import Header from '../components/header'
+// import { w3cwebsocket as W3CWebSocket } from "websocket";
 
 
 const index = ()=>{
+
+    const ws = useRef(null);
+
+    useEffect(() => {
+        ws.current = new WebSocket("ws://127.0.0.1:8080");
+        ws.current.onopen = () => console.log();
+        ws.current.onclose = () => console.log();
+
+        return () => {
+            ws.current.close();
+        };
+    }, []);
+
+    useEffect(() => {
+        ws.current.onmessage = (e) => console.log(`websocket data : ${e.data.replace('[','').replace(']','').split(',')}`)
+    }, []);
 
     const [userid, setUserid] = useState('.')
     const [username, setUsername] = useState('.')

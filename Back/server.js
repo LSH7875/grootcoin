@@ -29,7 +29,7 @@ app.use('/api', router)
 
 
 require('dotenv');
-const mysql = require('mysql')
+// const mysql = require('mysql')
 
 // let connection = mysql.createConnection({
 //     host:'localhost',
@@ -44,6 +44,9 @@ app.get('/',(req,res)=>{
     res.send('백 서버')
 })
 
+app.get('/websocket_test', (req,res)=>{
+    ws.wsinit();
+})
 app.listen(PORT,()=>{
     console.log(`server port ${PORT}`)
 })

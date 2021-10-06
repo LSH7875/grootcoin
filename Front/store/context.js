@@ -1,7 +1,7 @@
 import {createContext} from 'react'
 
 export const initialState={
-    login_boolean:false,
+    login_boolean:0,
     userid:'',
     userpw:'',
     username:'',
