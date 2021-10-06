@@ -1,5 +1,2 @@
-*/.env
-*/.pem
-*/node_modules
 */.next
-grootcoin.pem
+Front/.next/

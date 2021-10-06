@@ -11,8 +11,8 @@ router.post('/sell_order',controller.sell_order);
 router.post('/coin_cancle',controller.coin_cancle);
 router.post('/search_assets',controller.search_assets);
 router.post('/search_deal',controller.search_deal);
+router.post('/contract',controller.contract);
 router.get('/graph',controller.graph);
-router.get('/contract',controller.contract);
 
 router.get('/coinNews',coinNews.main);
 

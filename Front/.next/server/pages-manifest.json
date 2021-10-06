@@ -2,6 +2,10 @@
   "/_app": "pages/_app.js",
   "/_document": "pages/_document.js",
   "/_error": "pages/_error.js",
+  "/": "pages/index.js",
+  "/next/dist/pages/_error": "pages/next/dist/pages/_error.js",
+  "/joinAgree": "pages/joinAgree.js",
+  "/login": "pages/login.js",
   "/join": "pages/join.js",
-  "/joinAgree": "pages/joinAgree.js"
+  "/coin/assets": "pages/coin/assets.js"
 }
