@@ -77,7 +77,7 @@ const Box =Styled.div`
 &>a{
     font-weight:bold;
     float:right;
-    color:rgba(32, 201, 150);;
+    color:rgba(32, 201, 150);
     margin: 24px 0 0 24px;
 }
 `

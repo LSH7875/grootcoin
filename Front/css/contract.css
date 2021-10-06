@@ -40,3 +40,61 @@
     color: rgba(170,170,170);
     font-weight:bold;
 }
+#PreContractBox{
+    width:330px;
+    height: 100px;
+    margin: 5px auto;
+    border:1px solid rgba(153, 153, 153, 0.342);
+    border-radius:5px;
+}
+#PreContractBox ul{
+    display: flex;
+    flex-direction: column;
+    float: left;
+    padding: 10px;
+}
+
+#PreContractType li{
+    padding:7px 0;
+}
+#PreContractQty li{
+    width:60px;
+    padding:5px 0px;
+    font-size: 12px;
+}
+#PreContractQty2 li{
+    width:130px;
+    padding:1.5px 0px;
+}
+
+.ContractedPrice{
+    width:330px;
+    font-size: 25px;
+    text-align: center;
+}
+
+#ContractedBox{
+    width:330px;
+    height: 100px;
+    margin: 5px auto;
+    border:1px solid rgba(153, 153, 153, 0.342);
+    border-radius:5px;
+}
+#ContractedBox ul{
+    display: flex;
+    flex-direction: column;
+    float: left;
+    padding: 10px;
+}
+
+#ContractedQty{
+    margin: 0 30px;
+}
+
+.contractedb{
+    color:rgba(225,35,67);
+}
+
+.contracteds{
+    color:rgb(23, 99, 182);
+}
