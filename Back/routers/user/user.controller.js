@@ -13,7 +13,7 @@ let join_success = async (req, res, next) => {
     console.log(userid)
 
         let join_success = await connection.query(`insert into user (userid, username, userpw, account, wallet) values ('${userid}', '${username}', '${jwtuserpw}', '${Number(account)+Number(1000000)}', '${wallet}')`)
-
+    console.log(join_success)
     
 
 }

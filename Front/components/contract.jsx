@@ -5,7 +5,7 @@ const contractedcolor = { "borderBottom": "3px solid rgba(32, 201, 150)", "color
 
 const PreContract = () => {
 
-    const [content, setContent] = useState()
+    const [content, setContent] = useState([])
 
     const ws = useRef(null);
 
@@ -21,11 +21,16 @@ const PreContract = () => {
 
     useEffect(() => {
         ws.current.onmessage = (e) => setContent(e.data.replace('[','').replace(']','').split(','))
-    }, []);
+      }, []);
 
     return (
         <div>
-            
+
+            <div>
+                {content.map((element) => {
+                    return <div>{element}</div>
+                })}
+            </div>
         </div>
     )
 }
