@@ -44,12 +44,8 @@ app.get('/',(req,res)=>{
     res.send('백 서버')
 })
 
-app.get('/websocket_test', (req,res)=>{
-    ws.wsinit();
-})
 app.listen(PORT,()=>{
     console.log(`server port ${PORT}`)
 })
 
 ws.wsinit();
-

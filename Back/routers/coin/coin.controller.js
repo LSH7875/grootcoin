@@ -1,4 +1,5 @@
-const { pool } = require('../../pool')
+const { pool } = require('../../pool');
+const { wsinit } = require('../../websocket');
 
 // 매수 
 let buy_order = async (req, res) => {
@@ -280,6 +281,12 @@ res.json({
 })
 }
 
+let assets = async (req, res) => {
+
+    wsinit.asset()
+}
+
+
 module.exports = {
     buy_order,
     sell_order,
@@ -287,5 +294,6 @@ module.exports = {
     search_assets,
     search_deal,
     graph,
-    contract
+    contract,
+    assets
 }

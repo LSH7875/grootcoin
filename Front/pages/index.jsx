@@ -8,18 +8,7 @@ import Header from '../components/header'
 
 
 const index = ()=>{
-   
-    const ws = useRef(null);
 
-    useEffect(() => {
-        ws.current = new WebSocket("ws://127.0.0.1:8080");
-        ws.current.onopen = () => console.log();
-        ws.current.onclose = () => console.log();
-
-        return () => {
-            ws.current.close();
-        };
-    }, []);
 
     const [userid, setUserid] = useState('.')
     const [username, setUsername] = useState('.')

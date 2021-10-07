@@ -13,7 +13,7 @@ router.post('/search_assets',controller.search_assets);
 router.post('/search_deal',controller.search_deal);
 router.post('/contract',controller.contract);
 router.get('/graph',controller.graph);
-
+router.get('/assets',controller.assets)
 router.get('/coinNews',coinNews.main);
 
 
