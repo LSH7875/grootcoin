@@ -88,8 +88,8 @@ a{
 
 .mainCon3{
     position:absolute;
-    top: 400px;
-    left: 882px;
+    /* top: 0px; */
+    left: 0px;
 }
 
 .lastCon{
