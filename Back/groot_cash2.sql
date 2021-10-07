@@ -112,12 +112,12 @@ VALUES ('1','groot','0.001','GRT'),
 
 /* 가짜 데이터*/
 
-insert into coin_orderbook (userid,price,qty,ordertype,rest,coin_id,state) values("da","100","100","0","100","1","0");
-insert into coin_orderbook (userid,price,qty,ordertype,rest,coin_id,state) values("da","101","101","0","101","1","0");
-insert into coin_orderbook (userid,price,qty,ordertype,rest,coin_id,state) values("da","102","102","0","102","1","0");
-insert into coin_orderbook (userid,price,qty,ordertype,rest,coin_id,state) values("da","103","103","0","103","1","0");
-insert into coin_orderbook (userid,price,qty,ordertype,rest,coin_id,state) values("da","104","104","0","104","1","0");
-insert into coin_orderbook (userid,price,qty,ordertype,rest,coin_id,state) values("da","105","105","0","105","1","0");
+insert into coin_orderbook (userid,price,qty,ordertype,rest,coin_id,state) values("da","100","100","1","100","1","0");
+insert into coin_orderbook (userid,price,qty,ordertype,rest,coin_id,state) values("da","101","101","1","101","1","0");
+insert into coin_orderbook (userid,price,qty,ordertype,rest,coin_id,state) values("da","102","102","1","102","1","0");
+insert into coin_orderbook (userid,price,qty,ordertype,rest,coin_id,state) values("da","103","103","1","103","1","0");
+insert into coin_orderbook (userid,price,qty,ordertype,rest,coin_id,state) values("da","104","104","1","104","1","0");
+insert into coin_orderbook (userid,price,qty,ordertype,rest,coin_id,state) values("da","105","105","1","105","1","0");
 insert into coin_orderbook (userid,price,qty,ordertype,rest,coin_id,state) values("da","106","106","0","106","1","0");
 insert into coin_orderbook (userid,price,qty,ordertype,rest,coin_id,state) values("da","107","107","0","107","1","0");
 insert into coin_orderbook (userid,price,qty,ordertype,rest,coin_id,state) values("da","108","108","0","108","1","0");
