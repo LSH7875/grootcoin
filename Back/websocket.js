@@ -129,28 +129,6 @@ async function join() {
 
 }
 
-async function asset() {
-
-    let connection;
-        connection = await pool.getConnection(async conn => conn);
-
-        let cookie_userid =  req.cookies.userid
-        let assets = await connection.query(`select * from assets where userid = "${cookie_userid}"`)
-        
-        let asset = 0
-
-        for(let i=0; i<assets[0].length; i++)
-        {
-            asset + assets[0][i].input
-            asset - assets[0][i].output
-        }
-
-    wss.clients.forEach((e) => {
-        e.send( JSON.stringify({"asset":asset}))
-    })
-
-}
-
 function socketSend(data,func){
     const message=func? {func,data} : {data}
     wss.send(message);

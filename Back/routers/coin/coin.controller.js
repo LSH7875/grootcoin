@@ -281,11 +281,6 @@ res.json({
 })
 }
 
-let assets = async (req, res) => {
-
-    wsinit.asset()
-}
-
 
 module.exports = {
     buy_order,
@@ -295,5 +290,5 @@ module.exports = {
     search_deal,
     graph,
     contract,
-    assets
+    
 }
