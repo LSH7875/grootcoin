@@ -15,9 +15,9 @@ async function wsinit(){
         let buy_order = await connection.query(`select price,sum(rest)as total_qty from coin_orderbook where state = "0" AND ordertype = "0" group by price`)
         let sell_order = await connection.query(`select price,sum(rest)as total_qty from coin_orderbook where state = "0" AND ordertype = "1" group by price`)
         let total_amount = await connection.query(`select a.rest,b.rest from (select sum(rest) as rest from coin_orderbook where rest !="0" AND state != "1") as a,(select sum(rest) as rest from coin_orderbook where rest !="0" AND state != "1") as b`)
-        let transaction = await connection.query(`select a_amomunt,payment,regdate from transaction`)
+        //let transaction = await connection.query(`select a_amomunt,payment,regdate from transaction`)
 
-         content.push(buy_order[0],sell_order[0],transaction[0],total_amount[0])
+         content.push(buy_order[0],sell_order[0],total_amount[0])
 
         for(let i=0; i<login_success[0].length; i++)
         {
