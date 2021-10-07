@@ -48,3 +48,16 @@ table > th{
 	height: 500px;
 	overflow: auto;
 }
+
+.order_1{
+    width:250px;
+}
+.order_2{
+    width:115px;
+}
+.order_3{
+    width:70px;
+}
+.order_4{
+    width:130px;
+}

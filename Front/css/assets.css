@@ -322,8 +322,6 @@
     display: block;
 }
 
-
-.hover_black:hover{
-    color:black;
-    text-decoration: underline;
+.hover_blue:hover{
+    color:blue;
 }
