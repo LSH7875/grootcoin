@@ -113,13 +113,13 @@ const deposit = () =>{
                     <div className = "">
                         <div className = "float_left bold3">KRW 입출금</div>
                         <ul className = "">
-                            <li className = "float_right margin_left" onClick={btn1}>
+                            <li className = "float_right margin_left hover_blue" onClick={btn1}>
                                 입금
                             </li>
-                            <li className = "float_right margin_left" onClick={btn2}>
+                            <li className = "float_right margin_left hover_blue" onClick={btn2}>
                                 출금
                             </li>
-                            <li className = "float_right margin_left" onClick={btn3}>
+                            <li className = "float_right margin_left hover_blue" onClick={btn3}>
                                 내역
                             </li>
                         </ul>                        

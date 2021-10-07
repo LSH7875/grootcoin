@@ -206,6 +206,10 @@ insert into transaction (a_orderid,a_amount,a_commission,b_orderid,b_amount,b_co
 insert into transaction (a_orderid,a_amount,a_commission,b_orderid,b_amount,b_commission,coin_id,payment) values("28","2800","28","29","2800","28","1","128");
 insert into transaction (a_orderid,a_amount,a_commission,b_orderid,b_amount,b_commission,coin_id,payment) values("29","2900","29","30","2900","29","1","129");
 insert into transaction (a_orderid,a_amount,a_commission,b_orderid,b_amount,b_commission,coin_id,payment) values("30","3000","30","31","3000","30","1","130");
+
+
+insert into assets (userid,input,output,regdate,transaction values("ki@naver.com",50,0,n,"130","1","0");
+
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IFNULL(@OLD_FOREIGN_KEY_CHECKS, 1) */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

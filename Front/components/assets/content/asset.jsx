@@ -1,4 +1,34 @@
+import React,{ useState, useRef, useEffect } from 'react'
+
 const asset = () =>{
+    const [socket, setSocket] = useState(false);
+    const ws = useRef(null);
+    const [asset, setAsset] = useState([])
+
+    useEffect(() => {
+        ws.current= new WebSocket('ws://127.0.0.1:8080');
+        ws.current.onopen=()=>{
+            setSocket(true)
+        }
+
+        return () => {
+            ws.current.close();
+        };
+    }, []);
+
+    useEffect(()=>{
+    
+        // setInterval(()=>{
+            ws.current.onmessage=e=>{
+            console.log(JSON.parse(e.data).asset)
+            setAsset(JSON.parse(e.data).asset)
+        }
+    // },1000)
+        // const timeoutTEST = setTimeout(()=>{console.log(1)},1000)
+        // clearTimeout(timeoutTEST)
+    },[socket])
+
+
     return(
         <>
             <div class = "wassert">
@@ -6,7 +36,7 @@ const asset = () =>{
                 <div>
                     <div className = "assert_info1">
                         <div>총 보유자산</div>
-                        <div className = "bold">4565433원</div>
+                        <div className = "bold">{asset}원</div>
                     </div>
                     <div className = "assert_info2">
                         <ul className = "float_left">

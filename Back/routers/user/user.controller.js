@@ -1,20 +1,19 @@
 
 const { createToken, createPW } = require("../../jwt");
 const { pool } = require('../../pool')
+const ws = require('../../websocket')
 
 let join_success = async (req, res, next) => {
     let connection;
     connection = await pool.getConnection(async conn => conn);
 
     const {userid, username, userpw, account , wallet} = req.body
-    console.log(req.body)
     const jwtuserpw = createPW(userpw);
 
-    console.log(userid)
-
-        let join_success = await connection.query(`insert into user (userid, username, userpw, account, wallet) values ('${userid}', '${username}', '${jwtuserpw}', '${Number(account)+Number(1000000)}', '${wallet}')`)
-    console.log(join_success)
+    let join_success = await connection.query(`insert into user (userid, username, userpw, account, wallet) values ('${userid}', '${username}', '${jwtuserpw}', '${Number(account)+Number(1000000)}', '${wallet}')`)
     
+    ws.join()
+
 
 }
 
