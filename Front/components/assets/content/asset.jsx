@@ -1,34 +1,15 @@
 import React,{ useState, useRef, useEffect } from 'react'
-
+import {user_url} from '../../../store/Allurl'
 const asset = () =>{
-    const [socket, setSocket] = useState(false);
-    const ws = useRef(null);
-    const [asset, setAsset] = useState([])
+    // const [income, setincome] = useState(0);
 
-    useEffect(() => {
-        ws.current= new WebSocket('ws://127.0.0.1:8080');
-        ws.current.onopen=()=>{
-            setSocket(true)
-        }
+    //     let options = {
+    //         method: 'GET'
+    //     }
 
-        return () => {
-            ws.current.close();
-        };
-    }, []);
-
-    useEffect(()=>{
-    
-        // setInterval(()=>{
-            ws.current.onmessage=e=>{
-            console.log(JSON.parse(e.data).asset)
-            setAsset(JSON.parse(e.data).asset)
-        }
-    // },1000)
-        // const timeoutTEST = setTimeout(()=>{console.log(1)},1000)
-        // clearTimeout(timeoutTEST)
-    },[socket])
-
-
+    //     let result = await fetch(`${user_url}/info?userid=${Income}&Person=${Person}&Cost=${Cost}`, options)
+    //     const data = await result.json()
+    // }
     return(
         <>
             <div class = "wassert">
@@ -36,7 +17,7 @@ const asset = () =>{
                 <div>
                     <div className = "assert_info1">
                         <div>총 보유자산</div>
-                        <div className = "bold">{asset}원</div>
+                        <div className = "bold">e원</div>
                     </div>
                     <div className = "assert_info2">
                         <ul className = "float_left">
