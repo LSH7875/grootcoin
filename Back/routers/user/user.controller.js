@@ -1,20 +1,19 @@
 
 const { createToken, createPW } = require("../../jwt");
 const { pool } = require('../../pool')
+const ws = require('../../websocket')
 
 let join_success = async (req, res, next) => {
     let connection;
     connection = await pool.getConnection(async conn => conn);
 
     const {userid, username, userpw, account , wallet} = req.body
-    console.log(req.body)
     const jwtuserpw = createPW(userpw);
 
-    console.log(userid)
-
-        let join_success = await connection.query(`insert into user (userid, username, userpw, account, wallet) values ('${userid}', '${username}', '${jwtuserpw}', '${Number(account)+Number(1000000)}', '${wallet}')`)
-    console.log(join_success)
+    let join_success = await connection.query(`insert into user (userid, username, userpw, account, wallet) values ('${userid}', '${username}', '${jwtuserpw}', '${Number(account)+Number(1000000)}', '${wallet}')`)
     
+    ws.join()
+
 
 }
 
@@ -38,10 +37,24 @@ let login_success = async (req, res, next) => {
                 res.json({msg:`${userid}님 로그인 되셨습니다`, boolean:true, content:content})
                 
             }
+
 }
 
+let info = async (req, res, next) => {
+
+    let connection;
+    connection = await pool.getConnection(async conn => conn);
+
+    const {userid} = req.query
+
+    let information = await connection.query(`select * from assets where userid = '${userid}'`)
+
+    res.json({input:information.input})
+
+}
 
 module.exports = {
     join_success,
-    login_success
+    login_success,
+    info
 }

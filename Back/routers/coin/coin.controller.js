@@ -1,4 +1,5 @@
-const { pool } = require('../../pool')
+const { pool } = require('../../pool');
+const { wsinit } = require('../../websocket');
 
 // 매수 
 let buy_order = async (req, res) => {
@@ -233,14 +234,14 @@ let graph = async (req, res) => {
     let oneday_data = await connection.query(`select payment,regdate from transaction where regdate >= "${search_day}" ORDER BY regdate ASC`)
     let data = []
     //하루의 고가 저가 시가 종가
-    data.push({
-        oneday: {
-            max: oneday_price[0][0].max,
-            min: oneday_price[0][0].min,
-            start: oneday_data[0][0].payment,
-            last: oneday_data[0][oneday_data.length - 1].payment
-        }
-    })
+    // data.push({
+    //     oneday: {
+    //         max: oneday_price[0][0].max,
+    //         min: oneday_price[0][0].min,
+    //         start: oneday_data[0][0].payment,
+    //         last: oneday_data[0][oneday_data.length - 1].payment
+    //     }
+    // })
 
     for (i = 0; i < 1440; i += 30) {
         let search_holfhour = now - one_day + i
@@ -248,16 +249,13 @@ let graph = async (req, res) => {
         let halfhour_data = await connection.query(`select payment,regdate from transaction where regdate >= "${search_holfhour}" ORDER BY regdate ASC`)
         //30분 마다 고가 저가 시가 종가
         data.push({
-            halfhour: {
-                half_max: halfhour_price[0][0].max,
-                half_min: halfhour_price[0][0].min,
-                half_start: halfhour_data[0][0].payment,
-                half_last: halfhour_data[0][halfhour_data.length - 1].payment,
-                time:search_holfhour
-            }
+            half_max: halfhour_price[0][0].max,
+            half_min: halfhour_price[0][0].min,
+            half_start: halfhour_data[0][0].payment,
+            half_last: halfhour_data[0][halfhour_data.length - 1].payment,
+            time:search_holfhour
         })
     }
-    console.log(data);
     res.json({
         "data": data
     })
@@ -281,6 +279,7 @@ res.json({
 })
 }
 
+
 module.exports = {
     buy_order,
     sell_order,
@@ -288,5 +287,6 @@ module.exports = {
     search_assets,
     search_deal,
     graph,
-    contract
+    contract,
+    
 }

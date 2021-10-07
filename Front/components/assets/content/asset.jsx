@@ -1,4 +1,15 @@
+import React,{ useState, useRef, useEffect } from 'react'
+import {user_url} from '../../../store/Allurl'
 const asset = () =>{
+    // const [income, setincome] = useState(0);
+
+    //     let options = {
+    //         method: 'GET'
+    //     }
+
+    //     let result = await fetch(`${user_url}/info?userid=${Income}&Person=${Person}&Cost=${Cost}`, options)
+    //     const data = await result.json()
+    // }
     return(
         <>
             <div class = "wassert">
@@ -6,7 +17,7 @@ const asset = () =>{
                 <div>
                     <div className = "assert_info1">
                         <div>총 보유자산</div>
-                        <div className = "bold">4565433원</div>
+                        <div className = "bold">e원</div>
                     </div>
                     <div className = "assert_info2">
                         <ul className = "float_left">
