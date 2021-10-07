@@ -29,15 +29,10 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
-    "/coin/assets": [
+    "/join": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/coin/assets.js"
-    ],
-    "/logout": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/logout.js"
+      "static/chunks/pages/join.js"
     ]
   },
   "ampFirstPages": []

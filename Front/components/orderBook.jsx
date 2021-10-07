@@ -23,6 +23,7 @@ const orderBook = () =>{
     
         // setInterval(()=>{
             ws.current.onmessage=e=>{
+                console.log("+++++++++++++++++++++++++=");
             console.log(JSON.parse(e.data).userid)
             setdataArr(JSON.parse(e.data).price)
             settimeArr(JSON.parse(e.data).time)

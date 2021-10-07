@@ -37,10 +37,24 @@ let login_success = async (req, res, next) => {
                 res.json({msg:`${userid}님 로그인 되셨습니다`, boolean:true, content:content})
                 
             }
+
 }
 
+let info = async (req, res, next) => {
+
+    let connection;
+    connection = await pool.getConnection(async conn => conn);
+
+    const {userid} = req.query
+
+    let information = await connection.query(`select * from assets where userid = '${userid}'`)
+
+    res.json({input:information.input})
+
+}
 
 module.exports = {
     join_success,
-    login_success
+    login_success,
+    info
 }
