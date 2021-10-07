@@ -54,7 +54,7 @@
     padding: 10px;
 }
 
-#PreContractType li{
+.PreContractType li{
     padding:7px 0;
 }
 #PreContractQty li{
@@ -93,8 +93,10 @@
 
 .contractedb{
     color:rgba(225,35,67);
+    font-weight:bold;
 }
 
 .contracteds{
     color:rgb(23, 99, 182);
+    font-weight:bold;
 }

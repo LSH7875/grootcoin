@@ -320,7 +320,8 @@ const join = () => {
                 <br />
 
 
-                {check() ? <Link href={`/`}><a className="bigBtn">다음</a></Link> : ''}
+                {check() ? <input type = "submit" className="bigBtn" value = "다음" /> : ''}
+                
 
             </form>
         </Box>
