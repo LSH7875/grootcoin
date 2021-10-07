@@ -20,7 +20,6 @@ const orderBook = () =>{
     }, []);
 
     useEffect(()=>{
-    
         // setInterval(()=>{
             ws.current.onmessage=e=>{
                 console.log("+++++++++++++++++++++++++=");

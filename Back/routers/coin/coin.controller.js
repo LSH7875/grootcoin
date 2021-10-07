@@ -258,7 +258,6 @@ let graph = async (req, res) => {
             }
         })
     }
-    console.log(data);
     res.json({
         "data": data
     })
