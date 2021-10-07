@@ -23,10 +23,10 @@ const orderBook = () =>{
         // setInterval(()=>{
             ws.current.onmessage=e=>{
                 console.log("+++++++++++++++++++++++++=");
-            console.log(JSON.parse(e.data).userid)
-            setdataArr(JSON.parse(e.data).price)
-            settimeArr(JSON.parse(e.data).time)
-            setuserid(JSON.parse(e.data).userid)
+            console.log(JSON.parse(e.data).buy_qty)
+            setdataArr(JSON.parse(e.data).sell_price)
+            settimeArr(JSON.parse(e.data).buy_qty)
+            setuserid(JSON.parse(e.data).a_amount)
         }
     // },1000)
         // const timeoutTEST = setTimeout(()=>{console.log(1)},1000)

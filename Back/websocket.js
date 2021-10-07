@@ -54,7 +54,7 @@ async function wsinit(){
         }
 
         ws.send( JSON.stringify({
-            "userid":userid, 
+            // "userid":userid, 
             "regdate":regdate,
              "payment":payment,
               "a_amount":a_amount,
