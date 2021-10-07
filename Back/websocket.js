@@ -1,6 +1,6 @@
 const WebSocket = require('ws');
 const { WebSocketServer } = require('ws');
-const wss = new WebSocketServer({ port: 8080 });
+const wss  = new WebSocketServer({ port: 8080 });
 const { pool } = require('../Back/pool')
 
 async function wsinit(){
@@ -8,22 +8,18 @@ async function wsinit(){
     wss.on('connection', async function connection(ws) {
         
         let connection;
-        connection = await pool.getConnection(async conn => conn);
-
-        let user = await connection.query(`select * from user`)
-
-        let userid = []
-        for(let i=0; i<user[0].length; i++)
-        {
-            userid.push(user[0][i].userid)
-        }
-
-        let coin_orderbook = await connection.query(`select * from coin_orderbook`)
+        let content = []
         
-        let price = []
-        let time = []
-        let qty = []
-        for(let i=0; i<coin_orderbook[0].length; i++)
+        connection = await pool.getConnection(async conn => conn);
+        let login_success = await connection.query(`select * from user`)
+        let buy_order = await connection.query(`select price,sum(rest)as total_qty from coin_orderbook where state = "0" AND ordertype = "0" group by price`)
+        let sell_order = await connection.query(`select price,sum(rest)as total_qty from coin_orderbook where state = "0" AND ordertype = "1" group by price`)
+        let total_amount = await connection.query(`select a.rest,b.rest from (select sum(rest) as rest from coin_orderbook where rest !="0" AND state != "1") as a,(select sum(rest) as rest from coin_orderbook where rest !="0" AND state != "1") as b`)
+        //let transaction = await connection.query(`select a_amomunt,payment,regdate from transaction`)
+
+         content.push(buy_order[0],sell_order[0],total_amount[0])
+
+        for(let i=0; i<login_success[0].length; i++)
         {
             price.push(coin_orderbook[0][i].price)
             time.push(coin_orderbook[0][i].time)
