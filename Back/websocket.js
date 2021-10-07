@@ -14,10 +14,9 @@ async function wsinit(){
         let login_success = await connection.query(`select * from user`)
         let buy_order = await connection.query(`select price,sum(rest)as total_qty from coin_orderbook where state = "0" AND ordertype = "0" group by price`)
         let sell_order = await connection.query(`select price,sum(rest)as total_qty from coin_orderbook where state = "0" AND ordertype = "1" group by price`)
-        let total_amount = await connection.query(`select a.rest,b.rest from (select sum(rest) as rest from coin_orderbook where rest !="0" AND state != "1") as a,(select sum(rest) as rest from coin_orderbook where rest !="0" AND state != "1") as b`)
+        let buy_total_amount = await connection.query(`select sum(rest) as rest from coin_orderbook where ordertype = "0" AND rest != "0" AND state != "1"`)
+        let sell_total_amount = await connection.query(`select sum(rest) as rest from coin_orderbook where ordertype = "1" AND rest != "0" AND state != "1"`)
         //let transaction = await connection.query(`select a_amomunt,payment,regdate from transaction`)
-
-         content.push(buy_order[0],sell_order[0],total_amount[0])
          
          let buy_price =[]
          let buy_qty =[]
@@ -38,11 +37,9 @@ async function wsinit(){
             sell_price.push(sell_order[0][i].price)
             sell_qty.push(sell_order[0][i].total_qty)
          } 
-          for(let i=0; i<total_amount[0].length; i++)
-         {
-            buy_total.push(total_amount[0][i]. a.rest)
-            sell_total.push(total_amount[0][i].b.rest)
-         }
+         console.log(buy_total_amount[0][0].rest);
+            buy_total.push(buy_total_amount[0][0])
+            sell_total.push(sell_total_amount[0][0])
 
         let transaction = await connection.query(`select * from transaction`)
         
@@ -136,4 +133,4 @@ function socketSend(data,func){
 
 
 
-module.exports={wsinit,socketSend,join,asset}
+module.exports={wsinit,socketSend,join}
