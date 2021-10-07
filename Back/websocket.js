@@ -18,13 +18,31 @@ async function wsinit(){
         //let transaction = await connection.query(`select a_amomunt,payment,regdate from transaction`)
 
          content.push(buy_order[0],sell_order[0],total_amount[0])
+         
+         let buy_price =[]
+         let buy_qty =[]
 
-        for(let i=0; i<login_success[0].length; i++)
-        {
-            price.push(coin_orderbook[0][i].price)
-            time.push(coin_orderbook[0][i].time)
-            qty.push(coin_orderbook[0][i].coin_id)
-        }
+         let sell_price =[]
+         let sell_qty =[]
+
+         let buy_total =[]
+         let sell_total =[]
+
+         for(let i=0; i<buy_order[0].length; i++)
+         {
+             buy_price.push(buy_order[0][i].price)
+             buy_qty.push(buy_order[0][i].total_qty)
+         } 
+         for(let i=0; i<sell_order[0].length; i++)
+         {
+            sell_price.push(sell_order[0][i].price)
+            sell_qty.push(sell_order[0][i].total_qty)
+         } 
+          for(let i=0; i<total_amount[0].length; i++)
+         {
+            buy_total.push(total_amount[0][i]. a.rest)
+            sell_total.push(total_amount[0][i].b.rest)
+         }
 
         let transaction = await connection.query(`select * from transaction`)
         
@@ -38,7 +56,19 @@ async function wsinit(){
             a_amount.push(transaction[0][i].a_amount)
         }
 
-        ws.send( JSON.stringify({"userid":userid, "price":price, "time":time, "qty":qty, "regdate":regdate, "payment":payment, "a_amount":a_amount}))
+        ws.send( JSON.stringify({
+            "userid":userid, 
+            "regdate":regdate,
+             "payment":payment,
+              "a_amount":a_amount,
+              "buy_price":buy_price,
+              "buy_qty":buy_qty,
+              "sell_price":sell_price,
+              "sell_qty":sell_qty,
+              "buy_total":buy_total,
+              "sell_total":sell_total
+
+            }))
         // ws.send(JSON.stringify('{"data":"go"}'))
         
 
