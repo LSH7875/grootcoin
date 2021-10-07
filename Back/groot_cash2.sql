@@ -208,6 +208,7 @@ insert into transaction (a_orderid,a_amount,a_commission,b_orderid,b_amount,b_co
 insert into transaction (a_orderid,a_amount,a_commission,b_orderid,b_amount,b_commission,coin_id,payment) values("30","3000","30","31","3000","30","1","130");
 
 
+
 insert into assets (userid,input,output,regdate,transaction values("ki@naver.com",50,0,n,"130","1","0");
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
