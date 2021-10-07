@@ -261,25 +261,6 @@ const join = () => {
             setPwError(false)
         }
 
-        if (accountNo.value.length !== 11) {
-            setAccountError(true)
-            return
-        } else {
-            setAccountError(false)
-        }
-
-
-        // if(!term) {
-        //     setTermError(true)
-        //     return; 
-        // }
-
-        // console.log({
-        //     userid:userid.value,
-        //     username:username.value,
-        //     userpw:userpw.value,
-        //     accountNo:accountNo.value
-        // })
         join_success({userid:userid.value, username:username.value, userpw:userpw.value, account:accountNo.value, wallet:"info"})
         Router.push('/')
     }
@@ -321,7 +302,6 @@ const join = () => {
 
 
                 {check() ? <input type = "submit" className="bigBtn" value = "다음" /> : ''}
-                
 
             </form>
         </Box>

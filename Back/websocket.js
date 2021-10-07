@@ -17,9 +17,9 @@ async function wsinit(){
                 content.push(login_success[0][i].userid)
         }
      
-        console.log(content[0])
         ws.send(JSON.stringify(content))
 
+        
         ws.on('message', function incoming(data, isBinary) {
 
             ws.clients.forEach((e) => {

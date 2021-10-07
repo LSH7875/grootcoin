@@ -21,10 +21,6 @@ const index = ()=>{
         };
     }, []);
 
-    useEffect(() => {
-        ws.current.onmessage = (e) => console.log(`websocket data : ${e.data.replace('[','').replace(']','').split(',')}`)
-    }, []);
-
     const [userid, setUserid] = useState('.')
     const [username, setUsername] = useState('.')
     const [userpw, setUserpw] = useState('.')
