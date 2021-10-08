@@ -4,6 +4,7 @@ import useInput from '../hooks/useInput'
 import {useState} from 'react'
 import {join_success} from '../api/api'
 import Router from 'next/router'
+import { user_url } from '../store/Allurl'
 
 const Box = Styled.div`
     margin: 0 auto;
@@ -265,7 +266,22 @@ const join = () => {
         Router.push('/')
     }
 
+    
+    const [LoginCheck, setLoginCheck] = useState('---')
 
+    const handleuseridCheck = async e => {
+        e.preventDefault()
+        console.log('작동 여부')
+        const options = {
+            method:'GET'
+        }
+
+        const response = await fetch(`${user_url}/login_check?userid=${userid.value}`,options) //restful api 
+        const result = await response.json()
+        console.log(response)
+        setLoginCheck(result)
+        console.log(result.length)
+    }
 
     return (
         <Box>
@@ -276,8 +292,8 @@ const join = () => {
 
             <form onSubmit={handleSubmit} className="a">
                 <label className="margin24 inputFont" label htmlFor="userid" >이메일</label>
-                <input type="email" {...userid} className="inputBox" name="userid" id="userid" placeholder="아이디로 사용할 이메일 입력" />
-
+                <input type="email" {...userid} onMouseOut = {handleuseridCheck} className="inputBox" name="userid" id="userid" placeholder="아이디로 사용할 이메일 입력" />
+                <div>{LoginCheck}</div>
                 <label className="margin24 inputFont" label htmlFor="userpw" >비밀번호</label>
                 <input type="password" {...userpw} className="inputBox" name="userpw" id="userpw" placeholder="비밀번호 입력" />
                 <ul className="passwordBox2">
