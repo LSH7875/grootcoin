@@ -17,7 +17,12 @@ async function wsinit(){
         let buy_total_amount = await connection.query(`select sum(rest) as rest from coin_orderbook where ordertype = "0" AND rest != "0" AND state != "1"`)
         let sell_total_amount = await connection.query(`select sum(rest) as rest from coin_orderbook where ordertype = "1" AND rest != "0" AND state != "1"`)
         //let transaction = await connection.query(`select a_amomunt,payment,regdate from transaction`)
-         
+         let userid = []
+
+         for(let i=0; i<login_success[0].length; i++)
+         {
+            userid.push(login_success[0][i].userid)
+         } 
          let buy_price =[]
          let buy_qty =[]
 
@@ -54,7 +59,7 @@ async function wsinit(){
         }
 
         ws.send( JSON.stringify({
-            // "userid":userid, 
+            "userid":userid, 
             "regdate":regdate,
              "payment":payment,
               "a_amount":a_amount,
@@ -88,13 +93,14 @@ async function join() {
     let connection;
         connection = await pool.getConnection(async conn => conn);
 
-        let user = await connection.query(`select * from user`)
+        let login_success = await connection.query(`select * from user`)
 
         let userid = []
-        for(let i=0; i<user[0].length; i++)
-        {
-            userid.push(user[0][i].userid)
-        }
+
+         for(let i=0; i<login_success[0].length; i++)
+         {
+            userid.push(login_success[0][i].userid)
+         } 
 
         let coin_orderbook = await connection.query(`select * from coin_orderbook`)
         
@@ -121,7 +127,7 @@ async function join() {
         }
 
     wss.clients.forEach((e) => {
-        e.send( JSON.stringify({"userid":userid, "price":price, "time":time, "qty":qty, "regdate":regdate, "payment":payment, "a_amount":a_amount}))
+        e.send( JSON.stringify({"userid":[userid[userid.length-1],0], "price":price, "time":time, "qty":qty, "regdate":regdate, "payment":payment, "a_amount":a_amount}))
     })
 
 }

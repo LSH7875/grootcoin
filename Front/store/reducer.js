@@ -46,6 +46,17 @@ const reducer = (state,action)=>{
                 wallet:0,
                 msg:'로그인을 진행해주세요'
             }
+        case "upload":
+            let NewArr = [...state.upload_Arr]
+            for(let i=0; i<action.payload.length-1; i++){
+                NewArr.push(action.payload[i])
+            }
+      
+            return {
+                ...state,
+                upload_Arr:NewArr
+                
+            }
     }
 }
 

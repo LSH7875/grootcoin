@@ -1,6 +1,9 @@
-import React,{ useState, useRef, useEffect } from 'react'
-
+import React,{ useState, useRef, useEffect, useContext } from 'react'
+import Store from '../store/context'
 const orderBook = () =>{
+
+    const {state,dispatch} = useContext(Store)
+
     const [socket, setSocket] = useState(false);
     const ws = useRef(null);
     const [dataArr, setdataArr] = useState([])
@@ -24,9 +27,10 @@ const orderBook = () =>{
             ws.current.onmessage=e=>{
                 console.log("+++++++++++++++++++++++++=");
             console.log(JSON.parse(e.data).buy_qty)
-            setdataArr(JSON.parse(e.data).sell_price)
-            settimeArr(JSON.parse(e.data).buy_qty)
-            setuserid(JSON.parse(e.data).a_amount)
+            setdataArr(JSON.parse(e.data).a_amount)
+            settimeArr(JSON.parse(e.data).payment)
+            dispatch({type:"upload", payload:JSON.parse(e.data).userid})
+            console.log(state.upload_Arr)
         }
     // },1000)
         // const timeoutTEST = setTimeout(()=>{console.log(1)},1000)
@@ -49,7 +53,7 @@ const orderBook = () =>{
                 </tr> */}
                 <div>
                     <div className = "float_left order_1">
-                    {userid.map((ele) => <div className="order-1">{ele}</div>)}
+                    {state.upload_Arr.map((ele) =>  <div className="order-2">{ele}</div>)}
                     </div>
                     <div className = "float_left order_2">
                     {timeArr.map((ele) =>  <div className="order-2">{ele}</div>)}
