@@ -251,7 +251,7 @@ let graph = async (req, res) => {
         data.push({
             half_max: halfhour_price[0][0].max,
             half_min: halfhour_price[0][0].min,
-            half_start: halfhour_data[0][0].payment,
+            // half_start: halfhour_data[0][0].payment,
             half_last: halfhour_data[0][halfhour_data.length - 1].payment,
             time:search_holfhour
         })
