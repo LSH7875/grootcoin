@@ -6,9 +6,9 @@ const orderBook = () =>{
 
     const [socket, setSocket] = useState(false);
     const ws = useRef(null);
-    const [dataArr, setdataArr] = useState([])
-    const [userid, setuserid] = useState([])
-    const [timeArr, settimeArr] = useState([])
+    const [price, setpriceArr] = useState([])
+    const [time, settimeArr] = useState([])
+    const [qty, setqtyArr] = useState([])
     // const [test, settest] = useState(e)
 
     useEffect(() => {
@@ -25,19 +25,13 @@ const orderBook = () =>{
     useEffect(()=>{
         // setInterval(()=>{
             ws.current.onmessage=e=>{
-<<<<<<< HEAD
-            console.log(e.data)
-            setdataArr(JSON.parse(e.data).sell_price)
-            settimeArr(JSON.parse(e.data).buy_qty)
-            setuserid(JSON.parse(e.data).a_amount)
-=======
-                console.log("+++++++++++++++++++++++++=");
-            console.log(JSON.parse(e.data).buy_qty)
-            setdataArr(JSON.parse(e.data).a_amount)
-            settimeArr(JSON.parse(e.data).payment)
-            dispatch({type:"upload", payload:JSON.parse(e.data).userid})
-            console.log(state.upload_Arr)
->>>>>>> 7f060ad8a24b9cbecd79e94fc5145ca6e03c395a
+                console.log(JSON.parse(e.data).graph);
+            setpriceArr(JSON.parse(e.data).price)
+            settimeArr(JSON.parse(e.data).time)
+            setqtyArr(JSON.parse(e.data).qty)
+            // dispatch({type:"upload", payload:JSON.parse(e.data).qty})
+            // console.log(state.upload_Arr)
+
         }
     // },1000)
         // const timeoutTEST = setTimeout(()=>{console.log(1)},1000)
@@ -60,13 +54,13 @@ const orderBook = () =>{
                 </tr> */}
                 <div>
                     <div className = "float_left order_1">
-                    {state.upload_Arr.map((ele) =>  <div className="order-2">{ele}</div>)}
+                    {price.map((ele) =>  <div className="order-2">{ele}</div>)}
                     </div>
                     <div className = "float_left order_2">
-                    {timeArr.map((ele) =>  <div className="order-2">{ele}</div>)}
+                    {time.map((ele) =>  <div className="order-2">{ele}</div>)}
                     </div>
                     <div className = "float_left order_2">
-                    {dataArr.map((ele) =>  <div className="order-3">{ele}</div>)}
+                    {qty.map((ele) =>  <div className="order-3">{ele}</div>)}
                     </div>
                 </div>
                 </tbody>              
