@@ -113,6 +113,11 @@ VALUES ('1','groot','0.001','GRT'),
 
 /* 가짜 데이터*/
 
+insert into user (userid,username,userpw,account,wallet) values("kido@naver.com","kido","325325325325","#@53253232","325325325325");
+insert into user (userid,username,userpw,account,wallet) values("sudoo@naver.com","sudoo","325325325325","#@53253232","325325325325");
+insert into user (userid,username,userpw,account,wallet) values("kdsato@naver.com","kido","325325325325","#@53253232","325325325325");
+insert into user (userid,username,userpw,account,wallet) values("sudoddo@naver.com","sudoo","325325325325","#@53253232","325325325325");
+
 insert into coin_orderbook (userid,price,qty,ordertype,rest,coin_id,state) values("da","100","100","1","100","1","0");
 insert into coin_orderbook (userid,price,qty,ordertype,rest,coin_id,state) values("da","101","101","1","101","1","0");
 insert into coin_orderbook (userid,price,qty,ordertype,rest,coin_id,state) values("da","102","102","1","102","1","0");
@@ -209,10 +214,6 @@ insert into transaction (a_orderid,a_amount,a_commission,b_orderid,b_amount,b_co
 insert into transaction (a_orderid,a_amount,a_commission,b_orderid,b_amount,b_commission,coin_id,payment) values("30","3000","30","31","3000","30","1","130");
 
 
-insert into user (userid,username,userpw,account,wallet) values("kido@naver.com","kido","325325325325","#@53253232","325325325325");
-insert into user (userid,username,userpw,account,wallet) values("sudoo@naver.com","sudoo","325325325325","#@53253232","325325325325");
-insert into user (userid,username,userpw,account,wallet) values("kdsato@naver.com","kido","325325325325","#@53253232","325325325325");
-insert into user (userid,username,userpw,account,wallet) values("sudoddo@naver.com","sudoo","325325325325","#@53253232","325325325325");
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IFNULL(@OLD_FOREIGN_KEY_CHECKS, 1) */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
