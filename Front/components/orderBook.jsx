@@ -1,6 +1,9 @@
-import React,{ useState, useRef, useEffect } from 'react'
-
+import React,{ useState, useRef, useEffect, useContext } from 'react'
+import Store from '../store/context'
 const orderBook = () =>{
+
+    const {state,dispatch} = useContext(Store)
+
     const [socket, setSocket] = useState(false);
     const ws = useRef(null);
     const [dataArr, setdataArr] = useState([])
@@ -22,11 +25,19 @@ const orderBook = () =>{
     useEffect(()=>{
         // setInterval(()=>{
             ws.current.onmessage=e=>{
+<<<<<<< HEAD
+            console.log(e.data)
+            setdataArr(JSON.parse(e.data).sell_price)
+            settimeArr(JSON.parse(e.data).buy_qty)
+            setuserid(JSON.parse(e.data).a_amount)
+=======
                 console.log("+++++++++++++++++++++++++=");
-            console.log(JSON.parse(e.data).userid)
-            setdataArr(JSON.parse(e.data).price)
-            settimeArr(JSON.parse(e.data).time)
-            setuserid(JSON.parse(e.data).userid)
+            console.log(JSON.parse(e.data).buy_qty)
+            setdataArr(JSON.parse(e.data).a_amount)
+            settimeArr(JSON.parse(e.data).payment)
+            dispatch({type:"upload", payload:JSON.parse(e.data).userid})
+            console.log(state.upload_Arr)
+>>>>>>> 7f060ad8a24b9cbecd79e94fc5145ca6e03c395a
         }
     // },1000)
         // const timeoutTEST = setTimeout(()=>{console.log(1)},1000)
@@ -49,7 +60,7 @@ const orderBook = () =>{
                 </tr> */}
                 <div>
                     <div className = "float_left order_1">
-                    {userid.map((ele) => <div className="order-1">{ele}</div>)}
+                    {state.upload_Arr.map((ele) =>  <div className="order-2">{ele}</div>)}
                     </div>
                     <div className = "float_left order_2">
                     {timeArr.map((ele) =>  <div className="order-2">{ele}</div>)}
