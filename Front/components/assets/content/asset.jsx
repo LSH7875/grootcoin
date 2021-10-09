@@ -1,6 +1,40 @@
-import React,{ useState, useRef, useEffect } from 'react'
+import React,{ useState, useRef, useEffect, useContext } from 'react'
+import Store from '../../../store/context'
 import {user_url} from '../../../store/Allurl'
 const asset = () =>{
+
+    const {state,dispatch} = useContext(Store)
+
+    const [socket, setSocket] = useState(false);
+    const ws = useRef(null);
+    const [asset, setAsset] = useState(0)
+    // const [test, settest] = useState(e)
+
+    useEffect(() => {
+        ws.current= new WebSocket('ws://127.0.0.1:8080');
+        ws.current.onopen=()=>{
+            setSocket(true)
+        }
+
+        return () => {
+            ws.current.close();
+        };
+    }, []);
+
+    useEffect(()=>{
+        // setInterval(()=>{
+            ws.current.onmessage=e=>{
+                console.log("+++++++++++++++++++++++++=");
+            setAsset(JSON.parse(e.data).assets[0])
+            console.log(JSON.parse(e.data).assets[0])
+            // dispatch({type:"upload", payload:JSON.parse(e.data).qty})
+            // console.log(state.upload_Arr)
+        }
+    // },1000)
+        // const timeoutTEST = setTimeout(()=>{console.log(1)},1000)
+        // clearTimeout(timeoutTEST)
+    },[socket])
+
     // const [income, setincome] = useState(0);
 
     //     let options = {
@@ -17,7 +51,7 @@ const asset = () =>{
                 <div>
                     <div className = "assert_info1">
                         <div>총 보유자산</div>
-                        <div className = "bold">e원</div>
+                        <div className = "bold">{asset}원</div>
                     </div>
                     <div className = "assert_info2">
                         <ul className = "float_left">
