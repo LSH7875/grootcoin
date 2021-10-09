@@ -3,6 +3,7 @@ import Link from 'next/link'
 import axios from 'axios';
 import Store from '../store/context'
 
+
 const buycolor = { "background": "rgba(225,35,67)", "color": "#fff" }
 const sellcolor = { "background": "rgba(23,99,182)", "color": "#fff" }
 
@@ -31,6 +32,8 @@ const Buy = () => {
         .catch(error => {
             console.log('실패났음',error)
         })
+        setBuyPrice(0)
+        setVolume(0)
     }
     
     const priceUp = () =>{
@@ -220,17 +223,17 @@ const buyAndSell = ()=>{
     }
 
     return(
-        <div id="buyAndSellBox">
-            <div>
-                <button style={(bsBtn === 'buy')? buycolor : {}} onClick={buy} className="buyBtn">매수</button>
-                <button style={(bsBtn === 'sell')? sellcolor : {}} onClick={sell} className="sellBtn">매도</button>
+            <div id="buyAndSellBox">
+                <div>
+                    <button style={(bsBtn === 'buy')? buycolor : {}} onClick={buy} className="buyBtn">매수</button>
+                    <button style={(bsBtn === 'sell')? sellcolor : {}} onClick={sell} className="sellBtn">매도</button>
+                </div>
+                {
+                    bsBtn === 'buy'
+                        ? <Buy />
+                        : <Sell />
+                }
             </div>
-            {
-                bsBtn === 'buy'
-                    ? <Buy />
-                    : <Sell />
-            }
-        </div>
     )
 }
 

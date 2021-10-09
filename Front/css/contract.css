@@ -1,4 +1,7 @@
 #contractBox{
+    position:absolute;
+    top: 400px;
+    left: 882px;
     width: 350px;
     height: 380px;
     margin-top: 20px;
@@ -6,7 +9,27 @@
     border-right:1px solid rgba(153, 153, 153, 0.342);
     border-bottom:1px solid rgba(153, 153, 153, 0.342);
     border-radius: 5px;
+    overflow-y: scroll;
+    scrollbar-width: none;
     box-shadow: 5px 5px 5px -2px rgb(0, 0, 0,.07) ;
+}
+
+#contractBox::-webkit-scrollbar {
+    width: 3px;
+}
+
+#contractBox::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+
+#contractBox::-webkit-scrollbar-thumb {
+    border-radius: 3px;
+    background-color: gray;
+}
+
+#contractBox::-webkit-scrollbar-button {
+    width: 0;
+    height: 0;
 }
 
 #contractBox div button:hover{
@@ -14,7 +37,7 @@
 }
 
 .preContract{
-    width:173px;
+    width:170px;
     height:50px;
     background-color: rgb(255,255,255);
     border-top:1px solid rgba(153, 153, 153, 0.342);
@@ -28,7 +51,7 @@
 }
 
 .contracted{
-    width:172px;
+    width:170px;
     height:50px;
     background-color: rgb(255,255,255);
     border-top:1px solid rgba(153, 153, 153, 0.342);
@@ -51,7 +74,7 @@
     display: flex;
     flex-direction: column;
     float: left;
-    padding: 10px;
+    padding: 10px 6px;
 }
 
 .PreContractType li{
@@ -99,4 +122,10 @@
 .contracteds{
     color:rgb(23, 99, 182);
     font-weight:bold;
+}
+
+.fixedHeader2{
+    position: sticky;
+    background-color:white;
+	top: 0;
 }

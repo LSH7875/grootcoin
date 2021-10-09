@@ -1,5 +1,6 @@
 const { pool } = require('../../pool');
 const { wsinit } = require('../../websocket');
+const ws = require('../../websocket')
 
 // 매수 
 let buy_order = async (req, res) => {
@@ -12,6 +13,7 @@ let buy_order = async (req, res) => {
     let minus_rest;
     let sell_rest;
     let this_order_update;
+
     try {
         connection = await pool.getConnection(async conn => conn);
         // 매수주문 coin_orderbook 에 등록
@@ -41,7 +43,7 @@ let buy_order = async (req, res) => {
                     this_order_update = use_rest > serch_buy_law[i].rest ? `update coin_orderbook set rest = ${minus_rest} where pk = ${buy_pk}` : `update coin_orderbook set rest = 0 where pk = ${buy_pk}`
 
                     let transaction_pk = await connection.query(`insert into transaction (a_orderid,a_amount,a_commission,b_orderid,b_amount,b_commission,coin_id,payment) values('${buy_pk}','${signed_amount}','${sum_commission}','${serch_buy_law[i].pk}','${signed_amount}','${sum_commission}','${coin_id}','${serch_buy_law[i].price}')`)
-                    console.log(transaction_pk[0].insertId);
+
                     await connection.query(`insert into assets (userid,input,output,transaction) values('${userid}','0','${total_price}','${transaction_pk[0].insertId}')`)
                     await connection.query(this_order_update)
                     await connection.query(`update coin_orderbook set rest = ${sell_rest} where pk = ${serch_buy_law[i].pk}`)
@@ -67,7 +69,7 @@ let buy_order = async (req, res) => {
             this_order_update = use_rest > serch_buy_law[0].rest ? `update coin_orderbook set rest = ${minus_rest} where pk = ${buy_pk}` : `update coin_orderbook set rest = 0 where pk = ${buy_pk}`
 
             let transaction_pk = await connection.query(`insert into assets (userid,input,output,transaction) values('${userid}','0','${total_price}','${transaction_pk[0].insertId}')`)
-            console.log(transaction_pk);
+
             await connection.query(`insert into transaction (a_orderid,a_amount,a_commission,b_orderid,b_amount,b_commission,coin_id,payment) values('${buy_pk}','${signed_amount}','${sum_commission}','${serch_buy_law[0].pk}','${signed_amount}','${sum_commission}','${coin_id}','${serch_buy_law[0].price}')`)
             await connection.query(`update coin_orderbook set rest = ${sell_rest} where pk = ${serch_buy_law[i].pk}`)
             await connection.query(this_order_update)
@@ -85,6 +87,7 @@ let buy_order = async (req, res) => {
     } catch (error) {
         console.log(error);
     }
+    ws.wsinit()
 }
 
 
@@ -170,6 +173,7 @@ let sell_order = async (req, res) => {
     } catch (error) {
         console.log(error);
     }
+    ws.wsinit()
 }
 
 // 주문 취소하기 
@@ -183,6 +187,7 @@ let coin_cancle = async (req, res) => {
     } catch (error) {
         console.log(error);
     }
+    ws.wsinit()
 }
 
 // 내 자산 확인하기 
@@ -194,12 +199,25 @@ let search_assets = async (req, res) => {
         let assets = await connection.query(`select * from assets where userid = "${userid}"`)
         let in_out = await connection.query(`select sum(input) as total_input,sum(output) as total_output from assets where userid ="${userid}"`)
         let total = await connection.query(`select (adde.a-adde.b) as total_assets from (select sum(input)as a,sum(output)as b from assets where userid = "${userid}") as adde`)
+        //let cancle_cahrge = await connection.query(`select * from coin_orderbook where state = "1"`)
+        let book_pay = await connection.query(`select * from coin_orderbook where rest != "0" AND state != "1"`)
+        // let total_cancle = 0;
+        let total_book = 0;
+
+        // for(let i=0; i <cancle_cahrge.length; i++){
+        //     total_cancle += cancle_cahrge[0][i].price * cancle_cahrge[0][i].rest
+        // }
+        for (let i = 0; i < book_pay.length; i++) {
+            total_book += book_pay[0][i].price * book_pay[0][i].rest
+        }
+
+        let all_total = Number(total[0][0].total_assets) - total_book;
 
         res.json({
             "msg": "OK",
             "assets": assets[0],
             "in_out": in_out[0],
-            "total": total[0]
+            "total": all_total
         })
     } catch (error) {
         console.log(error);
@@ -222,69 +240,63 @@ let search_deal = async (req, res) => {
     }
 }
 
-// 그래프에 필요한 값
-let graph = async (req, res) => {
-    let connection;
-    let one_day = 24 * (60 * 60)
-    let now = Math.floor(+ new Date() / 1000);
-    let search_day = now - one_day
-    connection = await pool.getConnection(async conn => conn)
-
-    let oneday_price = await connection.query(`select max(payment) as max, min(payment) as min from transaction where regdate >= "${search_day}" ORDER BY regdate ASC`)
-    let oneday_data = await connection.query(`select payment,regdate from transaction where regdate >= "${search_day}" ORDER BY regdate ASC`)
-    let data = []
-    //하루의 고가 저가 시가 종가
-    data.push({
-        oneday: {
-            max: oneday_price[0][0].max,
-            min: oneday_price[0][0].min,
-            start: oneday_data[0][0].payment,
-            last: oneday_data[0][oneday_data.length - 1].payment
-        }
-    })
-
-    for (i = 0; i < 1440; i += 30) {
-        let search_holfhour = now - one_day + i
-        let halfhour_price = await connection.query(`select max(payment) as max, min(payment) as min from transaction where regdate >= "${search_holfhour}" ORDER BY regdate ASC`)
-        let halfhour_data = await connection.query(`select payment,regdate from transaction where regdate >= "${search_holfhour}" ORDER BY regdate ASC`)
-        //30분 마다 고가 저가 시가 종가
-        data.push({
-            halfhour: {
-                half_max: halfhour_price[0][0].max,
-                half_min: halfhour_price[0][0].min,
-                half_start: halfhour_data[0][0].payment,
-                half_last: halfhour_data[0][halfhour_data.length - 1].payment,
-                time:search_holfhour
-            }
-        })
-    }
-    res.json({
-        "data": data
-    })
-}
-
 // 주문내역 
 let contract = async (req, res) => {
     let connection;
     connection = await pool.getConnection(async conn => conn)
     let { userid, id } = req.body;
 
-let data;
+    let data;
     if (id == 0) {
         //미체결
-      data = await connection.query(`select * from coin_orderbook where userid = "${userid}" AND rest != "0" AND state = "0" ORDER BY time DESC`)
+        data = await connection.query(`select * from coin_orderbook where userid = "${userid}" AND rest != "0" AND state = "0" ORDER BY time DESC`)
     } else {
-       data = await connection.query(`select * from coin_orderbook where userid = "${userid}" AND rest = "0" OR state != "0" ORDER BY time DESC`)
-    }  //취소
-res.json({
-    "data":data[0]
-})
+        //취소
+        data = await connection.query(`select * from coin_orderbook where userid = "${userid}" AND rest = "0" OR state != "0" ORDER BY time DESC`)
+    }
+    res.json({
+        "data": data[0]
+    })
 }
 
-let assets = async (req, res) => {
+// 그래프에 필요한 값
+// let graph = async (req, res) => {
+//     let connection;
+//     connection = await pool.getConnection(async conn => conn)
+//     let one_day = 24 * (60 * 60)
+//     let now = Math.floor(+ new Date() / 1000);
+//     let ago_day = now - one_day
+//     // 트랜젝션 기록이 있는지 체크 
+//     let first_check = await connection.query(`select * from transaction`);
+//     let data = []
+//     if (first_check[0][0] !== undefined) {
+//         // 하루전까지 데이터가 있는지 체크  없으면 마지막 기점으로 24시간 거래 체크 
+//         let ckeck_data = await connection.query(`select * from transaction where regdate >="${ago_day}"`)
+//         let check_last = await connection.query(`select max(regdate) as last from transaction`);
+//         let last_time = check_last[0][0].last;
+//         for (i = 0; i < 1440; i += 30) {
+//             let search_holfhour = ckeck_data[0][0].payment !== undefined ? ago_day + i : last_time
+//             let halfhour_data = await connection.query(`select payment,regdate from transaction where regdate >= "${search_holfhour}" ORDER BY regdate ASC`)
+//             let halfhour_price = await connection.query(`select max(payment) as max, min(payment) as min from transaction where regdate >= "${search_holfhour}" ORDER BY regdate ASC`)
+//             //30분 마다 고가 저가 시가 종가
+//             data.push({
+//                 half_max: halfhour_price[0][0].max,
+//                 half_min: halfhour_price[0][0].min,
+//                 half_start: halfhour_data[0][0].payment,
+//                 half_last: halfhour_data[0][halfhour_data.length - 1].payment,
+//                 time: search_holfhour
+//             })
+//         }
+//     } else {
+//         data.push({
+//             "msg":"데이터 베이스에 겨래내역이 없습니다."
+//         })
+//     }
+//     res.json({
+//         "data": data
+//     })
+// }
 
-    wsinit.asset()
-}
 
 
 module.exports = {
@@ -293,7 +305,7 @@ module.exports = {
     coin_cancle,
     search_assets,
     search_deal,
-    graph,
+    // graph,
     contract,
-    assets
+
 }
