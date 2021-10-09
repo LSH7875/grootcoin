@@ -25,12 +25,19 @@ const orderBook = () =>{
     useEffect(()=>{
         // setInterval(()=>{
             ws.current.onmessage=e=>{
+<<<<<<< HEAD
+            console.log(e.data)
+            setdataArr(JSON.parse(e.data).sell_price)
+            settimeArr(JSON.parse(e.data).buy_qty)
+            setuserid(JSON.parse(e.data).a_amount)
+=======
                 console.log("+++++++++++++++++++++++++=");
             console.log(JSON.parse(e.data).buy_qty)
             setdataArr(JSON.parse(e.data).a_amount)
             settimeArr(JSON.parse(e.data).payment)
             dispatch({type:"upload", payload:JSON.parse(e.data).userid})
             console.log(state.upload_Arr)
+>>>>>>> 7f060ad8a24b9cbecd79e94fc5145ca6e03c395a
         }
     // },1000)
         // const timeoutTEST = setTimeout(()=>{console.log(1)},1000)
