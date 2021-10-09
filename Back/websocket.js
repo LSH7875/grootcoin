@@ -88,7 +88,8 @@ async function wsinit() {
               "sell_price":sell_price,
               "sell_qty":sell_qty,
               "buy_total":buy_total,
-              "sell_total":sell_total
+              "sell_total":sell_total,
+              "graph":graph
 
             }))
         // ws.send(JSON.stringify('{"data":"go"}'))

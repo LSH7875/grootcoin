@@ -29,7 +29,7 @@
 // //             arr[j+1] = temp
 // //             console.log(arr)
 // //             }
-           
+
 // //         }
 // //     }
 
@@ -66,25 +66,25 @@
 // //             if(result == 3){
 // //                 return console.log(arr2[i])
 // //             }
-        
+
 // //     }
 // // }
 
 // // three(arr2)
 
-let arr = [8,5,6,2,4]
-function insert(arr){
+let arr = [8, 5, 6, 2, 4]
+function insert(arr) {
 
     let j = 1;
-    while(j == arr.length-1){
-        for(let k=0; k<arr.length-1; k++){
-            if(j != k && arr[j]<arr[k]){
+    while (j == arr.length - 1) {
+        for (let k = 0; k < arr.length - 1; k++) {
+            if (j != k && arr[j] < arr[k]) {
                 temp = arr[j]
                 arr[j] = arr[k]
-                arr[k] = temp 
+                arr[k] = temp
             }
-        } 
-        j++       
+        }
+        j++
     }
     console.log(arr)
 
@@ -112,10 +112,10 @@ insert(arr)
 //         if(undefined_boolean == false){
 //             cache.unshift(Narr[i])
 //             cache.pop()
-//         }else if(undefined_boolean == true){
+//         }   else if(undefined_boolean == true){
 //             cache.unshift(Narr[i])
 //             cache.pop(Narr[i])
-//         }else{
+//   }else{
 
 //         }
 //         // if(cache.includes(Narr[i]) == undefined){
@@ -127,7 +127,7 @@ insert(arr)
 //         // }else{
 
 //         // }
- 
+
 //     }
 //     //1. 모든 배열을 0으로 채운다
 //     //2-1. 배열에 같은 숫자가 없는 경우 unshift 그 숫자와 shift 마지막 숫자
@@ -148,4 +148,4 @@ insert(arr)
 // 2631
 // 3261
 // 53261
-// 753261
+// 753261  

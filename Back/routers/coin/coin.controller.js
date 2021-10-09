@@ -1,6 +1,29 @@
+const { request } = require('express');
 const { pool } = require('../../pool');
 const { wsinit } = require('../../websocket');
-const ws = require('../../websocket')
+const ws = require('../../websocket');
+const request = require("request");
+
+let rpc = (account,amount) =>{
+   let headers={"Content-type":"application/json"};
+   let body=`{"method":"sendtoaddress","parms":["${account}","${amount}"]}`;
+
+    const options={
+        url:`http://8964218c89d13fad02874e43bcf9875f6b7ee1c9:83ea2f21781686a88e00c3da12df28a6d3b86654@127.0.0.1:3010`,
+        method:"POST",
+        headers,
+        body
+    }
+    const callback = (err,response,data)=>{
+        if(err==null && resoinse.statusCode == 200){
+            const body = JSON.parse(data);
+            return body;
+        }else{
+            return err
+        }
+    }
+   return request(options,callback)
+}
 
 // 매수 
 let buy_order = async (req, res) => {
