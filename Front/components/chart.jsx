@@ -1,19 +1,11 @@
 import { useState, useEffect,useReducer } from "react"
-import axios from "axios";
 import dynamic from 'next/dynamic';
 const ReactApexChart = dynamic(() => import('react-apexcharts'), { ssr: false });
 import dayjs from 'dayjs'
-import { compareDocumentPosition } from "../../Back/node_modules/domutils/lib";
-
-// const timestamp = () => {
-//   let localDate = new Date().toLocaleDateString()
-//   let unixStartTime = new Date(localDate).getTime()
-// }
 
 function reducer(state,action){
   switch(action.type){
     case "CLICK":
-      // console.log(action.result);
       return {
         ...state,
         data:action.result
@@ -47,17 +39,8 @@ const chart = () => {
       let obj = {x,y}
       result.push(obj)
     }
-
-    // console.log(result)
-    
     dispatch({ type:'CLICK',result})
-
   }
-  
-
-
-
-    // console.log(data.halfhour)
     const series = [{
       name: 'candle',
       data: state.data
@@ -105,29 +88,6 @@ const chart = () => {
       }
     }
 
-
-  // const a = () =>{
-  //   const ingoo = 100;
-  // }
-  // const view = () => {
-  //   console.log(state)
-  //   const hello = state.b.map(v=>{
-  //     return (
-  //       <>{v}</>
-  //     )
-  //   })
-  //   return (
-  //     <>
-  //     {hello}
-  //     </>
-  //     // <ReactApexChart key={k}
-  //     //       options={options}
-  //     //       series={series}
-  //     //       type="candlestick"
-  //     //       height={600}
-  //     //     />
-  //   )
-  // }
   return (
     <div id="chartBox" >
       <div id="chart">

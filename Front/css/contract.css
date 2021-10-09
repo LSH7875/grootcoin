@@ -83,11 +83,12 @@
 #PreContractQty li{
     width:60px;
     padding:5px 0px;
-    font-size: 12px;
+    font-size: 11px;
 }
 #PreContractQty2 li{
     width:130px;
-    padding:1.5px 0px;
+    padding:2.5px 0px;
+    font-size: 14px;
 }
 
 .ContractedPrice{
