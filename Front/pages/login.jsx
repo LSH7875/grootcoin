@@ -117,7 +117,7 @@ const login = ()=>{
         // let result = await response.json()
         let result = response.data;
         setloginresult(result.msg)
-        console.log(result.content)
+        console.log(result.boolean)
         if(result.boolean == true){
             dispatch({ type: 'login_boolean_true', payload: result.boolean, userid:result.content.userid, username:result.content.username, userpw:result.content.userpw, account:result.content.account, wallet:result.content.wallet})
             Router.push('/')

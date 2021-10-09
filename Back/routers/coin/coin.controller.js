@@ -1,5 +1,4 @@
 const { pool } = require('../../pool');
-const { wsinit } = require('../../websocket');
 const ws = require('../../websocket')
 
 // 매수 
@@ -84,6 +83,8 @@ let buy_order = async (req, res) => {
             "msg": "정상적으로 적으로 주문 되었습니다",
             "history": history[0]
         })
+
+        ws.join()
     } catch (error) {
         console.log(error);
     }
@@ -170,6 +171,7 @@ let sell_order = async (req, res) => {
             "msg": "정상적으로 적으로 주문 되었습니다",
             "history": history[0]
         })
+        ws.join()
     } catch (error) {
         console.log(error);
     }
@@ -184,6 +186,8 @@ let coin_cancle = async (req, res) => {
         let { pk } = req.body
         await connection.query(`update coin_orderbook set state = '1' where pk = ${pk}`)
         res.json({ 'msg': '정상 취소 되셨습니다.' })
+
+        ws.join()
     } catch (error) {
         console.log(error);
     }
