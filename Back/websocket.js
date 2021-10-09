@@ -78,21 +78,19 @@ async function wsinit() {
             })
         }
 
-        // "userid":userid, 
-        ws.send(JSON.stringify({
+        ws.send( JSON.stringify({
+            "userid":userid, 
+            "regdate":regdate,
+             "payment":payment,
+              "a_amount":a_amount,
+              "buy_price":buy_price,
+              "buy_qty":buy_qty,
+              "sell_price":sell_price,
+              "sell_qty":sell_qty,
+              "buy_total":buy_total,
+              "sell_total":sell_total
 
-            "regdate": regdate,
-            "payment": payment,
-            "a_amount": a_amount,
-            "buy_price": buy_price,
-            "buy_qty": buy_qty,
-            "sell_price": sell_price,
-            "sell_qty": sell_qty,
-            "buy_total": buy_total,
-            "sell_total": sell_total,
-            "graph":graph
-
-        }))
+            }))
         // ws.send(JSON.stringify('{"data":"go"}'))
 
 
@@ -113,14 +111,34 @@ async function wsinit() {
 async function join() {
 
     let connection;
-    connection = await pool.getConnection(async conn => conn);
+        connection = await pool.getConnection(async conn => conn);
+
+        let login_success = await connection.query(`select * from user`)
+
+        let userid = []
+
+         for(let i=0; i<login_success[0].length; i++)
+         {
+            userid.push(login_success[0][i].userid)
+         } 
 
     let user = await connection.query(`select * from user`)
 
-    let userid = []
-    for (let i = 0; i < user[0].length; i++) {
-        userid.push(user[0][i].userid)
-    }
+        let transaction = await connection.query(`select * from transaction`)
+        
+        let regdate = []
+        let payment = []
+        let a_amount = []
+        for(let i=0; i<transaction[0].length; i++)
+        {
+            regdate.push(new Date(transaction[0][i].regdate*1000))
+            payment.push(transaction[0][i].payment)
+            a_amount.push(transaction[0][i].a_amount)
+        }
+
+    wss.clients.forEach((e) => {
+        e.send( JSON.stringify({"userid":[userid[userid.length-1],0], "price":price, "time":time, "qty":qty, "regdate":regdate, "payment":payment, "a_amount":a_amount}))
+    })
 
     let coin_orderbook = await connection.query(`select * from coin_orderbook`)
 }

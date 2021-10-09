@@ -40,21 +40,26 @@ let login_success = async (req, res, next) => {
 
 }
 
-let info = async (req, res, next) => {
+let login_check = async (req, res, next) => {
 
     let connection;
     connection = await pool.getConnection(async conn => conn);
 
     const {userid} = req.query
 
-    let information = await connection.query(`select * from assets where userid = '${userid}'`)
-
-    res.json({input:information.input})
-
+    let user_table = await connection.query(`select * from user where userid = '${userid}' `)
+    console.log('db 작동')
+    console.log(user_table[0][0])
+    if(user_table[0][0] == undefined){
+        res.json('사용 가능한 아이디입니다')
+    }else{
+        res.json('사용 불가능한 아이디입니다')
+    }
 }
+
 
 module.exports = {
     join_success,
     login_success,
-    info
+    login_check
 }
