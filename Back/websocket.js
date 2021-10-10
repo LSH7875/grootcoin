@@ -217,7 +217,6 @@ wss.clients.forEach((e) => {
     e.send( JSON.stringify({"price":price, "time":time, "qty":qty, "regdate":regdate, "payment":payment, "a_amount":a_amount, "assets":assetsArr}))
 })
 
-    let coin_orderbook = await connection.query(`select * from coin_orderbook`)
 }
 
 function socketSend(data, func) {
