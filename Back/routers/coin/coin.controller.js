@@ -4,7 +4,7 @@ const request = require("request");
 
 let rpc = (userid,account, amount) => {
     let headers = { "Content-type": "application/json" };
-    let body = `{"method":"sendtoaddress","parms":["${userid}""${account}","${amount}"]}`;
+    let body = `{"method":"sendfrom","params":["${userid}""${account}","${amount}"]}`;
 
     const options = {
         url: `http://8964218c89d13fad02874e43bcf9875f6b7ee1c9:83ea2f21781686a88e00c3da12df28a6d3b86654@127.0.0.1:3010`,
@@ -14,10 +14,11 @@ let rpc = (userid,account, amount) => {
     }
     const callback = (err, response, data) => {
         if (err == null && resoinse.statusCode == 200) {
-            const body = JSON.parse(data);
-            return body;
+            let txid = JSON.parse(data);
+            res.send(txid.result)
         } else {
-            return err
+            console.log(err);
+            res.send(err)
         }
     }
     return request(options, callback)

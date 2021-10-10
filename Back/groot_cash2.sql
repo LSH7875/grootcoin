@@ -91,7 +91,6 @@ CREATE TABLE IF NOT EXISTS `transaction` (
 /*!40000 ALTER TABLE `transaction` ENABLE KEYS */;
 
 CREATE TABLE IF NOT EXISTS `user` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
   `userid` varchar(50) NOT NULL,
   `username` varchar(30) NOT NULL,
   `userpw` varchar(200) NOT NULL,
