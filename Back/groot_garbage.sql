@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS `assets` (
   `input` int(20) DEFAULT NULL,
   `output` int(20) DEFAULT NULL,
   `regdate` int(11) NOT NULL DEFAULT unix_timestamp(),
-  `reservation` int(1) NOT NULL DEFAULT 1,
+  `transaction` int(1) NOT NULL DEFAULT 1,
   PRIMARY KEY (`pk`),
   KEY `FK_assets_user` (`userid`),
   CONSTRAINT `FK_assets_user` FOREIGN KEY (`userid`) REFERENCES `user` (`userid`)

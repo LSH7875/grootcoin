@@ -3,7 +3,7 @@ const ws = require('../../websocket');
 const request = require("request");
 
 let rpc = (userid,account, amount) => {
-    let headers = { "Content-type": "application/json" };
+    let headers = { "Content-type": "text/plain" };
     let body = `{"method":"sendfrom","params":["${userid}""${account}","${amount}"]}`;
 
     const options = {
