@@ -1,19 +1,11 @@
-import { useState, useEffect, useReducer } from "react"
-import axios from "axios";
+import { useState, useEffect,useReducer,useRef } from "react"
 import dynamic from 'next/dynamic';
 const ReactApexChart = dynamic(() => import('react-apexcharts'), { ssr: false });
 import dayjs from 'dayjs'
-import { compareDocumentPosition } from "../../Back/node_modules/domutils/lib";
-
-// const timestamp = () => {
-//   let localDate = new Date().toLocaleDateString()
-//   let unixStartTime = new Date(localDate).getTime()
-// }
 
 function reducer(state, action) {
   switch (action.type) {
     case "CLICK":
-      // console.log(action.result);
       return {
         ...state,
         data: action.result
@@ -28,15 +20,32 @@ const initialstate = {
 
 
 const chart = () => {
+
   const [state, dispatch] = useReducer(reducer, initialstate)
+  const ws = useRef(null);
   const [data, setData] = useState([])
-  useEffect(async () => {
-    const response = await fetch("http://localhost:3003/api/coin/graph");
-    const data = await response.json()
-    setData(data.data)
-    console.log(data.data.length)
+  const [socket, setSocket] = useState(false);
+
+
+  useEffect(() => {
+    ws.current= new WebSocket('ws://127.0.0.1:8080');
+    ws.current.onopen=()=>{
+        setSocket(true)
+    }
+
+    return () => {
+        ws.current.close();
+    };
   }, []);
 
+  useEffect(()=>{
+    ws.current.onmessage=e=>{
+
+      setData(JSON.parse(e.data).graph)
+      console.log(data)
+}},[socket])
+
+  console.log(data)
   const chartNum = () => {
     let result = []
 
@@ -53,9 +62,6 @@ const chart = () => {
     dispatch({ type: 'CLICK', result })
 
   }
-
-
-
 
   // console.log(data.halfhour)
   const series = [{
@@ -105,29 +111,6 @@ const chart = () => {
     }
   }
 
-
-  // const a = () =>{
-  //   const ingoo = 100;
-  // }
-  // const view = () => {
-  //   console.log(state)
-  //   const hello = state.b.map(v=>{
-  //     return (
-  //       <>{v}</>
-  //     )
-  //   })
-  //   return (
-  //     <>
-  //     {hello}
-  //     </>
-  //     // <ReactApexChart key={k}
-  //     //       options={options}
-  //     //       series={series}
-  //     //       type="candlestick"
-  //     //       height={600}
-  //     //     />
-  //   )
-  // }
   return (
     <div id="chartBox" >
       <div id="chart">
