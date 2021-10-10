@@ -1,4 +1,4 @@
-import { useState, useEffect,useReducer } from "react"
+import { useState, useEffect,useReducer,useRef } from "react"
 import dynamic from 'next/dynamic';
 const ReactApexChart = dynamic(() => import('react-apexcharts'), { ssr: false });
 import dayjs from 'dayjs'
@@ -20,15 +20,32 @@ const initialstate = {
 
 
 const chart = () => {
+
   const [state, dispatch] = useReducer(reducer, initialstate)
+  const ws = useRef(null);
   const [data, setData] = useState([])
-  useEffect(async () => {
-    const response = await fetch("http://localhost:3003/api/coin/graph");
-    const data = await response.json()
-    setData(data.data)
-    console.log(data.data.length)
+  const [socket, setSocket] = useState(false);
+
+
+  useEffect(() => {
+    ws.current= new WebSocket('ws://127.0.0.1:8080');
+    ws.current.onopen=()=>{
+        setSocket(true)
+    }
+
+    return () => {
+        ws.current.close();
+    };
   }, []);
 
+  useEffect(()=>{
+    ws.current.onmessage=e=>{
+
+      setData(JSON.parse(e.data).graph)
+      console.log(data)
+}},[socket])
+
+  console.log(data)
   const chartNum = () => {
     let result = []
 
@@ -45,9 +62,6 @@ const chart = () => {
     dispatch({ type: 'CLICK', result })
 
   }
-
-
-
 
   // console.log(data.halfhour)
   const series = [{
