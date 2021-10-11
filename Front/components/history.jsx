@@ -22,21 +22,17 @@ const history = ()=> {
     }, []);
 
     useEffect(()=>{
-    
-        // setInterval(()=>{
             ws.current.onmessage=e=>{
             setpayment(JSON.parse(e.data).payment)
             seta_amount(JSON.parse(e.data).a_amount)
             setregdate(JSON.parse(e.data).regdate)
+            console.log(JSON.parse(e.data).payment)
         }
-    // },1000)
-        // const timeoutTEST = setTimeout(()=>{console.log(1)},1000)
-        // clearTimeout(timeoutTEST)
     },[socket])
 
     return(
         <div id="historyBox" className="container">
-            <table>
+            <table className="table">
             <thead className="fixedHeader">
                     <div className="float_left order_4">체결시간</div>
                     <div className="float_left order_3">가격</div>
