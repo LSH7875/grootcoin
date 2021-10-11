@@ -5,157 +5,9 @@ import {useState} from 'react'
 import {join_success} from '../api/api'
 import Router from 'next/router'
 
-const Box = Styled.div`
-    margin: 0 auto;
-    width:480px;
-    height:1000px;
-    padding: 16px 24px 32px;
-    margin-top:80px;
-    padding-top:40px;
-    text-align:center;
 
-    ul,li{
-        list-style:none;
-        
-    }
-    a{
-        text-decoration:none;
-        width:100%;
-    }
 
-    &>h1{
-        margin-bottom: 24px;
-        font-size: 34px;
-    }
 
-    &>.bigcheck{
-        display:inline-block;
-    }
-
-    &>.bigCheck>li{
-        display:inline-block;
-        font-weight:bold;
-        font-size:14px;
-    }
-
-    &>.bigCheck>.bigCheck1{
-        font-weight:bold;
-        color:rgba(32, 201, 150);
-    }
-
-    &>.bigCheck>.bigCheck2{
-        margin-right:5px;
-        margin-left:75px;
-
-    }
-    
-    &>.a>.margin24{
-        margin: 24px 0 5px 0;    
-    }
-    
-    &>.a>.inputFont{
-        float:left;
-        font-size: 14px;
-        font-weight: bold;
-        color: #484d55;
-        text-align:left;
-    }
-
-    &>.a>.inputBox{
-        box-sizing: border-box;
-        display: block;
-        padding-left: 16px;
-        padding-right: 16px;
-        width: 100%;
-        height: 48px;
-        border-radius: 3px;
-        border: 1px solid #c9ccd2;
-        background-color: #fff;
-        font-size: 14px;
-        color: #18191c;
-        -webkit-appearance: none;
-        margin-top: 5px;
-    }
-    
-    &>.a>.passwordBox2{
-        width: 100%;
-        height: 100%;
-        margin: 8px 0 24px;
-        padding: 12px 16px;
-        border: 1px solid #e4e5e8;
-        margin-left: 0;
-        background-color: #f8f8f9;
-    
-    }
-
-    &>.a>.passwordBox2{
-        display:inline-block;
-        text-align:left;
-        color: #18191c;
-        font-size:12px;
-        font-weight:bold;
-        box-sizing: border-box;     
-        font-size: 12px;
-        color: #79818f;
-    }
-
-    &>.a>.passwordBox2>li{
-      line-height:17px;
-    }
-    
-    &>.a>.passwordBox2>.chk{
-        color:rgba(32, 201, 150);
-    }
-    &>.a>.passwordBox2>.chk:before{
-        content:"🗸"
-    }
-    
-    &>.a>.passwordBox2>li:before{
-        content:"*";
-    }
-    
-    &>.a>.bigBtn{
-        background-color: #c9ccd2;
-        color: #000;
-        opacity: .5;
-        cursor: not-allowed;
-        width: 100%;
-        padding: 0 16px;
-        height: 48px;
-        font-size: 16px;
-        display: inline-flex;
-        flex: 0 0 auto;
-        justify-content: center;
-        align-items: center;
-        border-radius: 3px;
-        line-height: normal;
-        font-weight: bold;
-        font-style: normal;
-        transition: background .25s,border .25s;
-        text-align: center;
-        white-space: nowrap;
-        cursor: pointer;
-        touch-action: manipulation;
-        outline: 0;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-    }
-    &>.a>.bigBtn:hover{
-        background:rgba(32, 201, 150);
-        color:#000;
-        font-weight:bold;
-        }
-    &>.a>.bigBtn>a:hover{
-        color:#000;
-    }
-
-    &>.a>.error{
-        text-align:left;
-    }
-
-`
 
 const join = () => {
 
@@ -268,10 +120,10 @@ const join = () => {
 
 
     return (
-        <Box>
-            <h1>회원가입</h1>
+        <div id="box">
+            <h1 className="signUpTitle">회원가입</h1>
             <ul className="bigCheck">
-                <li className="bigCheck2">① 약관동의</li><li> ------------- </li> <li className="bigCheck1">② 정보입력</li>
+                <li className="agerrBigCheck2">① 약관동의</li><li> ------------- </li> <li className="agreeBigCheck1">② 정보입력</li>
             </ul>
 
             <form onSubmit={handleSubmit} className="a">
@@ -301,10 +153,10 @@ const join = () => {
                 <br />
 
 
-                {check() ? <input type = "submit" className="bigBtn" value = "다음" /> : ''}
+                {check() ? <input type = "submit" className="joinBigBtn" value = "다음" /> : ''}
 
             </form>
-        </Box>
+        </div>
     )
 }
 
