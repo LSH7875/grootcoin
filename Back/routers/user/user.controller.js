@@ -2,17 +2,42 @@
 const { createToken, createPW } = require("../../jwt");
 const { pool } = require('../../pool')
 const ws = require('../../websocket')
+const request = require('request');
 
 let join_success = async (req, res, next) => {
     let connection;
     connection = await pool.getConnection(async conn => conn);
 
-    const {userid, username, userpw, account , wallet} = req.body
+    const {userid, username, userpw, account} = req.body
+    const wallet = ''
     const jwtuserpw = createPW(userpw);
 
-    let join_success = await connection.query(`insert into user (userid, username, userpw, account, wallet) values ('${userid}', '${username}', '${jwtuserpw}', '${Number(account)+Number(1000000)}', '${wallet}')`)
+    headers={"Content-type": "application/json"};
+    body=`{"method":"getnewaddress","params":["${userid}"]}`;
+
+    const USER=process.env.RPC_USER
+    const PASS = process.env.RPC_PASSWORD 
+    const RPCPORT= process.env.RPC_PORT 
+    const options={
+        url:`http://${USER}:${PASS}@127.0.0.1:${RPCPORT}`,
+        method:"POST",
+        headers,
+        body
+    }
     
-    ws.join()
+    const callback = (err,response,data)=>{
+        if(err==null && response.statusCode ==200) {
+            const body = JSON.parse(data);
+            wallet = body.result
+        }else{
+            res.send(err)
+        }
+    }
+    request(options,callback)
+    
+    let join_success = await connection.query(`insert into user (userid, username, userpw, account, wallet) values ('${userid}', '${username}', '${jwtuserpw}', '${account}', '${wallet}')`)
+    
+    // ws.join()
 
 
 }
@@ -26,11 +51,14 @@ let login_success = async (req, res, next) => {
     const jwtuserpw = createPW(userpw);
     const Token = createToken(userpw);
 
-        let login_success = await connection.query(`select * from user where userid = '${userid}' and userpw = '${jwtuserpw}'`)
+        let login_success = await connection.query(`select * from user where userid = '${userid}'`)
+        let pw_success = await connection.query(`select * from user where userid = '${userid}' and userpw = '${jwtuserpw}'`)
             console.log(login_success[0][0])
             let content = login_success[0][0]
-            if(login_success.length == 0){
+            if(login_success[0][0] == undefined){
                 res.json({msg:'가입되어 있지 않습니다', boolean:false})
+            }else if(pw_success[0][0] == undefined){
+                res.json({msg:'패스워드가 틀렸습니다', boolean:false})
             }else{
                 res.cookie('userid', userid);
                 res.cookie('AccessToken', Token);
@@ -40,21 +68,25 @@ let login_success = async (req, res, next) => {
 
 }
 
-let info = async (req, res, next) => {
+let login_check = async (req, res, next) => {
 
     let connection;
     connection = await pool.getConnection(async conn => conn);
 
     const {userid} = req.query
 
-    let information = await connection.query(`select * from assets where userid = '${userid}'`)
-
-    res.json({input:information.input})
-
+    let user_table = await connection.query(`select * from user where userid = '${userid}' `)
+    console.log('db 작동')
+    console.log(user_table[0][0])
+    if(user_table[0][0] == undefined){
+        res.json('사용 가능한 아이디입니다')
+    }else{
+        res.json('사용 불가능한 아이디입니다')
+    }
 }
 
 module.exports = {
     join_success,
     login_success,
-    info
+    login_check
 }

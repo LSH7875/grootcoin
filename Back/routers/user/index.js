@@ -4,6 +4,6 @@ const controller = require('./user.controller');
 
 router.post('/join_success', controller.join_success);
 router.post('/login_success', controller.login_success);
-router.get('/info',controller.info)
+router.get('/login_check',controller.login_check)
 
 module.exports = router;
