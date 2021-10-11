@@ -12,11 +12,10 @@ const Buy = () => {
     const [buyPrice,setBuyPrice] = useState(0)
     const [volume,setVolume] = useState(0)
     const {state,dispatch} = useContext(Store)
-    console.log(state.login_boolean == false)
 
     const buyApi = () =>{
         axios.post("http://localhost:3003/api/coin/buy_order", {
-            userid: "da",
+            userid: state.userid,
             price: buyPrice,
             qty: volume,
             ordertype: 0,
@@ -119,7 +118,7 @@ const Sell = () =>{
 
     const sellApi = () =>{
         axios.post("http://localhost:3003/api/coin/buy_order", {
-            userid: "da",
+            userid: state.userid,
             price: sellPrice,
             qty: volume,
             ordertype: 1,

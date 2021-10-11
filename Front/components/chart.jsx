@@ -4,7 +4,6 @@ const ReactApexChart = dynamic(() => import('react-apexcharts'), { ssr: false })
 import dayjs from 'dayjs'
 
 const chart = () => {
-
   const ws = useRef(null);
   const [graph, setGraph] = useState([])
   const [socket, setSocket] = useState(false);
