@@ -35,7 +35,7 @@ const orderBook = () =>{
     return(
         <div id="orderBookBox">
             <table>
-                <thead>
+                <thead className="fixedHeader">
                     <div className="float_left order_1">가격</div>
                     <div className="float_left order_2">수량</div>
                     <div className="float_left order_2">누적수량</div>

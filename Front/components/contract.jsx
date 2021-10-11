@@ -1,5 +1,6 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import axios from 'axios';
+import Store from '../store/context'
 
 const preContractcolor = { "borderBottom": "3px solid rgba(32, 201, 150)", "color": "#333" }
 const contractedcolor = { "borderBottom": "3px solid rgba(32, 201, 150)", "color": "#333" }
@@ -7,6 +8,7 @@ const contractedcolor = { "borderBottom": "3px solid rgba(32, 201, 150)", "color
 const PreContract = () => {
     const [data, setData] = useState([]);
     const [cancle, setCancle] = useState(0)
+    const {state,dispatch} = useContext(Store)
 
     useEffect(async () => {
         const response = await fetch("http://localhost:3003/api/coin/contract",{ 
@@ -15,7 +17,7 @@ const PreContract = () => {
             'Content-type': 'application/json'
         }, 
             body: JSON.stringify({
-            userid: "da",
+            userid: state.userid,
             id:"0"
           })
         });
@@ -88,6 +90,7 @@ const PreContract = () => {
 
 const Contracted = () =>{
     const [data, setData] = useState([]);
+    const {state,dispatch} = useContext(Store)
     useEffect(async () => {
         const response = await fetch("http://localhost:3003/api/coin/search_deal",{ 
             method: "POST",
@@ -95,7 +98,7 @@ const Contracted = () =>{
             'Content-type': 'application/json'
         }, 
             body: JSON.stringify({
-            userid: "da",
+            userid: state.userid,
             id:"1"
           })
         });
