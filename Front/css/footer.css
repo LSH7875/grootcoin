@@ -28,18 +28,18 @@
 .text1{
     font-size:12px;
     font-weight:bold;
-    color: #79818f;
+    color: #000;
 }
 
 .text2{
     font-size:12px;
-    color:#aeb3bb;
+    color:#79818f;
 }
 
 .text1-1{
     font-size:12px;
     font-weight:bold;
-    color:#79818f;
+    color:#000;
     margin: 0 0 0 8px;
 }
 
@@ -49,12 +49,12 @@
     width: 1px;
     height: 12px;
     margin-right: 8px;
-    background-color: #79818f;
+    background-color: #000;
 }
 
 .text2-1{
     font-size:12px;
-    color:#aeb3bb;
+    color:#79818f;
 }
 
 .text2-1:before{
@@ -63,7 +63,7 @@
     width: 1px;
     height: 12px;
     margin-right: 8px;
-    background-color: #aeb3bb;
+    background-color: #co;
 }
 
 #cSubTitle4{
@@ -77,17 +77,17 @@
 #cSubTitle7{
     padding-top: 12px;
     width: 100%;
-    border-top: 1px solid #aeb3bb; 
+    border-top: 1px solid #1; 
 }
 
 .text3{
     
     float:right;
-    color:#aeb3bb;
+    color:#79818f;
     font-size:12px;
 }
 
 .text3-1{
-    color:#aeb3bb;
+    color:#79818f;
     font-size:12px;
 }

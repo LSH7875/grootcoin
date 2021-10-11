@@ -38,14 +38,25 @@ const join = () => {
     }
 
     const check = e => {
-        if (userid.value !== '' && userpw.value !== '' && userpw.value === pwChk && pwChk !== '' && username.value !== '' && accountNo.value !== '' && accountNo.value.length === 11) {
-            return true
-        } else {
-            return false
+            if (userid.value !== '' && 
+            userpw.value !== '' && 
+            userpw.value === pwChk && 
+            pwChk !== '' && 
+            username.value !== '' &&
+            accountNo.value !== '' && 
+            accountNo.value.length === 11 &&
+            bigChk() == true &&
+            smallChk() == true &&
+            numChk() == true &&
+            stChk() == true &&
+            pw10Chk() ==true) {
+                return true
+            } else {
+                return false
+            }
         }
-    }
 
-    const bigChk = () => {
+        const bigChk = () => {
         let big = ["A", "B", "C", "D", "E", "F", "G", 
                         "H", "I", "J","K","L","M","N","O",
                         "P","Q","R","S","T","U","V","W","X","Y","Z"];
@@ -59,6 +70,7 @@ const join = () => {
             return true;
         }
     }
+
     const smallChk = () => {
         let small = ["a", "b", "c", "d", "e", "f", "g", 
                         "h", "i", "j","k","l","m","n","o",
@@ -73,6 +85,7 @@ const join = () => {
             return true;
         }
     }
+
     const numChk = () => {
         let number = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
         let check_number = 0;
@@ -85,6 +98,7 @@ const join = () => {
             return true;
         }
     }
+
     const stChk = () => {
         let st = ["!", "@", "#", "$", "%", "^", "&", "*"];
         let check_st = 0;
@@ -97,12 +111,12 @@ const join = () => {
             return true;
         }
     }
+
     const pw10Chk = () => {
-        if ({ ...userpw }.value.length < 10) {
+        if ({ ...userpw }.value.length > 10) {
             return true
         }
     }
-
 
     const handleSubmit = e => {
         e.preventDefault()
@@ -153,7 +167,7 @@ const join = () => {
                     {smallChk() ? <li className="chk">영문 소문자 포함</li> : <li>영문 소문자 포함</li>}
                     {numChk() ? <li className="chk">숫자 포함</li> : <li>숫자 포함</li>}
                     {stChk() ? <li className="chk">특수문자 포함</li> : <li>특수문자 포함</li>}
-                    {pw10Chk() ? <li >10자 이상</li> : <li className="chk">10자 이상</li>}
+                    {pw10Chk() ? <li className="chk">10자 이상</li> : <li>10자 이상</li>}
                 </ul>
                 <label className="margin24 inputFont" label htmlFor="pwChk" >비밀번호 확인</label>
                 <input type="password" value={pwChk} id="pwChk" onChange={handlePassword} className="inputBox" placeholder="비밀번호 확인" />
