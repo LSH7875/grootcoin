@@ -66,7 +66,7 @@ async function wsinit() {
             let check_last = await connection.query(`select max(regdate) as last from transaction`);
             let last_time = check_last[0][0].last;
             for (i = 0; i < 1440; i += 30) {
-                let search_holfhour = ckeck_data[0][0].payment !== undefined ? ago_day + i : last_time
+                let search_holfhour = ckeck_data[0][0].payment !== undefined ? ago_day + i : last_time - one_day +i
                 let halfhour_data = await connection.query(`select payment,regdate from transaction where regdate >= "${search_holfhour}" ORDER BY regdate ASC`)
                 let halfhour_price = await connection.query(`select max(payment) as max, min(payment) as min from transaction where regdate >= "${search_holfhour}" ORDER BY regdate ASC`)
                 //30분 마다 고가 저가 시가 종가
@@ -74,8 +74,8 @@ async function wsinit() {
                     half_max: halfhour_price[0][0].max,
                     half_min: halfhour_price[0][0].min,
                     half_start: halfhour_data[0][0].payment,
-                    half_last: halfhour_data[0][halfhour_data.length - 1].payment,
-                    time: search_holfhour
+                    half_last: halfhour_data[0][0].payment,
+                    time: halfhour_data[0][0].regdate
                 })
             }
             console.log(graph[0])

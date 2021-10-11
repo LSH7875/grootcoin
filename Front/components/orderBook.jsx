@@ -23,6 +23,7 @@ const orderBook = () =>{
 
     useEffect(()=>{
             ws.current.onmessage=e=>{
+                console.log(JSON.parse(e.data).graph);
             setpriceArr(JSON.parse(e.data).price)
             settimeArr(JSON.parse(e.data).time)
             setqtyArr(JSON.parse(e.data).qty)
