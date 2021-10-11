@@ -1,0 +1,112 @@
+    #Box{
+    margin: 0 auto;
+    width:480px;
+    height:485px;
+    margin-top:80px;
+    padding-top:40px;
+    text-align:center;
+    }
+
+    ul,li{
+        list-style:none;
+    }
+    a{
+        text-decoration:none;
+    }
+
+    h1{
+        margin-bottom: 24px;
+        font-size: 34px;
+    }
+
+    .bigCheck{
+        display:inline-block;
+        text-align:center;
+    }
+    
+    .bigCheck>li{
+        display:inline-block;
+        font-weight:bold;
+        font-size:14px;
+    }
+
+    .bigCheck>.bigCheck1{
+        font-weight:bold;
+        color:rgba(32, 201, 150);;
+        margin-right:5px;
+        text-indent:-20px;
+    }
+
+    .checkedAll{
+        position: relative;
+        display: flex;
+        align-items: center;
+        height: 56px;
+        padding-left: 16px;
+        border-radius: 8px;
+        border: 1px solid #e4e5e8;
+        font-size: 14px;
+        font-weight: bold;
+        margin-left: 10px;
+    }
+  
+    /* label>h3{
+        font-size: 14px;
+        font-weight: bold;
+        margin-left: 10px;
+    } */
+
+    .smallCheck{
+        width:100%;
+        text-align:left;
+        display:inline-block;
+        margin-top:5px;
+        font-size:14px;
+    }
+
+    .smallCheck>li{
+        text-align:left;
+    }
+
+    .warningText{
+        font-size:12px;
+        padding: 11px 16px;
+        background-color: #f8f8f9;
+        border: 1px solid #e4e5e8;
+    }
+    
+    .agreeBigBtn{
+        background-color: #c9ccd2;
+        color: #000;
+        opacity: .5;
+        width: 100%;
+        padding: 0 16px;
+        height: 48px;
+        font-size: 16px;
+        display: inline-flex;
+        flex: 0 0 auto;
+        justify-content: center;
+        align-items: center;
+        border-radius: 3px;
+        line-height: normal;
+        font-weight: bold;
+        font-style: normal;
+        transition: .25s,border .25s;
+        text-align: center;
+        cursor: pointer;
+    }
+
+    
+    .agreeBigBtn>a{
+        /* background-color: #c9ccd2; */
+        color: #000;
+        opacity: .5;
+    }
+    
+    .agreeBigBtn:hover{
+        background:rgba(32, 201, 150);;
+    }
+    
+    .agreeBigBtn>a:hover{
+        color:#fff;
+    }

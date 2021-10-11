@@ -1,0 +1,69 @@
+#Box{
+    margin: 0 auto;
+    width:480px;
+    height:485px;
+    padding: 16px 24px 32px;
+    border: 1px solid #e4e5e8;
+    border-radius: 6px;
+    margin-top:80px;
+    padding-top:40px;
+}
+
+
+.loginTitle{
+    margin: 0 auto;
+    line-height: normal;
+    font-size: 28px;
+    font-weight: 700;
+    text-align: center;
+}
+
+.checkText{
+    margin-top: 16px;
+    margin-bottom: 50px;
+    font-size: 16px;
+    color: #79818f;
+    text-align: center;
+}
+
+.formtag>.inputBox{
+    margin-bottom: 15px;
+    padding: 0 16px;
+    width: 100%;
+    height: 48px;
+    border: 1px solid #dedede;
+    border-radius: 3px;
+    background-color: #f7f8f9;
+    font-size: 16px;
+    line-height: normal;
+    color: #18191c;
+    box-shadow: none;
+    -webkit-appearance: none;
+}
+.formtag>.bigBtn{
+    margin-top: 8px;
+    height: 48px;
+    font-size: 16px;
+    font-weight:bold;
+    background-color: rgba(32, 201, 150);;
+    color: #fff;
+    padding: .875em 1em;
+    border-radius: 3px;
+    height: 2.75em;
+    line-height: 1;
+    font-weight: 400;
+    border: none;
+    vertical-align: middle;
+    text-shadow: none;
+    display: inline-block;
+    cursor: pointer;
+    width: 100%;
+}
+
+.signUp{
+    text-align:right;
+    font-weight:bold;
+    float:right;
+    color:rgba(32, 201, 150);
+    margin: 24px 0 0 24px;
+}

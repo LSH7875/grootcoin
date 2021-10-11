@@ -12,6 +12,9 @@ import '../css/contract.css'
 import '../css/footer.css'
 import '../css/assets.css'
 import '../css/coinNews.css'
+import '../css/join.css'
+import '../css/joinAgree.css'
+import '../css/login.css'
 import { usePersistedReducer } from '../store/usePersist'
 
 const App=({Component,pageProps})=>{
