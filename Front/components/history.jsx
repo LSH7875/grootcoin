@@ -37,7 +37,7 @@ const history = ()=> {
     return(
         <div id="historyBox" className="container">
             <table>
-            <thead>
+            <thead className="fixedHeader">
                     <div className="float_left order_4">체결시간</div>
                     <div className="float_left order_3">가격</div>
                     <div className="float_left order_3">수량</div>

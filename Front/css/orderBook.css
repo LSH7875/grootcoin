@@ -35,13 +35,13 @@ table{
 
 table > th{
     width: 400px;
-    color:rgba(153, 153, 153, 0.699);
-    border-bottom: 1px solid rgba(153, 153, 153, 0.342);
 }
 
 .fixedHeader {
 	position: sticky;
 	top: 0;
+    color:rgba(153, 153, 153, 0.699);
+    border-bottom: 1px solid rgba(153, 153, 153, 0.342);
 }
 
 .container {
