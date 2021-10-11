@@ -7,16 +7,17 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "next dev -p 3002",
     "build": "next build",
-    "start": "next start -p 80",
-    "lint": "next lint"
+    "start": "next start -p 80"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "apexcharts": "^3.28.3",
     "axios": "^0.21.4",
+    "babel-plugin-module-resolver": "^4.1.0",
     "canvas": "^2.8.0",
     "canvas-js": "^8.0.0",
+    "css-loader": "^6.4.0",
     "dayjs": "^1.10.7",
     "next": "^11.1.2",
     "react": "^17.0.2",
