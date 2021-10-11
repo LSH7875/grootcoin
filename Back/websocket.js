@@ -379,6 +379,7 @@ async function wsinit() {
             console.log(graph[0])
         } 
 
+
         // ws.send( JSON.stringify({
         //     "graph":graph,
         // "price":price, "time":time, "qty":qty, "regdate":regdate, "payment":payment, "a_amount":a_amount, "assets":assetsArr

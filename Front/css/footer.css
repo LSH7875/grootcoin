@@ -63,7 +63,6 @@
     width: 1px;
     height: 12px;
     margin-right: 8px;
-    background-color: #co;
 }
 
 #cSubTitle4{
@@ -77,7 +76,7 @@
 #cSubTitle7{
     padding-top: 12px;
     width: 100%;
-    border-top: 1px solid #1; 
+    border-top: 1px solid #111; 
 }
 
 .text3{
