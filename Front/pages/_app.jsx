@@ -3,6 +3,9 @@ import {useReducer,useContext,useEffect} from 'react'
 import reducer from '../store/reducer'
 import Head from 'next/head'
 import useLocalStorage from '../store/useLocalStorage'
+import { usePersistedReducer } from '../store/usePersist'
+
+
 import '../css/history.css'
 import '../css/orderBook.css'
 import '../css/main.css'
@@ -15,7 +18,6 @@ import '../css/coinNews.css'
 import '../css/join.css'
 import '../css/joinAgree.css'
 import '../css/login.css'
-import { usePersistedReducer } from '../store/usePersist'
 
 const App=({Component,pageProps})=>{
     // const globalContext=useContext(Store)
