@@ -159,7 +159,7 @@ const join = () => {
             <form onSubmit={handleSubmit} className="a">
                 <label className="margin24 inputFont" label htmlFor="userid" >이메일</label>
                 <input type="email" {...userid} onMouseOut = {handleuseridCheck} className="inputBox" name="userid" id="userid" placeholder="아이디로 사용할 이메일 입력" />
-                <div>{LoginCheck}</div>
+                <div className="idChk">{LoginCheck}</div>
                 <label className="margin24 inputFont" label htmlFor="userpw" >비밀번호</label>
                 <input type="password" {...userpw} className="inputBox" name="userpw" id="userpw" placeholder="비밀번호 입력" />
                 <ul className="passwordBox2">
