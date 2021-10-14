@@ -1,11 +1,14 @@
-import { useState, useEffect,useReducer,useRef } from "react"
+import { useState, useEffect,useReducer,useRef, useContext } from "react"
 import dynamic from 'next/dynamic';
 const ReactApexChart = dynamic(() => import('react-apexcharts'), { ssr: false });
 import dayjs from 'dayjs'
+import Store from '../store/context'
 
 const chart = () => {
   const ws = useRef(null);
-  const [graph, setGraph] = useState([])
+  const {state,dispatch} = useContext(Store)
+  // const [graph, setGraph] = useState([])
+  const [data, setData] = useState([])
   const [socket, setSocket] = useState(false);
 
 
@@ -19,29 +22,17 @@ const chart = () => {
         ws.current.close();
     };
   }, []);
-
+  let result = []
   useEffect(()=>{
     ws.current.onmessage=e=>{
-
-      setGraph(JSON.parse(e.data).graph)
-      console.log(graph)
+      state.graph = JSON.parse(e.data).graph
+      for (let i = 0; i < state.graph.length; i++) {
+        const x = new Date(state.graph[i].time * 1000)
+        const y = [state.graph[i].half_start, state.graph[i].half_max, state.graph[i].half_min, state.graph[i].half_last]
+        let obj = { x, y }
+        result.push(obj)
+      }
     }},[socket])
-
-    console.log(graph)
-
-    let result = []
-
-    for (let i = 0; i < graph.length; i++) {
-      const x = new Date(graph[i].time * 1000)
-      const y = [graph[i].half_start, graph[i].half_max, graph[i].half_min, graph[i].half_last]
-
-      let obj = { x, y }
-      result.push(obj)
-    }
-
-
-    console.log(result)
-
   const series = [{
     name: 'candle',
     data: result

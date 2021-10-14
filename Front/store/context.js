@@ -8,7 +8,9 @@ export const initialState={
     account:0,
     wallet:0,
     msg:'',
-    upload_Arr:[]
+    upload_Arr:[],
+    graph:[],
+    precontract:[]
 };
 
 

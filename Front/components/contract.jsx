@@ -6,7 +6,7 @@ const preContractcolor = { "borderBottom": "3px solid rgba(32, 201, 150)", "colo
 const contractedcolor = { "borderBottom": "3px solid rgba(32, 201, 150)", "color": "#333" }
 
 const PreContract = () => {
-    const [data, setData] = useState([]);
+    // const [data, setData] = useState([]);
     const [cancle, setCancle] = useState(0)
     const {state,dispatch} = useContext(Store)
 
@@ -17,15 +17,15 @@ const PreContract = () => {
             'Content-type': 'application/json'
         }, 
             body: JSON.stringify({
-            userid: state.userid,
+            userid: "123@naver.com",
             id:"0"
           })
         });
         const data = await response.json()
-        setData(data.data);
+        dispatch({ type: 'precontract', preContractArr:data.data})
         }, []);
 
-    const preContractData = data.map((v,k)=>{
+    let preContractData = state.precontract.map((v,k)=>{
         const timestamp = v.time
         const date = new Date(timestamp*1000)
         const year = date.getFullYear().toString().slice(-4)
@@ -33,7 +33,6 @@ const PreContract = () => {
         const day = ("0" + (date.getDate() +1 )).slice(-2)
         const hour = ("0" + (date.getHours() +1 )).slice(-2)
         const minute = ("0" + (date.getMinutes() +1 )).slice(-2)
-        console.log(data)
 
         const DeleteApi = () =>{
             setCancle(cancle+1)
@@ -71,7 +70,7 @@ const PreContract = () => {
                     </ul>
                     <ul id="PreContractQty2">
                         <li>{v.qty} GRT</li>
-                        <li>{v.rest}</li>
+                        <li>{v.rest} GRT</li>
                         <li>{year}.{month}.{day} {hour}:{minute}</li>
                     </ul>
                     <ul>

@@ -12,6 +12,7 @@
     overflow-y: scroll;
     scrollbar-width: none;
     box-shadow: 5px 5px 5px -2px rgb(0, 0, 0,.07) ;
+    box-sizing: border-box;
 }
 
 #contractBox::-webkit-scrollbar {
@@ -74,11 +75,15 @@
     display: flex;
     flex-direction: column;
     float: left;
-    padding: 10px 6px;
+    padding: 10px 3px;
+}
+.PreContractType{
+    width:120px;
 }
 
 .PreContractType li{
     padding:7px 0;
+    font-size: 13px;
 }
 #PreContractQty li{
     width:60px;
@@ -86,9 +91,9 @@
     font-size: 11px;
 }
 #PreContractQty2 li{
-    width:130px;
+    width:100px;
     padding:2.5px 0px;
-    font-size: 14px;
+    font-size: 12px;
 }
 
 .ContractedPrice{
