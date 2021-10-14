@@ -7,14 +7,14 @@ const asset = () =>{
 
     const [socket, setSocket] = useState(false);
     const ws = useRef(null);
+    const [assetarr, setAssetarr] = useState([])
     const [asset, setAsset] = useState(0)
-    // const [test, settest] = useState(e)
 
-    useEffect(() => {
+    useEffect(async () => {
         ws.current= new WebSocket('ws://127.0.0.1:8080');
-        ws.current.onopen=()=>{
-            setSocket(true)
+        ws.current.onopen=(e)=>{
         }
+
 
         return () => {
             ws.current.close();
@@ -22,28 +22,33 @@ const asset = () =>{
     }, []);
 
     useEffect(()=>{
-        // setInterval(()=>{
-            ws.current.onmessage=e=>{
-                console.log("+++++++++++++++++++++++++=");
-            setAsset(JSON.parse(e.data).assets[0])
-            console.log(JSON.parse(e.data).assets[0])
-            // dispatch({type:"upload", payload:JSON.parse(e.data).qty})
-            // console.log(state.upload_Arr)
+        ws.current.onmessage=e=>{
+            let betaArr = []
+            for(let j=0; j<JSON.parse(e.data).assets.length; j++) {
+                if(JSON.parse(e.data).assets[j].userid == state.userid){
+                    betaArr.push(JSON.parse(e.data).assets[j])
+                }else{
+                    continue; 
+                }
+            }
+            console.log(betaArr)
+            setAssetarr(betaArr)
+            console.log(assetarr)
+            let asset_beta = 0
+            for(let k=0; k<betaArr.length; k++){
+                asset_beta += betaArr[k].input
+            }
+            for(let t=0; t<assetarr.length; t++){
+                asset_beta -= assetarr[t].output 
+            }
+    
+            setAsset(asset_beta)
+            console.log(asset_beta)
         }
-    // },1000)
-        // const timeoutTEST = setTimeout(()=>{console.log(1)},1000)
-        // clearTimeout(timeoutTEST)
+    
+    
     },[socket])
 
-    // const [income, setincome] = useState(0);
-
-    //     let options = {
-    //         method: 'GET'
-    //     }
-
-    //     let result = await fetch(`${user_url}/info?userid=${Income}&Person=${Person}&Cost=${Cost}`, options)
-    //     const data = await result.json()
-    // }
     return(
         <>
             <div class = "wassert">
