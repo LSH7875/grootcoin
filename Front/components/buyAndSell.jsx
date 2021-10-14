@@ -13,7 +13,7 @@ const Buy = (props) => {
 
 
     useEffect(() => {
-        console.log(`bs에서 넘어온값: ${props}${props.bsState}`)
+        console.log(`bs에서 넘어온값: ${props}${props.bsState_Value}`)
     },[])
 
 
