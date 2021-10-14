@@ -20,7 +20,6 @@ const chart = () => {
         ws.current.close();
     };
   }, []);
-
   let result = []
   useEffect(()=>{
     ws.current.onmessage=e=>{
