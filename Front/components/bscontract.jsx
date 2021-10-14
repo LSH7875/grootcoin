@@ -9,8 +9,8 @@ const BsContract =  ()=>{
 
     return(
         <>
-            <BuyAndSell bsState={String(bsState)} setBsState={setBsState}/>
-            <Contract bsState={bsState} setBsState={setBsState}/>
+            <BuyAndSell bsState_Value = {bsState}/>
+            <Contract bsState_Value = {bsState}/>
         </>
     )
 }

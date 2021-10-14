@@ -71,30 +71,29 @@ async function wsinit() {
         let ago_day = now - one_day
         // 트랜젝션 기록이 있는지 체크 
        
+
         let graph = []
         for(let i=0; i < graph_data.length; i++){
           graph.push(graph_data[i])
         }
-        let ckeck_data = await connection.query(`select * from transaction ORDER BY regdate ASC`)
-        if (ckeck_data[0][0] !== undefined) {
-            // 하루전까지 데이터가 있는지 체크  없으면 마지막 기점으로 24시간 거래 체크 
-            for (i = 0; i < ckeck_data.length; i ++) {
-                let halfhour_data = await connection.query(`select payment,regdate from transaction ORDER BY regdate ASC`)
-                let halfhour_price = await connection.query(`select max(payment) as max, min(payment) as min from transaction ORDER BY regdate ASC`)
-                //30분 마다 고가 저가 시가 종가
-                graph.shift()
-                graph.push({
-                    half_max: halfhour_price[0][i].max,
-                    half_min: halfhour_price[0][i].min,
-                    half_start: halfhour_data[0][i].payment, 
-                    half_last: halfhour_data[0][i].payment,
-                    time: halfhour_data[0][i].regdate
-                })
-            }
-            console.log(graph[0])
-        } 
-
-
+//         let ckeck_data = await connection.query(`select * from transaction ORDER BY regdate ASC`)
+//         if (ckeck_data[0][0] !== undefined) {
+//             // 하루전까지 데이터가 있는지 체크  없으면 마지막 기점으로 24시간 거래 체크 
+//             for (i = 0; i < ckeck_data.length; i ++) {
+//                 let halfhour_data = await connection.query(`select payment,regdate from transaction ORDER BY regdate ASC`)
+//                 let halfhour_price = await connection.query(`select max(payment) as max, min(payment) as min from transaction ORDER BY regdate ASC`)
+//                 //30분 마다 고가 저가 시가 종가
+//                 graph.shift()
+//                 graph.push({
+//                     half_max: halfhour_price[0][i].max,
+//                     half_min: halfhour_price[0][i].min,
+//                     half_start: halfhour_data[0][i].payment, 
+//                     half_last: halfhour_data[0][i].payment,
+//                     time: halfhour_data[0][i].regdate
+//                 })
+//             }
+//             console.log(graph[0])
+//         } 
         // ws.send( JSON.stringify({
         //     "graph":graph,
         // "price":price, "time":time, "qty":qty, "regdate":regdate, "payment":payment, "a_amount":a_amount, "assets":assetsArr
