@@ -21,17 +21,23 @@ const chart = () => {
     };
   }, []);
 
-  let result = []
+
   useEffect(()=>{
     ws.current.onmessage=e=>{
       state.graph = JSON.parse(e.data).graph
-      for (let i = 0; i < state.graph.length; i++) {
-        const x = new Date(state.graph[i].time * 1000)
-        const y = [state.graph[i].half_start, state.graph[i].half_max, state.graph[i].half_min, state.graph[i].half_last]
-        let obj = { x, y }
-        result.push(obj)
-      }
+      console.log(state.graph)
+      
     }},[socket])
+    
+    let result = []
+    for (let i = 0; i < state.graph.length; i++) {
+      const x = new Date(state.graph[i].time * 1000)
+      const y = [state.graph[i].half_start, state.graph[i].half_max, state.graph[i].half_min, state.graph[i].half_last]
+      let obj = { x, y }
+      result.push(obj)
+    }
+
+
   const series = [{
     name: 'candle',
     data: result

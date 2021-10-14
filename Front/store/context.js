@@ -10,7 +10,8 @@ export const initialState={
     msg:'',
     upload_Arr:[],
     graph:[],
-    precontract:[]
+    precontract:[],
+    length:0
 };
 
 

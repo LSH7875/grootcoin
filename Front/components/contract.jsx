@@ -5,10 +5,29 @@ import Store from '../store/context'
 const preContractcolor = { "borderBottom": "3px solid rgba(32, 201, 150)", "color": "#333" }
 const contractedcolor = { "borderBottom": "3px solid rgba(32, 201, 150)", "color": "#333" }
 
-const PreContract = () => {
+const PreContract = (props) => {
     // const [data, setData] = useState([]);
     const [cancle, setCancle] = useState(0)
     const {state,dispatch} = useContext(Store)
+
+    // if(bsState change){
+    //     const Change = e => {
+
+    //         const response = await fetch("http://localhost:3003/api/coin/contract",{ 
+    //         method: "POST",
+    //         headers: {
+    //         'Content-type': 'application/json'
+    //     }, 
+    //         body: JSON.stringify({
+    //         userid: state.userid,
+    //         id:"0"
+    //       })
+    //     });
+    //     const data = await response.json()
+    //     dispatch({ type: 'precontract', preContractArr:data.data})
+
+    //     }
+    // }
 
     useEffect(async () => {
         const response = await fetch("http://localhost:3003/api/coin/contract",{ 
@@ -17,7 +36,7 @@ const PreContract = () => {
             'Content-type': 'application/json'
         }, 
             body: JSON.stringify({
-            userid: "123@naver.com",
+            userid: state.userid,
             id:"0"
           })
         });

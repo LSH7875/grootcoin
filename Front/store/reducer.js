@@ -62,9 +62,19 @@ const reducer = (state,action)=>{
             let arr = Object.values(action.preContractArr);
             return {
                 ...state,
-                precontract:[...arr]
+                precontract:[...arr],
+                prelength:state.precontract.length
             }
-            
+        case "precontractList":
+            return {
+                ...state,
+                length:action.length
+            }
+        case "precontractUpdate":
+            return {
+                ...state,
+                preContractArr:action.preContractArr
+            }
     }
 }
 

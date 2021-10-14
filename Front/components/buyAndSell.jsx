@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext} from 'react'
+import { useEffect, useState, useContext, Component} from 'react'
 import Link from 'next/link'
 import axios from 'axios';
 import Store from '../store/context'
@@ -6,10 +6,15 @@ import Store from '../store/context'
 const buycolor = { "background": "rgba(225,35,67)", "color": "#fff" }
 const sellcolor = { "background": "rgba(23,99,182)", "color": "#fff" }
 
-const Buy = () => {
+const Buy = (props) => {
     const [buyPrice,setBuyPrice] = useState(0)
     const [volume,setVolume] = useState(0)
     const {state,dispatch} = useContext(Store)
+
+
+    useEffect(() => {
+        console.log(`bs에서 넘어온값: ${props}${props.bsState}`)
+    },[])
 
 
     const onChange = e => {
@@ -20,7 +25,7 @@ const Buy = () => {
         setVolume(e.target.value)
     }
 
-    const buyApi = () =>{
+    const buyApi = async () =>{
         axios.post("http://localhost:3003/api/coin/buy_order", {
             userid: state.userid,
             price: buyPrice,
@@ -40,6 +45,26 @@ const Buy = () => {
         })
         setBuyPrice(0)
         setVolume(0)
+
+        this.props.bsState++
+        console.log(this.props.bsState)
+        // const response = await fetch("http://localhost:3003/api/coin/contract",{ 
+        //     method: "POST",
+        //     headers: {
+        //     'Content-type': 'application/json'
+        // }, 
+        //     body: JSON.stringify({
+        //     userid: state.userid,
+        //     id:"0"
+        //   })
+        // });
+        // const data = await response.json()
+        // console.log(data.data.length)
+        // dispatch({ type: 'precontractList', length:data.data.length})
+
+        // if(state.prelength != state.length){
+        // dispatch({ type: 'precontractUpdate', preContractArr:data.data})
+        // }
     }
     const priceUp = () =>{
         setBuyPrice((price)=>price+1)
