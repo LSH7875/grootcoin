@@ -30,7 +30,6 @@ const header = ()=>{
                     <Link href={`/logout`}><a className="logout Btn">로그아웃</a></Link>
                                     
                 } 
-
             </div>
         </div>
     )
