@@ -3,15 +3,22 @@ import Link from 'next/link'
 import axios from 'axios';
 import Store from '../store/context'
 
-
 const buycolor = { "background": "rgba(225,35,67)", "color": "#fff" }
 const sellcolor = { "background": "rgba(23,99,182)", "color": "#fff" }
-
 
 const Buy = () => {
     const [buyPrice,setBuyPrice] = useState(0)
     const [volume,setVolume] = useState(0)
     const {state,dispatch} = useContext(Store)
+
+
+    const onChange = e => {
+        setBuyPrice(e.target.value)
+    }
+
+    const onChange2 = e => {
+        setVolume(e.target.value)
+    }
 
     const buyApi = () =>{
         axios.post("http://localhost:3003/api/coin/buy_order", {
@@ -34,7 +41,6 @@ const Buy = () => {
         setBuyPrice(0)
         setVolume(0)
     }
-    
     const priceUp = () =>{
         setBuyPrice((price)=>price+1)
     }
@@ -51,7 +57,6 @@ const Buy = () => {
         setVolume((volume)=>volume>0 ? volume-1 : 0)
     }
 
-
     return (
         <div>
             <ul className="flex">
@@ -65,7 +70,7 @@ const Buy = () => {
             <div className="priceBox">
                 <h6>가격(KRW)</h6>
                 <ul className="coinPrice">
-                    <li>{buyPrice}</li>
+                    <li><input type="number" value={buyPrice} onChange={onChange} /></li>
                     <li>
                         <ul className="plusMinus">
                             <li><button onClick={priceDown}>-</button></li>
@@ -77,7 +82,7 @@ const Buy = () => {
             <div className="priceBox">
                 <h6>수량(GRT)</h6>
                 <ul className="coinPrice">
-                    <li>{volume}</li>
+                    <li><input type="number" value={volume} onChange={onChange2} /></li>
                     <li>
                         <ul className="plusMinus">
                             <li><button onClick={volumeDown}>-</button></li>
@@ -88,11 +93,11 @@ const Buy = () => {
             </div>
             <ul className="flex">
                 <li>주문 금액</li>
-                <li>0 KRW</li>
+                <li>{buyPrice*volume} KRW</li>
             </ul>
             <ul className="flex">
-                <li>매수 수량</li>
-                <li>0 GRT</li>
+                <li>매수 금액</li>
+                <li>{volume} GRT</li>
             </ul>
             { state.login_boolean === 0 ? 
                 <Link href={`/login`}>
@@ -114,10 +119,17 @@ const Sell = () =>{
     const [sellPrice,setSellPrice] = useState(0)
     const [volume,setVolume] = useState(0)
     const {state,dispatch} = useContext(Store)
-    console.log(state.login_boolean == false)
+
+    const onChange = e => {
+        setSellPrice(e.target.value)
+    }
+
+    const onChange2 = e => {
+        setVolume(e.target.value)
+    }
 
     const sellApi = () =>{
-        axios.post("http://localhost:3003/api/coin/buy_order", {
+        axios.post("http://localhost:3003/api/coin/sell_order", {
             userid: state.userid,
             price: sellPrice,
             qty: volume,
@@ -166,7 +178,7 @@ const Sell = () =>{
             <div className="priceBox">
                 <h6>가격(KRW)</h6>
                 <ul className="coinPrice">
-                    <li>{sellPrice}</li>
+                    <li><input type="number" value={sellPrice} onChange={onChange} /></li>
                     <li>
                         <ul className="plusMinus">
                             <li><button onClick={onDown}>-</button></li>
@@ -178,7 +190,7 @@ const Sell = () =>{
             <div className="priceBox">
                 <h6>수량(GRT)</h6>
                 <ul className="coinPrice">
-                    <li>{volume}</li>
+                    <li><input type="number" value={volume} onChange={onChange2} /></li>
                     <li>
                         <ul className="plusMinus">
                             <li><button onClick={volumeDown}>-</button></li>
@@ -189,11 +201,11 @@ const Sell = () =>{
             </div>
             <ul className="flex">
                 <li>주문 금액</li>
-                <li>0 KRW</li>
+                <li>{sellPrice*volume} KRW</li>
             </ul>
             <ul className="flex">
                 <li>매도 금액</li>
-                <li>0 KRW</li>
+                <li>{volume} KRW</li>
             </ul>
             { state.login_boolean === 0 ? 
                 <Link href={`/login`}>

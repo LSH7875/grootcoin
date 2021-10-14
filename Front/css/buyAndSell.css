@@ -70,9 +70,13 @@
 
 .coinPrice{
     display: flex;
-    width:300px;
-    border:1px solid rgba(153, 153, 153, 0.342);
+    width:250px;
     border-radius: 5px;
+}
+
+.coinPrice li input{
+    margin-left: -20px;
+    width:200px
 }
 
 .plusMinus{
@@ -84,14 +88,8 @@
     width:30px;
     height:30px;
     background-color:white;
-    /* border:1px solid rgba(153, 153, 153, 0.342); */
-}
-/* .flexLeft{
-    width:100px;
-    margin-left:auto;
 }
 
-.flexRight{
-    width: 100px;
-    margin-right:auto;
-} */
+.plusMinus li button:hover{
+    background-color: rgb(238,238,238);
+}

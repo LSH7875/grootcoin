@@ -26,7 +26,6 @@ const history = ()=> {
             setpayment(JSON.parse(e.data).payment)
             seta_amount(JSON.parse(e.data).a_amount)
             setregdate(JSON.parse(e.data).regdate)
-            console.log(JSON.parse(e.data).payment)
         }
     },[socket])
 

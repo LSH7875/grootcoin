@@ -349,6 +349,7 @@ async function wsinit() {
           }
         ]
 
+
         // let ckeck_data = await connection.query(`select * from transaction ORDER BY regdate ASC`)
         // if (ckeck_data[0][0] !== undefined) {
         //     // 하루전까지 데이터가 있는지 체크  없으면 마지막 기점으로 24시간 거래 체크 
@@ -717,7 +718,7 @@ async function join() {
         payment.push(transaction[0][i].payment)
         a_amount.push(transaction[0][i].a_amount)
     }
-   
+
 wss.clients.forEach((e) => {
     e.send( JSON.stringify({"price":price, "time":time, "qty":qty, "regdate":regdate, "payment":payment, "a_amount":a_amount, "assets":assetsArr, "graph":graph}))
 })

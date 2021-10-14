@@ -1,3 +1,4 @@
+import { compareDocumentPosition } from '../../Back/node_modules/domutils/lib'
 import {initialState} from './context'
 
 const reducer = (state,action)=>{
@@ -57,6 +58,13 @@ const reducer = (state,action)=>{
                 upload_Arr:NewArr
                 
             }
+        case "precontract":
+            let arr = Object.values(action.preContractArr);
+            return {
+                ...state,
+                precontract:[...arr]
+            }
+            
     }
 }
 
