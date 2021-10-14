@@ -7,8 +7,6 @@ import Store from '../store/context'
 const chart = () => {
   const ws = useRef(null);
   const {state,dispatch} = useContext(Store)
-  // const [graph, setGraph] = useState([])
-  const [data, setData] = useState([])
   const [socket, setSocket] = useState(false);
 
 
