@@ -15,21 +15,12 @@ async function wsinit() {
         let assets = await connection.query(`select * from assets`)
         
         let assetsArr = []
-        let assets_result = 0
-        
-        for(let i=0; i<assets[0].length; i++)
-        {
-            assets_result = assets_result + assets[0][i].input
-            // assets_result = assets_result - assets[0][i].output
+    
+        for(let j=0; j<assets[0].length; j++){
+          assetsArr.push(assets[0][j])
         }
-        for(let i=0; i<assets[0].length; i++)
-        {
-            // assets_result = assets_result + assets[0][i].input
-            // assets_result = assets_result - assets[0][i].output
-        }
-        console.log(assets_result)
-        assetsArr.push(assets_result)
 
+        console.log(assetsArr)
         let coin_orderbook = await connection.query(`select * from coin_orderbook`)
         
         let price = []
@@ -385,7 +376,7 @@ async function wsinit() {
         // "price":price, "time":time, "qty":qty, "regdate":regdate, "payment":payment, "a_amount":a_amount, "assets":assetsArr
         // }))
         wss.clients.forEach((e) => {
-            e.send( JSON.stringify({"price":price, "time":time, "qty":qty, "regdate":regdate, "payment":payment, "a_amount":a_amount, "assets":assetsArr,"graph":graph}))
+            e.send( JSON.stringify({"price":price, "time":time, "qty":qty, "regdate":regdate, "payment":payment, "a_amount":a_amount, "assets":assetsArr, "graph":graph}))
         })
         });
 }
@@ -394,51 +385,6 @@ async function join() {
 
     let connection;
     let content = []
-    
-    connection = await pool.getConnection(async conn => conn);
-      
-    let assets = await connection.query(`select * from assets`)
-        
-    let assetsArr = []
-    let assets_result = 0
-    
-    for(let i=0; i<assets[0].length; i++)
-    {
-        assets_result = assets_result + assets[0][i].input
-        // assets_result = assets_result - assets[0][i].output
-    }
-    for(let i=0; i<assets[0].length; i++)
-    {
-        // assets_result = assets_result + assets[0][i].input
-        // assets_result = assets_result - assets[0][i].output
-    }
-    console.log(assets_result)
-    assetsArr.push(assets_result)
-
-    let coin_orderbook = await connection.query(`select * from coin_orderbook`)
-    
-    let price = []
-    let time = []
-    let qty = []
-    for(let i=0; i<coin_orderbook[0].length; i++)
-    {
-        price.push(coin_orderbook[0][i].price)
-        time.push(coin_orderbook[0][i].time)
-        qty.push(coin_orderbook[0][i].coin_id)
-    }
-
-    let transaction = await connection.query(`select * from transaction`)
-    
-    let regdate = []
-    let payment = []
-    let a_amount = []
-    for(let i=0; i<transaction[0].length; i++)
-    {
-        regdate.push(`${new Date(transaction[0][i].regdate*1000).getFullYear()}-${new Date(transaction[0][i].regdate*1000).getMonth()+1}-${new Date(transaction[0][i].regdate*1000).getDate()} ${("0" + new Date(transaction[0][i].regdate*1000).getHours()).slice(-2)}:${("0" + new Date(transaction[0][i].regdate*1000).getMinutes()).slice(-2)}`)
-        payment.push(transaction[0][i].payment)
-        a_amount.push(transaction[0][i].a_amount)
-    }
-
     let graph = 
         [
         {
@@ -736,6 +682,41 @@ async function join() {
             half_last:6592
           }
         ]
+        connection = await pool.getConnection(async conn => conn);
+        let assets = await connection.query(`select * from assets`)
+        
+        let assetsArr = []
+    
+        for(let j=0; j<assets[0].length; j++){
+          assetsArr.push(assets[0][j])
+        }
+
+        console.log(assetsArr)
+   
+
+    let coin_orderbook = await connection.query(`select * from coin_orderbook`)
+    
+    let price = []
+    let time = []
+    let qty = []
+    for(let i=0; i<coin_orderbook[0].length; i++)
+    {
+        price.push(coin_orderbook[0][i].price)
+        time.push(coin_orderbook[0][i].time)
+        qty.push(coin_orderbook[0][i].coin_id)
+    }
+
+    let transaction = await connection.query(`select * from transaction`)
+    
+    let regdate = []
+    let payment = []
+    let a_amount = []
+    for(let i=0; i<transaction[0].length; i++)
+    {
+        regdate.push(`${new Date(transaction[0][i].regdate*1000).getFullYear()}-${new Date(transaction[0][i].regdate*1000).getMonth()+1}-${new Date(transaction[0][i].regdate*1000).getDate()} ${("0" + new Date(transaction[0][i].regdate*1000).getHours()).slice(-2)}:${("0" + new Date(transaction[0][i].regdate*1000).getMinutes()).slice(-2)}`)
+        payment.push(transaction[0][i].payment)
+        a_amount.push(transaction[0][i].a_amount)
+    }
 
 wss.clients.forEach((e) => {
     e.send( JSON.stringify({"price":price, "time":time, "qty":qty, "regdate":regdate, "payment":payment, "a_amount":a_amount, "assets":assetsArr, "graph":graph}))
