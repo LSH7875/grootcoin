@@ -33,7 +33,7 @@
 
 .text2{
     font-size:12px;
-    color:#79818f;
+    color:#fff;
 }
 
 .text1-1{
@@ -54,7 +54,7 @@
 
 .text2-1{
     font-size:12px;
-    color:#79818f;
+    color:#fff;
 }
 
 .text2-1:before{
@@ -82,11 +82,11 @@
 .text3{
     
     float:right;
-    color:#79818f;
+    color:#fff;
     font-size:12px;
 }
 
 .text3-1{
-    color:#79818f;
+    color:#fff;
     font-size:12px;
 }

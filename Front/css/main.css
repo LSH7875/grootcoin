@@ -83,6 +83,14 @@ a{
     background-color:rgba(32,201,151);
 }
 
+.nameOn{
+    margin-top:90px;
+    margin-right:5px;
+    text-indent:-30px;
+    
+
+}
+
 .join{
     margin-left:30px;
 }

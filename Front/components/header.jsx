@@ -26,8 +26,10 @@ const header = ()=>{
                     <Link href={`/joinAgree`}><a className="join Btn">회원가입</a></Link>
                 </>
                 :
+                <>
+                <span className="logout nameOn">{state.userid} 님</span>
                 <Link href={`/logout`}><a className="logout Btn">로그아웃</a></Link>
-                                
+                </>              
             } 
 
         </div>
