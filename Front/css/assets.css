@@ -5,9 +5,12 @@
 }
 
 .w1200asserts{
-    width:1400px;
+    width:1600px;
     margin:0 auto;
     padding:0;
+}
+.wdeposit{
+    margin-left: 80px;
 }
 .asserts_navi_left, .asserts_navi_right{
     display: inline-block;

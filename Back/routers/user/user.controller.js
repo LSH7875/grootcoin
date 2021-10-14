@@ -85,8 +85,21 @@ let login_check = async (req, res, next) => {
     }
 }
 
+let assets = async (req, res, next) => {
+    
+    let connection;
+    connection = await pool.getConnection(async conn => conn);
+
+    const {userid} = req.query
+
+    let assets_result = await connection.query(`select * from assets where userid = '${userid}' `)
+
+    res.json(assets_result)
+    console.log(assets_result)
+}
 module.exports = {
     join_success,
     login_success,
-    login_check
+    login_check,
+    assets
 }
