@@ -15,7 +15,6 @@ const orderBook = () =>{
         ws.current.onopen=()=>{
             setSocket(true)
         }
-
         return () => {
             ws.current.close();
         };
@@ -23,27 +22,32 @@ const orderBook = () =>{
 
     useEffect(()=>{
             ws.current.onmessage=e=>{
-            setpriceArr(JSON.parse(e.data).price)
-            settimeArr(JSON.parse(e.data).time)
-            setqtyArr(JSON.parse(e.data).qty)
-
+                console.log(JSON.parse(e.data).orderbook);
+                console.log(JSON.parse(e.data).graph);
+            // setpriceArr(JSON.parse(e.data).price)
+            // settimeArr(JSON.parse(e.data).time)
+            // setqtyArr(JSON.parse(e.data).qty)
+            // console.log("++++++++++++++")
+            //console.log(JSON.parse(e.data).price)
 
         }
     },[socket])
 
-    // const callprice = price.filter((v,k)=>{
-    //     if(price.indexOf(v) == k)
-    //         return v
-    // })  
+    const callprice = price.filter((v,k)=>{
+        if(price.indexOf(v) == k)
+            return v
+    })  
 
-    // for(let i=0; i<callprice.length; i++){
-    //     let fromIndex = price.indexOf(callprice[i]);
-    //     while(fromIndex != -1)  {
-    //     console.log(fromIndex)
-    //     fromIndex = price.indexOf(callprice[i], fromIndex+1);
-    //     }
+    for(let i=0; i<callprice.length; i++){
+        let fromIndex = price.indexOf(callprice[i]);
+        while(fromIndex != -1)  {
+        console.log(fromIndex)
+        fromIndex = price.indexOf(callprice[i], fromIndex+1);
+        }
 
-    // }
+    }
+
+    console.log(callprice)
 
     return(
         <div id="orderBookBox">
