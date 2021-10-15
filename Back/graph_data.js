@@ -50,7 +50,7 @@ let graph_data = [
           {
             time:1538791200000,
             half_start:6627,
-            half_max:7.62,
+            half_max:7620,
             half_min:6584.22,
             half_last:6603.02
           },
