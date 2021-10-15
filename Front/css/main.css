@@ -96,6 +96,20 @@ a{
     color:black;
 }
 
+.idOn{
+    height:50px;
+    line-height:50px;
+    margin-top: 75px;
+    margin-right: 10px;
+    padding: 0 10px;
+    text-align: center;
+    font-size: 20px;
+    border: 1px solid rgba(153, 153, 153, 0.342);
+    border-radius: 5px;
+    background-color:rgba(255, 255, 255, 0.897);
+    color:black;
+}
+
 .nameOn{
     margin-top:90px;
     margin-right:5px;
