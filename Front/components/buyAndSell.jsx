@@ -11,12 +11,6 @@ const Buy = (props) => {
     const [volume,setVolume] = useState(0)
     const {state,dispatch} = useContext(Store)
 
-
-    useEffect(() => {
-        console.log(`bs에서 넘어온값: ${props}${props.bsState_Value}`)
-    },[])
-
-
     const onChange = e => {
         setBuyPrice(e.target.value)
     }
@@ -25,7 +19,21 @@ const Buy = (props) => {
         setVolume(e.target.value)
     }
 
-    const buyApi = async () =>{
+    const updateOrder = ()=>{
+        props.newSet()
+    }
+
+    const updateOrder2 = ()=>{
+        props.newSet2()
+    }
+
+    const updateBuy = ()=>{
+        buyApi()
+        updateOrder()
+        updateOrder2()
+    }
+
+    const buyApi = () =>{
         axios.post("http://localhost:3003/api/coin/buy_order", {
             userid: state.userid,
             price: buyPrice,
@@ -45,26 +53,6 @@ const Buy = (props) => {
         })
         setBuyPrice(0)
         setVolume(0)
-
-        this.props.bsState++
-        console.log(this.props.bsState)
-        // const response = await fetch("http://localhost:3003/api/coin/contract",{ 
-        //     method: "POST",
-        //     headers: {
-        //     'Content-type': 'application/json'
-        // }, 
-        //     body: JSON.stringify({
-        //     userid: state.userid,
-        //     id:"0"
-        //   })
-        // });
-        // const data = await response.json()
-        // console.log(data.data.length)
-        // dispatch({ type: 'precontractList', length:data.data.length})
-
-        // if(state.prelength != state.length){
-        // dispatch({ type: 'precontractUpdate', preContractArr:data.data})
-        // }
     }
     const priceUp = () =>{
         setBuyPrice((price)=>price+1)
@@ -131,16 +119,15 @@ const Buy = (props) => {
                     </button>
                 </Link>
                 : 
-                    <button onClick={buyApi} className="buy Btn2">
+                    <button onClick={updateBuy} className="buy Btn2">
                         매수
                     </button>
             }
-
         </div>
     )
 }
 
-const Sell = () =>{
+const Sell = (props) =>{
     const [sellPrice,setSellPrice] = useState(0)
     const [volume,setVolume] = useState(0)
     const {state,dispatch} = useContext(Store)
@@ -151,6 +138,20 @@ const Sell = () =>{
 
     const onChange2 = e => {
         setVolume(e.target.value)
+    }
+
+    const updateOrder = ()=>{
+        props.newSet()
+    }
+
+    const updateOrder2 = ()=>{
+        props.newSet2()
+    }
+
+    const updateSell = ()=>{
+        sellApi()
+        updateOrder()
+        updateOrder2()
     }
 
     const sellApi = () =>{
@@ -171,6 +172,8 @@ const Sell = () =>{
         .catch(error => {
             console.log('실패났음',error)
         })
+        setSellPrice(0)
+        setVolume(0)
     }
 
     const onUp = () =>{
@@ -239,7 +242,7 @@ const Sell = () =>{
                     </button>
                 </Link>
                 : 
-                    <button onClick={sellApi} className="sell Btn2">
+                    <button onClick={updateSell} className="sell Btn2">
                         매도
                     </button>
             }
@@ -247,7 +250,7 @@ const Sell = () =>{
     )
 }
 
-const buyAndSell = ()=>{
+const buyAndSell = (props)=>{
     const [bsBtn, setbsBtn] = useState('buy')
 
     const buy = () =>{
@@ -266,8 +269,8 @@ const buyAndSell = ()=>{
                 </div>
                 {
                     bsBtn === 'buy'
-                        ? <Buy />
-                        : <Sell />
+                        ? <Buy newSet={props.newSet} newSet2={props.newSet2}/>
+                        : <Sell newSet={props.newSet} newSet2={props.newSet2}/>
                 }
             </div>
     )

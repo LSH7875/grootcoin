@@ -6,45 +6,10 @@ const preContractcolor = { "borderBottom": "3px solid rgba(32, 201, 150)", "colo
 const contractedcolor = { "borderBottom": "3px solid rgba(32, 201, 150)", "color": "#333" }
 
 const PreContract = (props) => {
-    // const [data, setData] = useState([]);
-    const [cancle, setCancle] = useState(0)
-    const {state,dispatch} = useContext(Store)
 
-    // if(bsState change){
-    //     const Change = e => {
+    let updatePreArr = props.preArr
 
-    //         const response = await fetch("http://localhost:3003/api/coin/contract",{ 
-    //         method: "POST",
-    //         headers: {
-    //         'Content-type': 'application/json'
-    //     }, 
-    //         body: JSON.stringify({
-    //         userid: state.userid,
-    //         id:"0"
-    //       })
-    //     });
-    //     const data = await response.json()
-    //     dispatch({ type: 'precontract', preContractArr:data.data})
-
-    //     }
-    // }
-
-    useEffect(async () => {
-        const response = await fetch("http://localhost:3003/api/coin/contract",{ 
-            method: "POST",
-            headers: {
-            'Content-type': 'application/json'
-        }, 
-            body: JSON.stringify({
-            userid: state.userid,
-            id:"0"
-          })
-        });
-        const data = await response.json()
-        dispatch({ type: 'precontract', preContractArr:data.data})
-        }, []);
-
-    let preContractData = state.precontract.map((v,k)=>{
+    let preContractData = updatePreArr.map((v,k)=>{
         const timestamp = v.time
         const date = new Date(timestamp*1000)
         const year = date.getFullYear().toString().slice(-4)
@@ -101,31 +66,14 @@ const PreContract = (props) => {
             <>
                 {preContractData}
             </>
-
         )
-
 }
 
-const Contracted = () =>{
-    const [data, setData] = useState([]);
-    const {state,dispatch} = useContext(Store)
-    useEffect(async () => {
-        const response = await fetch("http://localhost:3003/api/coin/search_deal",{ 
-            method: "POST",
-            headers: {
-            'Content-type': 'application/json'
-        }, 
-            body: JSON.stringify({
-            userid: state.userid,
-            id:"1"
-          })
-        });
-        const data = await response.json()
-        setData(data.deal);
-        console.log(data.deal)
-      }, []);
+const Contracted = (props) =>{
 
-    const contractedData = data.map((v,k)=>{
+    let updateConArr = props.conArr
+
+    const contractedData = updateConArr.map((v,k)=>{
         const timestamp = v.time
         const date = new Date(timestamp*1000)
         const year = date.getFullYear().toString().slice(-4)
@@ -160,7 +108,7 @@ const Contracted = () =>{
     )
 }
 
-const contract = () =>{
+const contract = (props) =>{
     const [contract,setContract] = useState(false)
 
     const preContract = () =>{
@@ -179,10 +127,9 @@ const contract = () =>{
                 </div>
                 {
                     contract === false
-                        ? <PreContract />
-                        : <Contracted />
+                        ? <PreContract  preArr = {props.preArr}/>
+                        : <Contracted  conArr = {props.conArr}/>
                 }
-
             </div>
         </>
     )
