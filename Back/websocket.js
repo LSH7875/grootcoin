@@ -81,18 +81,18 @@ async function wsinit() {
         let halfhour_data = await connection.query(`select payment,regdate from transaction where regdate >= "${start}" AND regdate <="${plus_day}" ORDER BY regdate ASC`)
         let halfhour_price = await connection.query(`select max(payment) as max, min(payment) as min from transaction where regdate >= "${start}" AND regdate <="${plus_day}" ORDER BY regdate ASC`)
         //30분 마다 고가 저가 시가 종가
-        if (halfhour_data !== undefined && halfhour_price !== undefined) {
+        console.log(halfhour_data[0][0]);
+        if (halfhour_data[0][0] !== undefined && halfhour_price[0][0] !== undefined) {
           graph.shift()
           graph.push({
             half_max: halfhour_price[0][i].max,
             half_min: halfhour_price[0][i].min,
-            half_start: halfhour_data[0][i].payment,
-            half_last: halfhour_data[0][i].payment,
+            half_start: halfhour_data[0][0].payment,
+            half_last: halfhour_data[0][halfhour_data.length - 1].payment,
             time: halfhour_data[0][i].regdate
           })
         }
       }
-      console.log(graph[0])
     }
     // ws.send( JSON.stringify({
     //     "graph":graph,
@@ -148,7 +148,7 @@ async function join() {
     order.push(buy_order[0][i])
   }
 
-  let orderbook = { "buy": buy, "sell": sell, "order": order,"last": last }
+  let orderbook = { "buy": buy, "sell": sell, "order": order, "last": last }
   console.log(orderbook);
 
 
@@ -163,8 +163,42 @@ async function join() {
     a_amount.push(transaction[0][i].a_amount)
   }
 
+     //그래프에 필요한값
+     let one_day = 24 * (60 * 60)
+     let one_month = (24 * (60 * 60)) * 30
+     let now = Math.floor(+ new Date() / 1000);
+     let ago_day = now - one_month
+     // 트랜젝션 기록이 있는지 체크 
+ 
+     let graph = []
+     for (let i = 0; i < graph_data.length; i++) {
+       graph.push(graph_data[i])
+     }
+     let ckeck_data = await connection.query(`select * from transaction where regdate >= "${ago_day}" ORDER BY regdate ASC`)
+     if (ckeck_data[0][0] !== undefined) {
+       // 하루전까지 데이터가 있는지 체크  없으면 마지막 기점으로 24시간 거래 체크 
+       for (i = 0; i < ckeck_data.length; i++) {
+         let plus_day = now - ((one_month - (one_day * (i + 1))))
+         let start = now - (one_month - one_day * i)
+         let halfhour_data = await connection.query(`select payment,regdate from transaction where regdate >= "${start}" AND regdate <="${plus_day}" ORDER BY regdate ASC`)
+         let halfhour_price = await connection.query(`select max(payment) as max, min(payment) as min from transaction where regdate >= "${start}" AND regdate <="${plus_day}" ORDER BY regdate ASC`)
+         //30분 마다 고가 저가 시가 종가
+         console.log(halfhour_data[0][0]);
+         if (halfhour_data[0][0] !== undefined && halfhour_price[0][0] !== undefined) {
+           graph.shift()
+           graph.push({
+             half_max: halfhour_price[0][i].max,
+             half_min: halfhour_price[0][i].min,
+             half_start: halfhour_data[0][0].payment,
+             half_last: halfhour_data[0][halfhour_data.length - 1].payment,
+             time: halfhour_data[0][i].regdate
+           })
+         }
+       }
+     }
+
   wss.clients.forEach((e) => {
-    e.send(JSON.stringify({ "orderbook":orderbook, "regdate": regdate, "payment": payment, "a_amount": a_amount, "assets": assetsArr }))
+    e.send(JSON.stringify({ "orderbook": orderbook, "regdate": regdate, "payment": payment, "a_amount": a_amount, "assets": assetsArr , "graph":graph}))
   })
 
 }
