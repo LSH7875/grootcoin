@@ -25,7 +25,7 @@ const chart = () => {
   useEffect(()=>{
     ws.current.onmessage=e=>{
       state.graph = JSON.parse(e.data).graph
-      console.log(state.graph)
+      //console.log(state.graph)
       
     }},[socket])
     

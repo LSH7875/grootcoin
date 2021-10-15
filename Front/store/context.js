@@ -11,8 +11,6 @@ export const initialState={
     upload_Arr:[],
     graph:[],
     precontract:[],
-    prelength:0,
-    length:0
 };
 
 
