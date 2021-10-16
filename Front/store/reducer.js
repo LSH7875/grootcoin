@@ -83,12 +83,12 @@ const reducer = (state,action)=>{
                     }
                     pre_order_num=order[i].price;
                 }
-
+                console.log(orderArr)
                 let j = 0; 
-                while(pre_order_num>=orderArr[j].price){
-                    j++;
-                     if(j==(orderArr.length-1))break;
-                }
+                // while(pre_order_num>=orderArr[j].price){
+                //     j++;
+                //      if(j==(orderArr.length-1))break;
+                // }
                 j= j>0? j--:0;
                 for(let i=0;i<30;i++){
                     if (start_money==orderArr[j].price){
