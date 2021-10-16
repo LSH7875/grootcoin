@@ -1,16 +1,15 @@
 import React,{ useState, useRef, useEffect, useContext } from 'react'
 import Store from '../store/context'
 const orderBook = () =>{
-
+    let [pre_order_data,setpre_order_data] = useState([]);
     const {state,dispatch} = useContext(Store)
-
+    const [order,setOrder] = useState([]);
     const [socket, setSocket] = useState(false);
     const ws = useRef(null);
-    const [price, setpriceArr] = useState([])
-    const [time, settimeArr] = useState([])
-    const [qty, setqtyArr] = useState([])
-
+    const [buy, setBuy] = useState([])
+    const [sell, setSell] = useState([])
     useEffect(() => {
+        
         ws.current= new WebSocket('ws://127.0.0.1:8080');
         ws.current.onopen=()=>{
             setSocket(true)
@@ -21,33 +20,16 @@ const orderBook = () =>{
     }, []);
 
     useEffect(()=>{
+        
             ws.current.onmessage=e=>{
-                console.log(JSON.parse(e.data).orderbook);
-                console.log(JSON.parse(e.data).graph);
-            // setpriceArr(JSON.parse(e.data).price)
-            // settimeArr(JSON.parse(e.data).time)
-            // setqtyArr(JSON.parse(e.data).qty)
-            // console.log("++++++++++++++")
-            //console.log(JSON.parse(e.data).price)
+                dispatch({type:"orderbook",payload:JSON.parse(e.data).orderbook})
+                setpre_order_data(JSON.parse(e.data).orderbook.order);
+                setOrder(JSON.parse(e.data).orderbook.order);
+                setBuy(JSON.parse(e.data).orderbook.buy[0]);
+                setSell(JSON.parse(e.data).orderbook.sell[0]);
 
         }
     },[socket])
-
-    const callprice = price.filter((v,k)=>{
-        if(price.indexOf(v) == k)
-            return v
-    })  
-
-    for(let i=0; i<callprice.length; i++){
-        let fromIndex = price.indexOf(callprice[i]);
-        while(fromIndex != -1)  {
-        console.log(fromIndex)
-        fromIndex = price.indexOf(callprice[i], fromIndex+1);
-        }
-
-    }
-
-    console.log(callprice)
 
     return(
         <div id="orderBookBox">
@@ -55,29 +37,44 @@ const orderBook = () =>{
                 <thead className="fixedHeader">
                     <div className="float_left order_1">가격</div>
                     <div className="float_left order_2">수량</div>
-                    <div className="float_left order_2">누적수량</div>
                 </thead>
                 <tbody>
                 <div>
-                    <div className = "float_left order_1">
-                    {price.map((ele) =>  <div className="order-2">{ele}</div>)}
-                    </div>
-                    <div className = "float_left order_2">
-                    {time.map((ele) =>  <div className="order-2">{ele}</div>)}
-                    </div>
-                    <div className = "float_left order_2">
-                    {qty.map((ele) =>  <div className="order-3">{ele}</div>)}
-                    </div>
+                    {state.orderbook.map((v,k)=>{
+                        return(
+                            state.currentPrice>=v.price?
+                            <>
+                            <div key={k}>
+                            <div className = "float_left order_1">
+                                <div className="order-2" style={{color:"blue",BackgroundColor:"lightblue"}}>{v.price}</div>
+                            </div>
+                            <div className = "float_left order_2">
+                                 <div className="order-2" style={{color:"blue"}}>{v.rest}</div>
+                            </div>
+                            </div>
+                            </>
+                            :
+                            <>
+                            <div key={k}>
+                            <div className = "float_left order_1">
+                                <div className="order-2" style={{color:"red"}}>{v.price}</div>
+                            </div>
+                            <div className = "float_left order_2">
+                                 <div className="order-2" style={{color:"red"}}>{v.rest}</div>
+                            </div>
+                            </div>
+                            </>
+                        )})}
                 </div>
                 </tbody>              
             </table>
             <ul>
-                <li>매도 잔량</li>
-                <li>1.2345</li>
+                <li style={{color:"blue"}}>매도 잔량</li>
+                <li style={{color:"blue"}}>{state.buyQty}</li>
             </ul>
             <ul>
-                <li>매수 잔량</li>
-                <li>1.2345</li>
+                <li style={{color:"red"}}>매수 잔량</li>
+                <li style={{color:"red"}}>{state.sellQty}</li>
             </ul>
         </div>
     )
