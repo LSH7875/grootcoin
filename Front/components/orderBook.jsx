@@ -22,6 +22,9 @@ const orderBook = () =>{
     useEffect(()=>{
         
             ws.current.onmessage=e=>{
+                
+                console.log('받은메세지');
+                console.log(JSON.parse(e.data).orderbook)
                 dispatch({type:"orderbook",payload:JSON.parse(e.data).orderbook})
                 setpre_order_data(JSON.parse(e.data).orderbook.order);
                 setOrder(JSON.parse(e.data).orderbook.order);
@@ -32,51 +35,48 @@ const orderBook = () =>{
     },[socket])
 
     return(
-        <div id="orderBookBox">
-            <table>
-                <thead className="fixedHeader">
-                    <div className="float_left order_1">가격</div>
-                    <div className="float_left order_2">수량</div>
-                </thead>
-                <tbody>
+        <div id="orderBookBox">       
+                <div className="orderFixedHeader">
+                    <div className="float_left order_1 non_padding non_right_border">가격</div>
+                    <div className="float_left order_2 non_padding ">수량</div>
+                </div>
                 <div>
                     {state.orderbook.map((v,k)=>{
                         return(
                             state.currentPrice>=v.price?
                             <>
-                            <div key={k}>
-                            <div className = "float_left order_1">
-                                <div className="order-2" style={{color:"blue",BackgroundColor:"lightblue"}}>{v.price}</div>
+                            <div key={k} className = "order_tuple">
+                            <div className = " order_1" style={{color:"rgba(225,35,67)",backgroundColor:"rgb(255, 247, 249)"}}>
+                                {v.price}
                             </div>
-                            <div className = "float_left order_2">
-                                 <div className="order-2" style={{color:"blue"}}>{v.rest}</div>
+                            <div className = " order_2" style={{color:"rgba(225,35,67)"}}>
+                                {v.rest}
                             </div>
                             </div>
                             </>
                             :
                             <>
-                            <div key={k}>
-                            <div className = "float_left order_1">
-                                <div className="order-2" style={{color:"red"}}>{v.price}</div>
+                            <div key={k} className = "order_tuple">
+                            <div className = " order_1" style={{color:"rgb(23, 99, 182)", backgroundColor:"rgb(247, 251, 255)"}}>
+                                {v.price}
                             </div>
-                            <div className = "float_left order_2">
-                                 <div className="order-2" style={{color:"red"}}>{v.rest}</div>
+                            <div className = " order_2" style={{color:"rgb(23, 99, 182)"}}>
+                                {v.rest}
                             </div>
                             </div>
                             </>
                         )})}
                 </div>
-                </tbody>              
-            </table>
-            <ul>
-                <li style={{color:"blue"}}>매도 잔량</li>
-                <li style={{color:"blue"}}>{state.buyQty}</li>
+            <ul className="order_book_ul">
+                <li className="float_left" style={{color:"rgb(23, 99, 182)"}}>매도 잔량</li>
+                <li style={{color:"rgb(23, 99, 182)",marginLeft:"1em"}}>{state.buyQty}</li>
             </ul>
-            <ul>
-                <li style={{color:"red"}}>매수 잔량</li>
-                <li style={{color:"red"}}>{state.sellQty}</li>
+            <ul className="order_book_ul">
+                <li className="float_left" style={{color:"rgba(225,35,67)"}}>매수 잔량</li>
+                <li style={{color:"rgba(225,35,67)",marginLeft:"1em"}}>{state.sellQty}</li>
             </ul>
         </div>
+        
     )
 }
 
