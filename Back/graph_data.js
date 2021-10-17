@@ -57,14 +57,14 @@ let graph_data = [
           {
             time:1538793000000,
             half_start:6605,
-            half_max:668.03,
+            half_max:6689.03,
             half_min:6598.95,
             half_last:6604.01
           },
           {
             time:1538794800000,
             half_start:6604.5,
-            half_max:614.4,
+            half_max:6914.4,
             half_min:6602.26,
              half_last:6608.02
           },
@@ -85,14 +85,14 @@ let graph_data = [
           {
             time:1538800200000,
             half_start:6612,
-            half_max:665.13,
+            half_max:6965.13,
             half_min:6605.0,
             half_last:6612
           },
           {
             time:1538802000000,
             half_start:6612,
-            half_max:664.12,
+            half_max:6964.12,
             half_min:6608.43,
             half_last:6622.95
           },
@@ -113,14 +113,14 @@ let graph_data = [
           {
             time:1538807400000,
             half_start:6611,
-            half_max:662.78,
+            half_max:6992.78,
             half_min:6610.4,
             half_last:6614.9
           },
           {
             time:1538809200000,
             half_start:6614.9,
-            half_max:626.2,
+            half_max:6926.2,
             half_min:6613.33,
             half_last:6623.45
           },
@@ -176,7 +176,7 @@ let graph_data = [
           {
             time:1538823600000,
             half_start:6619,
-            half_max:5.97,
+            half_max:6795.97,
             half_min:6595.27,
             half_last:6598.86
           },
@@ -239,7 +239,7 @@ let graph_data = [
           {
             time:1538839800000,
             half_start:6589.3,
-            half_max:598.89,
+            half_max:6698.89,
             half_min:6589.1,
             half_last:6596.08
           },
@@ -247,7 +247,7 @@ let graph_data = [
             time:1538841600000,
             half_start:6597.5,
             half_max:6006,
-            half_min:588.39,
+            half_min:5880.39,
             half_last:6596.25
           },
           {
