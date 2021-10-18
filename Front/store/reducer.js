@@ -4,11 +4,9 @@ import {initialState} from './context'
 const reducer = (state,action)=>{
     switch(action.type){
         case "init_stored":
-            console.log('init_stored : ',action.value.login_boolean)
+            const localStorage=action.value
             return {
-                ...state,
-                login_boolean:action.value.login_boolean
-                
+                ...state,...localStorage
             }
         case "login_boolean_true":
             console.log(action.payload)
