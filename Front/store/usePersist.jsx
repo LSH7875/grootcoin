@@ -1,8 +1,8 @@
 import {useEffect} from 'react'
 
-export const usePersistedReducer = ([state, dispatch] , key = "state") => {
+export const usePersistedReducer = ([state, dispatch] , key = "@initialState") => {
     useEffect(()=>{
-        localStorage.setItem(key,JSON.stringify(state))
+        window.sessionStorage.setItem(key,JSON.stringify(state))
     },[state])
 
     return [state,dispatch]
