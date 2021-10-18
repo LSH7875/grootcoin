@@ -23,6 +23,8 @@ const App=({Component,pageProps})=>{
     // const globalContext=useContext(Store)
     const localstorageKey = "@initialState"
     const globalStore = useContext(Store)
+    // const [state, dispatch] = useReducer(reducer, globalStore);
+
     const [state, dispatch] = usePersistedReducer(
         useReducer(reducer, globalStore),
         localstorageKey
@@ -37,6 +39,7 @@ const App=({Component,pageProps})=>{
             });
         }
     }, []);
+ 
     return (
         <>
         <Head>
