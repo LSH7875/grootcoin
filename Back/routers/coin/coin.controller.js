@@ -2,23 +2,25 @@ const { pool } = require('../../pool');
 const ws = require('../../websocket');
 const request = require("request");
 
-let rpc = (userid,account, amount) => {
+let rpc = (userid,account,amount) => {
     let headers = { "Content-type": "text/plain" };
     let body = `{"method":"sendfrom","params":["${userid}""${account}","${amount}"]}`;
 
     const options = {
-        url: `http://8964218c89d13fad02874e43bcf9875f6b7ee1c9:83ea2f21781686a88e00c3da12df28a6d3b86654@127.0.0.1:3010`,
+        //url: `http://8964218c89d13fad02874e43bcf9875f6b7ee1c9:83ea2f21781686a88e00c3da12df28a6d3b86654@127.0.0.1:3010`,
+        url:`http://grootcoin2:1234@127.0.0.1:3011`,
         method: "POST",
         headers,
         body
     }
     const callback = (err, response, data) => {
-        if (err == null && resoinse.statusCode == 200) {
+        if (err == null && response.statusCode == 200) {
             let txid = JSON.parse(data);
+            console.log('txid:',txid);
             res.send(txid.result)
         } else {
             console.log(err);
-            res.send(err)
+            //res.send(err)
         }
     }
     return request(options, callback)
@@ -56,8 +58,8 @@ let buy_order = async (req, res) => {
                     if (use_rest == 0) {
                         break;
                     }
-                    // let wallet_check = await connection.query(`select wallet from user where userid = "${serch_buy_law[i].userid}"`)
-                    // let wallet = wallet_check[0][i].wallet;
+                     let wallet_check = await connection.query(`select wallet from user where userid = "${serch_buy_law[i].userid}"`)
+                     let wallet = wallet_check[0][i].wallet;
 
                     //매수량이 매도보다 많을때    : 매수량이 같거나 매도보다 적을때
                     sum_commission = use_rest > serch_buy_law[i].rest ? coin_commission[0][0].commission * serch_buy_law[i].rest : coin_commission[0][0].commission * use_rest
@@ -68,7 +70,7 @@ let buy_order = async (req, res) => {
                     minus_rest = use_rest > serch_buy_law[i].rest ? use_rest - serch_buy_law[i].rest : serch_buy_law[i].rest - use_rest
                     this_order_update = use_rest > serch_buy_law[i].rest ? `update coin_orderbook set rest = ${minus_rest} where pk = ${buy_pk}` : `update coin_orderbook set rest = 0 where pk = ${buy_pk}`
                     
-                    //rpc(userid,wallet,signed_amount)
+                    rpc(userid,wallet,signed_amount)
                     
                     let transaction_pk = await connection.query(`insert into transaction (a_orderid,a_amount,a_commission,b_orderid,b_amount,b_commission,coin_id,payment) values('${buy_pk}','${signed_amount}','${sum_commission}','${serch_buy_law[i].pk}','${signed_amount}','${sum_commission}','${coin_id}','${serch_buy_law[i].price}')`)
                     await connection.query(`insert into assets (userid,input,output,transaction) values('${userid}','0','${total_price}','${transaction_pk[0].insertId}')`)
@@ -83,8 +85,8 @@ let buy_order = async (req, res) => {
                 //맞는게 1개일 경우
                 let check_rest = await connection.query(`select rest from coin_orderbook where pk = ${buy_pk}`)
                 let use_rest = check_rest[0][0].rest
-                // let wallet_check = await connection.query(`select wallet from user where userid = "${serch_buy_law[0].userid}"`)
-                // let {wallet} = wallet_check[0][0];
+                 let wallet_check = await connection.query(`select wallet from user where userid = "${serch_buy_law[0].userid}"`)
+                 let {wallet} = wallet_check[0][0];
                 //매수량이 매도보다 많을때    : 매수량이 같거나 매도보다 적을때
                 sum_commission = use_rest > serch_buy_law[0].rest ? coin_commission[0][0].commission * serch_buy_law[0].rest : coin_commission[0][0].commission * use_rest
                 total_price = use_rest > serch_buy_law[0].rest ? serch_buy_law[0].rest * serch_buy_law[0].price : use_rest * serch_buy_law[0].price
@@ -94,7 +96,7 @@ let buy_order = async (req, res) => {
                 sell_rest = use_rest >= serch_buy_law[0].rest ? 0 : serch_buy_law[0].rest - use_rest
                 this_order_update = use_rest > serch_buy_law[0].rest ? `update coin_orderbook set rest = ${minus_rest} where pk = ${buy_pk}` : `update coin_orderbook set rest = 0 where pk = ${buy_pk}`
                 
-                //rpc(userid,wallet,signed_amount)
+                rpc(userid,wallet,signed_amount)
                 let transaction_pk = await connection.query(`insert into transaction (a_orderid,a_amount,a_commission,b_orderid,b_amount,b_commission,coin_id,payment) values('${buy_pk}','${signed_amount}','${sum_commission}','${serch_buy_law[0].pk}','${signed_amount}','${sum_commission}','${coin_id}','${serch_buy_law[0].price}')`)
                 
                 await connection.query(`insert into assets (userid,input,output,transaction) values('${userid}','0','${total_price}','${transaction_pk[0].insertId}')`)
@@ -150,8 +152,8 @@ let sell_order = async (req, res) => {
                     if (use_rest == 0) {
                         break;
                     }
-                    // let wallet_check = await connection.query(`select wallet from user where userid = "${serch_sell_law[i].userid}"`)
-                    // let {wallet} = wallet_check[0][i];
+                     let wallet_check = await connection.query(`select wallet from user where userid = "${serch_sell_law[i].userid}"`)
+                     let {wallet} = wallet_check[0][i];
                     //매도량이 매수보다 많을때    : 매수량이 같거나 매도보다 적을때
                     sum_commission = use_rest > serch_sell_law[i].rest ? coin_commission[0][0].commission * serch_sell_law[i].rest : coin_commission[0][0].commission * use_rest
                     total_price = use_rest > serch_sell_law[i].rest ? serch_sell_law[i].rest * serch_sell_law[i].price : use_rest * serch_sell_law[i].price
@@ -161,7 +163,7 @@ let sell_order = async (req, res) => {
                     minus_rest = use_rest > serch_sell_law[i].rest ? use_rest - serch_sell_law[i].rest : serch_sell_law[i].rest - use_rest
                     this_order_update = use_rest > serch_sell_law[i].rest ? `update coin_orderbook set rest = ${minus_rest} where pk = ${sell_pk}` : `update coin_orderbook set rest = 0 where pk = ${sell_pk}`
 
-                   // rpc(userid,wallet,signed_amount)
+                    rpc(userid,wallet,signed_amount)
 
                     let transaction_pk = await connection.query(`insert into transaction (a_orderid,a_amount,a_commission,b_orderid,b_amount,b_commission,coin_id,payment) values('${serch_sell_law[i].pk}','${signed_amount}','${sum_commission}','${sell_pk}','${signed_amount}','${sum_commission}','${coin_id}','${serch_sell_law[i].price}')`)
                     await connection.query(`insert into assets (userid,input,output,transaction) values('${userid}','${total_price}','0','${transaction_pk[0].insertId}')`)
@@ -176,8 +178,8 @@ let sell_order = async (req, res) => {
                 //맞는게 1개일 경우
                 let check_rest = await connection.query(`select rest from coin_orderbook where pk = ${sell_pk}`)
                 let use_rest = check_rest[0][0].rest
-                // let wallet_check = await connection.query(`select wallet from user where userid = "${serch_sell_law[0].userid}"`)
-                // let {wallet} = wallet_check[0][0];
+                 let wallet_check = await connection.query(`select wallet from user where userid = "${serch_sell_law[0].userid}"`)
+                 let {wallet} = wallet_check[0][0];
                 //매도량이 매수보다 많을때    : 매수량이 같거나 매도보다 적을때
                 sum_commission = use_rest > serch_sell_law[0].rest ? coin_commission[0][0].commission * serch_sell_law[0].rest : coin_commission[0][0].commission * use_rest
                 total_price = use_rest > serch_sell_law[0].rest ? serch_sell_law[0].rest * serch_sell_law[0].price : use_rest * serch_sell_law[0].price
@@ -187,7 +189,7 @@ let sell_order = async (req, res) => {
                 minus_rest = use_rest > serch_sell_law[0].rest ? use_rest - serch_sell_law[0].rest : serch_sell_law[0].rest - use_rest
                 this_order_update = use_rest > serch_sell_law[0].rest ? `update coin_orderbook set rest = ${minus_rest} where pk = ${sell_pk}` : `update coin_orderbook set rest = 0 where pk = ${sell_pk}`
     
-                //rpc(userid,wallet,signed_amount)
+                rpc(userid,wallet,signed_amount)
 
                 let transaction_pk = await connection.query(`insert into transaction (a_orderid,a_amount,a_commission,b_orderid,b_amount,b_commission,coin_id,payment) values('${serch_sell_law[0].pk}','${signed_amount}','${sum_commission}','${sell_pk}','${signed_amount}','${sum_commission}','${coin_id}','${serch_sell_law[0].price}')`)
                 await connection.query(`insert into assets (userid,input,output,transaction) values('${userid}','${total_price}','0','${transaction_pk[0].insertId}')`)
