@@ -2,23 +2,26 @@ const { pool } = require('../../pool');
 const ws = require('../../websocket');
 const request = require("request");
 
-let rpc = (userid,account, amount) => {
+let rpc = async (userid, account, amount, transaction_id) => {
     let headers = { "Content-type": "text/plain" };
-    let body = `{"method":"sendfrom","params":["${userid}""${account}","${amount}"]}`;
-
+    let body = `{"method":"sendfrom","params":["${userid}","${account}","${amount}"]}`;
+    let connection = await pool.getConnection(async conn => conn);
     const options = {
-        url: `http://8964218c89d13fad02874e43bcf9875f6b7ee1c9:83ea2f21781686a88e00c3da12df28a6d3b86654@127.0.0.1:3010`,
+        //url: `http://8964218c89d13fad02874e43bcf9875f6b7ee1c9:83ea2f21781686a88e00c3da12df28a6d3b86654@127.0.0.1:3010`,
+        url: `http://grootcoin2:1234@127.0.0.1:3011`,
         method: "POST",
         headers,
         body
     }
-    const callback = (err, response, data) => {
-        if (err == null && resoinse.statusCode == 200) {
+    const callback = async (err, response, data) => {
+        if (err == null && response.statusCode == 200) {
             let txid = JSON.parse(data);
-            res.send(txid.result)
+            let new_txid = txid.result;
+            await connection.query(`update transaction set txid = "${new_txid}" where id = "${transaction_id}"`)
+            console.log("TXID-----성공");
         } else {
             console.log(err);
-            res.send(err)
+
         }
     }
     return request(options, callback)
@@ -56,8 +59,8 @@ let buy_order = async (req, res) => {
                     if (use_rest == 0) {
                         break;
                     }
-                    // let wallet_check = await connection.query(`select wallet from user where userid = "${serch_buy_law[i].userid}"`)
-                    // let wallet = wallet_check[0][i].wallet;
+                    let wallet_check = await connection.query(`select wallet from user where userid = "${serch_buy_law[i].userid}"`)
+                    let wallet = wallet_check[0][i].wallet;
 
                     //매수량이 매도보다 많을때    : 매수량이 같거나 매도보다 적을때
                     sum_commission = use_rest > serch_buy_law[i].rest ? coin_commission[0][0].commission * serch_buy_law[i].rest : coin_commission[0][0].commission * use_rest
@@ -67,24 +70,25 @@ let buy_order = async (req, res) => {
                     sell_rest = use_rest >= serch_buy_law[i].rest ? 0 : serch_buy_law[i].rest - use_rest
                     minus_rest = use_rest > serch_buy_law[i].rest ? use_rest - serch_buy_law[i].rest : serch_buy_law[i].rest - use_rest
                     this_order_update = use_rest > serch_buy_law[i].rest ? `update coin_orderbook set rest = ${minus_rest} where pk = ${buy_pk}` : `update coin_orderbook set rest = 0 where pk = ${buy_pk}`
-                    
-                    //rpc(userid,wallet,signed_amount)
-                    
+
+
                     let transaction_pk = await connection.query(`insert into transaction (a_orderid,a_amount,a_commission,b_orderid,b_amount,b_commission,coin_id,payment) values('${buy_pk}','${signed_amount}','${sum_commission}','${serch_buy_law[i].pk}','${signed_amount}','${sum_commission}','${coin_id}','${serch_buy_law[i].price}')`)
-                    await connection.query(`insert into assets (userid,input,output,transaction) values('${userid}','0','${total_price}','${transaction_pk[0].insertId}')`)
+                    let transaction_id = transaction_pk[0].insertId;
+                    rpc(wallet, userid, signed_amount, transaction_id)
+                    await connection.query(`insert into assets (userid,input,output,transaction) values('${userid}','0','${total_price}','${transaction_id}')`)
                     await connection.query(this_order_update)
                     await connection.query(`update coin_orderbook set rest = ${sell_rest} where pk = ${serch_buy_law[i].pk}`)
-                    await connection.query(`insert into assets (userid,input,output,transaction) values('${serch_buy_law[i].userid}','${total_price}','0','${transaction_pk[0].insertId}')`)
+                    await connection.query(`insert into assets (userid,input,output,transaction) values('${serch_buy_law[i].userid}','${total_price}','0','${transaction_id}')`)
 
-                   
+
                 }
-            }else if (serch_buy_law.length == 1) {
+            } else if (serch_buy_law.length == 1) {
                 //results.length == 1
                 //맞는게 1개일 경우
                 let check_rest = await connection.query(`select rest from coin_orderbook where pk = ${buy_pk}`)
                 let use_rest = check_rest[0][0].rest
-                // let wallet_check = await connection.query(`select wallet from user where userid = "${serch_buy_law[0].userid}"`)
-                // let {wallet} = wallet_check[0][0];
+                let wallet_check = await connection.query(`select wallet from user where userid = "${serch_buy_law[0].userid}"`)
+                let { wallet } = wallet_check[0][0];
                 //매수량이 매도보다 많을때    : 매수량이 같거나 매도보다 적을때
                 sum_commission = use_rest > serch_buy_law[0].rest ? coin_commission[0][0].commission * serch_buy_law[0].rest : coin_commission[0][0].commission * use_rest
                 total_price = use_rest > serch_buy_law[0].rest ? serch_buy_law[0].rest * serch_buy_law[0].price : use_rest * serch_buy_law[0].price
@@ -93,20 +97,20 @@ let buy_order = async (req, res) => {
                 minus_rest = use_rest > serch_buy_law[0].rest ? use_rest - serch_buy_law[0].rest : serch_buy_law[0].rest - use_rest
                 sell_rest = use_rest >= serch_buy_law[0].rest ? 0 : serch_buy_law[0].rest - use_rest
                 this_order_update = use_rest > serch_buy_law[0].rest ? `update coin_orderbook set rest = ${minus_rest} where pk = ${buy_pk}` : `update coin_orderbook set rest = 0 where pk = ${buy_pk}`
-                
-                //rpc(userid,wallet,signed_amount)
+
                 let transaction_pk = await connection.query(`insert into transaction (a_orderid,a_amount,a_commission,b_orderid,b_amount,b_commission,coin_id,payment) values('${buy_pk}','${signed_amount}','${sum_commission}','${serch_buy_law[0].pk}','${signed_amount}','${sum_commission}','${coin_id}','${serch_buy_law[0].price}')`)
-                
-                await connection.query(`insert into assets (userid,input,output,transaction) values('${userid}','0','${total_price}','${transaction_pk[0].insertId}')`)
+                let transaction_id = transaction_pk[0].insertId
+                rpc(wallet, userid, signed_amount)
+                await connection.query(`insert into assets (userid,input,output,transaction) values('${userid}','0','${total_price}','${transaction_id}')`)
                 await connection.query(`update coin_orderbook set rest = ${sell_rest} where pk = ${serch_buy_law[0].pk}`)
                 await connection.query(this_order_update)
-                await connection.query(`insert into assets (userid,input,output,transaction) values('${serch_buy_law[0].userid}','${total_price}','0','${transaction_pk[0].insertId}')`)
+                await connection.query(`insert into assets (userid,input,output,transaction) values('${serch_buy_law[0].userid}','${total_price}','0','${transaction_id}')`)
                 res.json('거래완료')
             } else {
                 // 매수가격과 맞는게 없을경우
                 console.log("맞는게 없음으로 대기");
             }
-        } 
+        }
         let history = await connection.query(`select * from coin_orderbook where userid = "${userid}"`)
         res.json({
             "msg": "정상적으로 적으로 주문 되었습니다",
@@ -150,8 +154,8 @@ let sell_order = async (req, res) => {
                     if (use_rest == 0) {
                         break;
                     }
-                    // let wallet_check = await connection.query(`select wallet from user where userid = "${serch_sell_law[i].userid}"`)
-                    // let {wallet} = wallet_check[0][i];
+                    let wallet_check = await connection.query(`select wallet from user where userid = "${serch_sell_law[i].userid}"`)
+                    let { wallet } = wallet_check[0][i];
                     //매도량이 매수보다 많을때    : 매수량이 같거나 매도보다 적을때
                     sum_commission = use_rest > serch_sell_law[i].rest ? coin_commission[0][0].commission * serch_sell_law[i].rest : coin_commission[0][0].commission * use_rest
                     total_price = use_rest > serch_sell_law[i].rest ? serch_sell_law[i].rest * serch_sell_law[i].price : use_rest * serch_sell_law[i].price
@@ -161,23 +165,24 @@ let sell_order = async (req, res) => {
                     minus_rest = use_rest > serch_sell_law[i].rest ? use_rest - serch_sell_law[i].rest : serch_sell_law[i].rest - use_rest
                     this_order_update = use_rest > serch_sell_law[i].rest ? `update coin_orderbook set rest = ${minus_rest} where pk = ${sell_pk}` : `update coin_orderbook set rest = 0 where pk = ${sell_pk}`
 
-                   // rpc(userid,wallet,signed_amount)
 
                     let transaction_pk = await connection.query(`insert into transaction (a_orderid,a_amount,a_commission,b_orderid,b_amount,b_commission,coin_id,payment) values('${serch_sell_law[i].pk}','${signed_amount}','${sum_commission}','${sell_pk}','${signed_amount}','${sum_commission}','${coin_id}','${serch_sell_law[i].price}')`)
-                    await connection.query(`insert into assets (userid,input,output,transaction) values('${userid}','${total_price}','0','${transaction_pk[0].insertId}')`)
+                    let transaction_id = transaction_pk[0].insertId
+                    rpc(userid, wallet, signed_amount, transaction_id)
+                    await connection.query(`insert into assets (userid,input,output,transaction) values('${userid}','${total_price}','0','${transaction_id}')`)
                     await connection.query(this_order_update)
                     await connection.query(`update coin_orderbook set rest = ${buy_rest} where pk = ${serch_sell_law[i].pk}`)
-                    await connection.query(`insert into assets (userid,input,output,transaction) values('${serch_sell_law[i].userid}','0','${total_price}','${transaction_pk[0].insertId}')`)
+                    await connection.query(`insert into assets (userid,input,output,transaction) values('${serch_sell_law[i].userid}','0','${total_price}','${transaction_id}')`)
 
-                   
+
                 }
-            }else if (serch_sell_law.length == 1) {
+            } else if (serch_sell_law.length == 1) {
                 //results.length == 1
                 //맞는게 1개일 경우
                 let check_rest = await connection.query(`select rest from coin_orderbook where pk = ${sell_pk}`)
                 let use_rest = check_rest[0][0].rest
-                // let wallet_check = await connection.query(`select wallet from user where userid = "${serch_sell_law[0].userid}"`)
-                // let {wallet} = wallet_check[0][0];
+                let wallet_check = await connection.query(`select wallet from user where userid = "${serch_sell_law[0].userid}"`)
+                let { wallet } = wallet_check[0][0];
                 //매도량이 매수보다 많을때    : 매수량이 같거나 매도보다 적을때
                 sum_commission = use_rest > serch_sell_law[0].rest ? coin_commission[0][0].commission * serch_sell_law[0].rest : coin_commission[0][0].commission * use_rest
                 total_price = use_rest > serch_sell_law[0].rest ? serch_sell_law[0].rest * serch_sell_law[0].price : use_rest * serch_sell_law[0].price
@@ -186,21 +191,22 @@ let sell_order = async (req, res) => {
                 buy_rest = use_rest >= serch_sell_law[0].rest ? 0 : serch_sell_law[0].rest - use_rest
                 minus_rest = use_rest > serch_sell_law[0].rest ? use_rest - serch_sell_law[0].rest : serch_sell_law[0].rest - use_rest
                 this_order_update = use_rest > serch_sell_law[0].rest ? `update coin_orderbook set rest = ${minus_rest} where pk = ${sell_pk}` : `update coin_orderbook set rest = 0 where pk = ${sell_pk}`
-    
-                //rpc(userid,wallet,signed_amount)
+
 
                 let transaction_pk = await connection.query(`insert into transaction (a_orderid,a_amount,a_commission,b_orderid,b_amount,b_commission,coin_id,payment) values('${serch_sell_law[0].pk}','${signed_amount}','${sum_commission}','${sell_pk}','${signed_amount}','${sum_commission}','${coin_id}','${serch_sell_law[0].price}')`)
-                await connection.query(`insert into assets (userid,input,output,transaction) values('${userid}','${total_price}','0','${transaction_pk[0].insertId}')`)
+                let transaction_id = transaction_pk[0].insertId
+                rpc(userid, wallet, signed_amount.transaction_id)
+                await connection.query(`insert into assets (userid,input,output,transaction) values('${userid}','${total_price}','0','${transaction_id}')`)
                 await connection.query(this_order_update)
                 await connection.query(`update coin_orderbook set rest = ${buy_rest} where pk = ${serch_sell_law[0].pk}`)
-                await connection.query(`insert into assets (userid,input,output,transaction) values('${serch_sell_law[0].userid}','0','${total_price}','${transaction_pk[0].insertId}')`)
-    
+                await connection.query(`insert into assets (userid,input,output,transaction) values('${serch_sell_law[0].userid}','0','${total_price}','${transaction_id}')`)
+
             } else {
                 // 매도가격과 맞는게 없을경우
                 //res.json({ 'msg': '거래에 맞는 가격이 없음으로 대기' })
             }
             // res.json('ok')
-        } 
+        }
         let history = await connection.query(`select * from coin_orderbook where userid = "${userid}"`)
         res.json({
             "msg": "정상적으로 적으로 주문 되었습니다",
@@ -274,16 +280,16 @@ let contract = async (req, res) => {
     connection = await pool.getConnection(async conn => conn)
     let { userid, id } = req.body;
 
-let data;
+    let data;
     if (id == 0) {
         //미체결
-      data = await connection.query(`select * from coin_orderbook where userid = "${userid}" AND rest != "0" AND state = "0" ORDER BY time DESC`)
+        data = await connection.query(`select * from coin_orderbook where userid = "${userid}" AND rest != "0" AND state = "0" ORDER BY time DESC`)
     } else {
-       data = await connection.query(`select * from coin_orderbook where userid = "${userid}" AND rest = "0" OR state != "0" ORDER BY time DESC`)
+        data = await connection.query(`select * from coin_orderbook where userid = "${userid}" AND rest = "0" OR state != "0" ORDER BY time DESC`)
     }  //취소
-res.json({
-    "data":data[0]
-})
+    res.json({
+        "data": data[0]
+    })
 }
 
 module.exports = {
@@ -293,4 +299,4 @@ module.exports = {
     search_assets,
     search_deal,
     contract
-}
+} 
