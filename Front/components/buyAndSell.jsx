@@ -1,7 +1,7 @@
 import { useEffect, useState, useContext, Component} from 'react'
 import Link from 'next/link'
 import axios from 'axios';
-import Store from '../../../store/context'
+import Store from '../store/context'
 
 const buycolor = { "background": "rgba(225,35,67)", "color": "#fff" }
 const sellcolor = { "background": "rgba(23,99,182)", "color": "#fff" }

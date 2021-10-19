@@ -1,12 +1,12 @@
 import { useState, useEffect, useContext } from 'react'
 import axios from 'axios';
-import Store from '../../../store/context'
+import Store from '../store/context'
 
 const preContractcolor = { "borderBottom": "3px solid rgba(32, 201, 150)", "color": "#333" }
 const contractedcolor = { "borderBottom": "3px solid rgba(32, 201, 150)", "color": "#333" }
 
 const PreContract = (props) => {
-
+    const {state,dispatch} = useContext(Store)
     let updatePreArr = props.preArr
 
     let preContractData = updatePreArr.map((v,k)=>{
