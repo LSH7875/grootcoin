@@ -15,8 +15,8 @@ let join_success = async (req, res, next) => {
     headers={"Content-type": "application/json"};
     body=`{"method":"getnewaddress","params":["jdskafjdsf"]}`;
 
-    const RPCPORT=3010
-    const USER="groot1"
+    const RPCPORT=3011
+    const USER="groot2"
     const PASS="1234"
     const options={
         url:`http://${USER}:${PASS}@127.0.0.1:${RPCPORT}`,
