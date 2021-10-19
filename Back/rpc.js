@@ -1,6 +1,6 @@
+const {pool} = require('./pool')
 
-
-let getransaction = async (txid) => {
+let getransaction = async (txid,id) => {
     let headers = { "Content-type": "hson/application" };
     let body = `{"method":"gettransaction","params":["${txid}"]}`;
     let connection = await pool.getConnection(async conn => conn);
@@ -14,7 +14,13 @@ let getransaction = async (txid) => {
     const callback = async (err, response, data) => {
         if (err == null && response.statusCode == 200) {
             let txid = JSON.parse(data);
-            let new_txid = txid.result;
+            let new_state = txid.result.blockindex;
+            if(new_state == undefined){
+                console.log("처리 아직 안됨");
+            }else if(new_state > 0){
+                await connection.query(`update transaction set txid_state = "1" where id = "${id}"`)
+            }
+
             console.log("TXID-----성공");
         } else {
             console.log(err);

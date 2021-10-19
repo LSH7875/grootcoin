@@ -47,19 +47,20 @@ app.get('/', (req, res) => {
 })
 
 let check_rpc = async () => {
+    console.log("checke");
     let connection = await pool.getConnection(async conn => conn);
     let result = await connection.query(`select * from transaction where txid_state = "0"`)
     if (result[0].length > 0) {
         for (let i = 0; i < result[0].length; i++) {
             let transaction = result[0][i]
             if (transaction.txid_state == "0") {
-                getransaction(transaction.txid)
+                getransaction(transaction.txid,transaction.id)
             }
         }
     }
 }
-
-
+// check_rpc()
+// setInterval(check_rpc,10000)
 
 
 app.listen(PORT, () => {

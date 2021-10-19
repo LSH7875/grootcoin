@@ -23,16 +23,16 @@ let graph_data = [
   {
     time: 1538784000000,
     half_start: 5035.65,
-    half_max: 6051,
+    half_max: 7000,
     half_min: 4629.67,
-    half_last: 4638.24
+    half_last: 6938.24
   },
   {
     time: 1538785800000,
-    half_start: 4638.24,
-    half_max: 6640,
+    half_start: 6938.24,
+    half_max: 8600,
     half_min: 3020,
-    half_last: 6624.47
+    half_last: 8024.47
   },
   {
     time: 1538787600000,
