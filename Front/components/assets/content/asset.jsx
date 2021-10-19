@@ -116,65 +116,10 @@ const asset = (props) => {
                         </tr>
                         <tr className = "content_row">
                             <td className = "float_left margin_top0">
-                                <div className = "big_font">KLAY</div>
-                                <div className = "small_font">클레이튼</div>
+                                <div className = "big_font">GROOT</div>
+                                <div className = "small_font">그루트코인</div>
                             </td>
-                            <td>805050505</td>
-                            <td>45454</td>
-                            <td>50606</td>
-                            <td>1213212313</td>
-                            <td>-11.93%</td>
-                        </tr>
-                        <tr className = "content_row">
-                            <td className = "float_left margin_top0">
-                                <div className = "big_font">ETH</div>
-                                <div className = "small_font">이더리움</div>
-                            </td>
-                            <td>805050505</td>
-                            <td>45454</td>
-                            <td>50606</td>
-                            <td>1213212313</td>
-                            <td>-11.93%</td>
-                        </tr>
-                        <tr className = "content_row">
-                            <td className = "float_left margin_top0">
-                                <div className = "big_font">BNA</div>
-                                <div className = "small_font">바나나</div>
-                            </td>
-                            <td>805050505</td>
-                            <td>45454</td>
-                            <td>50606</td>
-                            <td>1213212313</td>
-                            <td>-11.93%</td>
-                        </tr>
-                        <tr className = "content_row">
-                            <td className = "float_left margin_top0">
-                                <div className = "big_font">KLAY</div>
-                                <div className = "small_font">클레이튼</div>
-                            </td>
-                            <td>805050505</td>
-                            <td>45454</td>
-                            <td>50606</td>
-                            <td>1213212313</td>
-                            <td>-11.93%</td>
-                        </tr>
-                        <tr className = "content_row">
-                            <td className = "float_left margin_top0">
-                                <div className = "big_font">ETH</div>
-                                <div className = "small_font">이더리움</div>
-                            </td>
-                            <td>805050505</td>
-                            <td>45454</td>
-                            <td>50606</td>
-                            <td>1213212313</td>
-                            <td>-11.93%</td>
-                        </tr>
-                        <tr className = "content_row">
-                            <td className = "float_left margin_top0">
-                                <div className = "big_font">BNA</div>
-                                <div className = "small_font">바나나</div>
-                            </td>
-                            <td>805050505</td>
+                            <td>{asset}</td>
                             <td>45454</td>
                             <td>50606</td>
                             <td>1213212313</td>
