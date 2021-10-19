@@ -39,7 +39,7 @@ const App=({Component,pageProps})=>{
             });
         }
     }, []);
- 
+    
     return (
         <>
         <Head>

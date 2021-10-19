@@ -4,7 +4,7 @@ import Deposit from './content/deposit'
 import Usehistory from './content/usehistory'
 
 const AssetNavi = ()=>{
-        const [tabBtn, setTabBtn] = useState(2)
+        const [tabBtn, setTabBtn] = useState(1)
 
         const btn1 = () => {
             setTabBtn(1)
