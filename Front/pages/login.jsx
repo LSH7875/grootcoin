@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import Styled from 'styled-components'
 import { user_url } from '../store/Allurl'
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Store from '../store/context'
 import Router from 'next/router'
 import axios from 'axios'
@@ -19,6 +19,7 @@ const login = ()=>{
     const [loginuserid, setloginuserid] = useState('.')
     const [loginuserpw, setloginuserpw] = useState('.')
     const [loginresult, setloginresult] = useState('.')
+
 
     const handleID = (e) => {
         setloginuserid(e.target.value)
@@ -48,8 +49,10 @@ const login = ()=>{
         setloginresult(result.msg)
         console.log(result.boolean)
         if(result.boolean == true){
-            dispatch({ type: 'login_boolean_true', payload: result.boolean, userid:result.content.userid, username:result.content.username, userpw:result.content.userpw, account:result.content.account, wallet:result.content.wallet})
-            Router.push('/')
+            localStorage.setItem('login_boolean',false)
+            dispatch({ type: 'login_boolean_true', userid:result.content.userid, username:result.content.username, userpw:result.content.userpw, account:result.content.account, wallet:result.content.wallet})
+            
+            Router.push('/login_success')
             
         }else{
             dispatch({ type: 'login_boolean_false', payload: result.boolean})

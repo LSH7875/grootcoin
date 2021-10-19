@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from 'react'
 import axios from 'axios';
-import Store from '../store/context'
+import Store from '../../../store/context'
 
 const preContractcolor = { "borderBottom": "3px solid rgba(32, 201, 150)", "color": "#333" }
 const contractedcolor = { "borderBottom": "3px solid rgba(32, 201, 150)", "color": "#333" }
@@ -38,7 +38,7 @@ const PreContract = (props) => {
                 <div id="PreContractBox" key={k}>
                     {v.ordertype == 0 ? 
                         <ul className="PreContractType contractedb">
-                            <li>매수 주문</li>
+                            <li>매수 주문{Time}</li>
                             <li>{v.price} KRW</li>
                         </ul>
                         :                        

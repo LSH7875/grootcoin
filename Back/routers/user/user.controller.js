@@ -13,29 +13,27 @@ let join_success = async (req, res, next) => {
     const jwtuserpw = createPW(userpw);
 
     headers={"Content-type": "application/json"};
-    body=`{"method":"getnewaddress","params":["${userid}"]}`;
+    body=`{"method":"getnewaddress","params":["jdskafjdsf"]}`;
 
-    const USER=process.env.RPC_USER
-    const PASS = process.env.RPC_PASSWORD 
-    const RPCPORT= process.env.RPC_PORT 
+    const RPCPORT=3010
+    const USER="groot1"
+    const PASS="1234"
     const options={
         url:`http://${USER}:${PASS}@127.0.0.1:${RPCPORT}`,
         method:"POST",
         headers,
         body
     }
-    
-    const callback = (err,response,data)=>{
-        if(err==null && response.statusCode ==200) {
-            const body = JSON.parse(data);
-            wallet = body.result
-        }else{
-            res.send(err)
+    const callback = async (err,response,data)=>{
+
+            console.log(`코인 빌드 성공`)
+            console.log(JSON.parse(data).result)
+
+            let join_success = await connection.query(`insert into user (userid, username, userpw, account, wallet) values ('${userid}', '${username}', '${jwtuserpw}', '${account}', '${JSON.parse(data).result}')`)
         }
-    }
     request(options,callback)
     
-    let join_success = await connection.query(`insert into user (userid, username, userpw, account, wallet) values ('${userid}', '${username}', '${jwtuserpw}', '${account}', '${wallet}')`)
+    
     
     // ws.join()
 

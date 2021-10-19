@@ -8,8 +8,8 @@ const Logout = () => {
     const {state,dispatch} = useContext(Store)
 
     useEffect(()=>{
-        dispatch({ type: 'logout' })
-
+        localStorage.setItem('login_boolean',true)
+        dispatch({ type: 'logout', payload: true})
         setTimeout(()=>{
             Router.back()
         },1000)
