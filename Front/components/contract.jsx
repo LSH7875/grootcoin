@@ -38,7 +38,7 @@ const PreContract = (props) => {
                 <div id="PreContractBox" key={k}>
                     {v.ordertype == 0 ? 
                         <ul className="PreContractType contractedb">
-                            <li>매수 주문{Time}</li>
+                            <li>매수 주문</li>
                             <li>{v.price} KRW</li>
                         </ul>
                         :                        
