@@ -57,10 +57,10 @@ const coinInfo = () =>{
         <h1 className="title">information</h1>
         <ul>
             <li>grootcoin 출시일 : 2021.10 </li>
-            <li>총 grooutcoin 수 : 84,000 qty </li>
+            <li>총 grooutcoin 수 : 840,000,000 qty </li>
             <li>블록 생성 주기    : 2.5 minute  </li>
-            <li>난이도 조절 주기    : 3.5 day  </li>
-            <li>반감기   : 4 year </li>
+            <li>난이도 조절 주기    : 2.5 day  </li>
+            <li>반감기   : 3 year </li>
             <li>채굴방식    : POW(작업증명)  </li>
         </ul>
         </ Box>

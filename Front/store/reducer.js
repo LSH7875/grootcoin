@@ -4,11 +4,9 @@ import {initialState} from './context'
 const reducer = (state,action)=>{
     switch(action.type){
         case "init_stored":
-            console.log('init_stored : ',action.value.login_boolean)
+            const localStorage=action.value
             return {
-                ...state,
-                login_boolean:action.value.login_boolean
-                
+                ...state,...localStorage
             }
         case "login_boolean_true":
             console.log(action.payload)
@@ -64,21 +62,49 @@ const reducer = (state,action)=>{
                 precontract:[...arr],
                 prelength:state.precontract.length
             }
-        case "precontractList":
-            return {
-                ...state,
-                length:action.length
-            }
-        case "precontractUpdate":
-            return {
-                ...state,
-                preContractArr:action.preContractArr
-            }
-        case "login_boolean_true_middle":
-            return {
-                ...state,
-                login_boolean:action.payload
-            }
+            case "orderbook":{
+                let orderArr=[];//총 합을 넣는 array
+                let {buy,order,sell,last} = action.payload;
+                let current_length = last.toString().length;
+                let unit= Math.pow(10,current_length-3);
+                let start_money=parseInt(last) + (15*unit);
+                let order_Arr=[];//총 합의 값을 넣는 array
+                let pre_order_num=0;
+
+                for(let i=0;i<order.length;i++){
+                    if(pre_order_num==order[i].price){
+                        console.log(order[i].rest);
+                        orderArr[(orderArr.length)-1].rest +=order[i].rest;
+                    }else{
+                        orderArr.push(order[i]);
+                    }
+                    pre_order_num=order[i].price;
+                }
+                console.log(orderArr)
+                let j = 0; 
+                while(pre_order_num>=orderArr[j].price){
+                    if(j==(orderArr.length-1))break;
+                    j++;
+                }
+                j= j>0? j--:0;
+                for(let i=0;i<30;i++){
+                    if (start_money==orderArr[j].price){
+                        order_Arr.push({price:start_money,rest:orderArr[j].rest});
+                        j++;
+                    }else{
+                        order_Arr.push({price:start_money,rest:0});
+                    }
+                    start_money -=unit;
+                }
+
+                return{
+                    ...state,
+                    orderbook:order_Arr,
+                    currentPrice:last,
+                    buyQty:buy,
+                    sellQty:sell,
+                }
+            }   
     }
 }
 

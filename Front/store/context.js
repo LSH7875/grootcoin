@@ -11,8 +11,10 @@ export const initialState={
     upload_Arr:[],
     graph:[],
     precontract:[],
-    length:0,
-    now_number:0
+    orderbook:[],
+    currentPrice:0,
+    buyQty:0,
+    sellQty:0
 };
 
 

@@ -28,8 +28,8 @@
 }
 
 table{
-    margin-left:auto;
-    margin-right: auto;
+    margin-left:1em;
+    margin-right: 0;
     text-align:center;
 }
 
@@ -42,22 +42,66 @@ table > th{
 	top: 0;
     color:rgba(153, 153, 153, 0.699);
     border-bottom: 1px solid rgba(153, 153, 153, 0.342);
+    height:40px;
+    display:flex;
+    flex-direction: row;
+}
+.orderFixedHeader {
+	position: sticky;
+	top: 0;
+    color:rgba(153, 153, 153, 0.699);
+    border-bottom: 1px solid rgba(153, 153, 153, 0.342);
+    height:50px;
+    padding-top: 10px;
+    display:flex;
+    flex-direction: row;
+    background-color: rgb(255, 255, 255);
+    z-index: 3;
 }
 
+.non_padding{
+    padding-top:0 !important;
+}
 .container {
 	height: 500px;
 	overflow: auto;
 }
-
+.non_right_border{
+    border-right: 0 !important;
+}
+.order_tuple{
+    /* clear:both; */
+    display:flex;
+    flex-direction: row;
+    /* flex-wrap: wrap; */
+    /* flex-basis: 0; */
+    height: auto;
+    border-right:0.5px solid rgba(153, 153, 153, 0.342);
+    
+}
 .order_1{
-    width:250px;
+    margin-left: 1em;
+    width:20%;
+    min-width: 60px;
+    text-align: left;
+    padding: 0.5em 1em;
+    border-right:1px solid rgba(153, 153, 153, 0.342);
+    
 }
 .order_2{
-    width:115px;
+    margin-left: 1em;
+    width:80%;
+    padding:0.5em 0;
+
+    /* text-align: left; */
 }
 .order_3{
     width:70px;
 }
 .order_4{
     width:130px;
+}
+.order_book_ul{
+    margin-left: 1em;
+    padding-left: 0;
 }

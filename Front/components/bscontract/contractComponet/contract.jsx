@@ -6,61 +6,10 @@ const preContractcolor = { "borderBottom": "3px solid rgba(32, 201, 150)", "colo
 const contractedcolor = { "borderBottom": "3px solid rgba(32, 201, 150)", "color": "#333" }
 
 const PreContract = (props) => {
-    const [qty, setqty] = useState([]);
-    const [Time, setTime] = useState(0);
-    const [cancle, setCancle] = useState(0)
-    const {state,dispatch} = useContext(Store)
-    console.log(state.now_number)
-    console.log( props.tabBtn+1)
-    let dataArr = []
 
+    let updatePreArr = props.preArr
 
-    if(state.now_number != props.tabBtn+1){
-     
-        async function Update(){
-            console.log('contract 장부 업데이트 하겠습니다')
-            const response = await fetch("http://localhost:3003/api/coin/contract",{ 
-                method: "POST",
-                headers: {
-                'Content-type': 'application/json'
-            }, 
-                body: JSON.stringify({
-                userid: state.userid,
-                id:"0"
-            })
-            });
-            const data = await response.json()
-   
-            setTime(data.data.length)
-            console.log(qty)
-            setqty(String(data.data))
-            console.log(`dispatch 전까지는 되나?:${data.data.length}`)
-        }
-       
-
-        Update()
-    }
-        
-    useEffect(() => {
-        console.log(`넘긴 함수에서:${props.tabBtn}`)
-        
-    }, []);
-    
-    useEffect(async () => {
-        const response = await fetch("http://localhost:3003/api/coin/contract",{ 
-            method: "POST",
-            headers: {
-            'Content-type': 'application/json'
-        }, 
-            body: JSON.stringify({
-            userid: state.userid,
-            id:"0"
-          })
-        });
-        const data = await response.json()
-        }, []);
-
-    let preContractData = state.precontract.map((v,k)=>{
+    let preContractData = updatePreArr.map((v,k)=>{
         const timestamp = v.time
         const date = new Date(timestamp*1000)
         const year = date.getFullYear().toString().slice(-4)
@@ -117,39 +66,14 @@ const PreContract = (props) => {
             <>
                 {preContractData}
             </>
-
         )
-
 }
 
 const Contracted = (props) =>{
-    const [data, setData] = useState([]);
-    const {state,dispatch} = useContext(Store)
-    useEffect(async () => {
-        if(state.now_number != props.tabBtn+1){
-            const Change = async (e) => {
-                console.log('contract 장부 업데이트 하겠습니다')
-    
-                const response = await fetch("http://localhost:3003/api/coin/contract",{ 
-                method: "POST",
-                headers: {
-                'Content-type': 'application/json'
-            }, 
-                body: JSON.stringify({
-                userid: state.userid,
-                id:"0"
-              })
-            });
-            const data = await response.json()
-            dispatch({ type: 'precontract', preContractArr:data.data})
-    
-            }
-    
-            Change()
-        }
-      }, []);
 
-    const contractedData = data.map((v,k)=>{
+    let updateConArr = props.conArr
+
+    const contractedData = updateConArr.map((v,k)=>{
         const timestamp = v.time
         const date = new Date(timestamp*1000)
         const year = date.getFullYear().toString().slice(-4)
@@ -203,10 +127,9 @@ const contract = (props) =>{
                 </div>
                 {
                     contract === false
-                        ? <PreContract tabBtn = {props.tabBtn}/>
-                        : <Contracted tabBtn = {props.tabBtn} />
+                        ? <PreContract  preArr = {props.preArr}/>
+                        : <Contracted  conArr = {props.conArr}/>
                 }
-
             </div>
         </>
     )

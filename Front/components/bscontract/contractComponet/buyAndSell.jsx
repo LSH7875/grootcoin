@@ -1,7 +1,7 @@
 import { useEffect, useState, useContext, Component} from 'react'
 import Link from 'next/link'
 import axios from 'axios';
-import Store from '../../../store/context'
+import Store from '../store/context'
 
 const buycolor = { "background": "rgba(225,35,67)", "color": "#fff" }
 const sellcolor = { "background": "rgba(23,99,182)", "color": "#fff" }
@@ -11,13 +11,6 @@ const Buy = (props) => {
     const [volume,setVolume] = useState(0)
     const {state,dispatch} = useContext(Store)
 
-
-    useEffect(async () => {
-        console.log(`넘긴 함수에서:${props.tabBtn}`)
-
-    }, []);
-
-
     const onChange = e => {
         setBuyPrice(e.target.value)
     }
@@ -26,7 +19,21 @@ const Buy = (props) => {
         setVolume(e.target.value)
     }
 
-    const buyApi = async () =>{
+    const updateOrder = ()=>{
+        props.newSet()
+    }
+
+    const updateOrder2 = ()=>{
+        props.newSet2()
+    }
+
+    const updateBuy = ()=>{
+        buyApi()
+        updateOrder()
+        updateOrder2()
+    }
+
+    const buyApi = () =>{
         axios.post("http://localhost:3003/api/coin/buy_order", {
             userid: state.userid,
             price: buyPrice,
@@ -46,31 +53,6 @@ const Buy = (props) => {
         })
         setBuyPrice(0)
         setVolume(0)
-
-        props.setTabBtn(props.tabBtn + 1)
-        console.log(`넘긴 함수에서:${props.tabBtn}`)
-
-        state.now_number = props.tabBtn + 1
-        console.log(`state값 변화여부:${state.now_number}`)
-        
-
-        // const response = await fetch("http://localhost:3003/api/coin/contract",{ 
-        //     method: "POST",
-        //     headers: {
-        //     'Content-type': 'application/json'
-        // }, 
-        //     body: JSON.stringify({
-        //     userid: state.userid,
-        //     id:"0"
-        //   })
-        // });
-        // const data = await response.json()
-        // console.log(data.data.length)
-        // dispatch({ type: 'precontractList', length:data.data.length})
-
-        // if(state.prelength != state.length){
-        // dispatch({ type: 'precontractUpdate', preContractArr:data.data})
-        // }
     }
     const priceUp = () =>{
         setBuyPrice((price)=>price+1)
@@ -130,18 +112,17 @@ const Buy = (props) => {
                 <li>매수 금액</li>
                 <li>{volume} GRT</li>
             </ul>
-            { state.login_boolean === true ? 
+            { state.login_boolean === 0 ? 
                 <Link href={`/login`}>
                     <button className="buy Btn2">
                         로그인
                     </button>
                 </Link>
                 : 
-                    <button onClick={buyApi} className="buy Btn2">
+                    <button onClick={updateBuy} className="buy Btn2">
                         매수
                     </button>
             }
-
         </div>
     )
 }
@@ -151,16 +132,26 @@ const Sell = (props) =>{
     const [volume,setVolume] = useState(0)
     const {state,dispatch} = useContext(Store)
 
-    useEffect(async () => {
-        console.log(`넘긴 함수에서:${props.tabBtn}`)
-
-    }, []);
     const onChange = e => {
         setSellPrice(e.target.value)
     }
 
     const onChange2 = e => {
         setVolume(e.target.value)
+    }
+
+    const updateOrder = ()=>{
+        props.newSet()
+    }
+
+    const updateOrder2 = ()=>{
+        props.newSet2()
+    }
+
+    const updateSell = ()=>{
+        sellApi()
+        updateOrder()
+        updateOrder2()
     }
 
     const sellApi = () =>{
@@ -181,8 +172,8 @@ const Sell = (props) =>{
         .catch(error => {
             console.log('실패났음',error)
         })
-
-        props.setTabBtn(props.tabBtn + 1)
+        setSellPrice(0)
+        setVolume(0)
     }
 
     const onUp = () =>{
@@ -251,7 +242,7 @@ const Sell = (props) =>{
                     </button>
                 </Link>
                 : 
-                    <button onClick={sellApi} className="sell Btn2">
+                    <button onClick={updateSell} className="sell Btn2">
                         매도
                     </button>
             }
@@ -278,8 +269,8 @@ const buyAndSell = (props)=>{
                 </div>
                 {
                     bsBtn === 'buy'
-                        ? <Buy tabBtn = {props.tabBtn} setTabBtn = {props.setTabBtn}/>
-                        : <Sell tabBtn = {props.tabBtn} setTabBtn = {props.setTabBtn}/>
+                        ? <Buy newSet={props.newSet} newSet2={props.newSet2}/>
+                        : <Sell newSet={props.newSet} newSet2={props.newSet2}/>
                 }
             </div>
     )
