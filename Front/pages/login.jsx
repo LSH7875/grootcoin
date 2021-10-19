@@ -47,12 +47,11 @@ const login = ()=>{
         // let result = await response.json()
         let result = response.data;
         setloginresult(result.msg)
-        console.log(result.boolean)
         if(result.boolean == true){
-            localStorage.setItem('login_boolean',false)
+            // localStorage.setItem('login_boolean',false)
             dispatch({ type: 'login_boolean_true', userid:result.content.userid, username:result.content.username, userpw:result.content.userpw, account:result.content.account, wallet:result.content.wallet})
             
-            Router.push('/login_success')
+            Router.push('/')
             
         }else{
             dispatch({ type: 'login_boolean_false', payload: result.boolean})
