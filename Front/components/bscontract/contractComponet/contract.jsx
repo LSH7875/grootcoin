@@ -1,34 +1,51 @@
 import { useState, useEffect, useContext } from 'react'
 import axios from 'axios';
-import Store from '../store/context'
+import Store from '../../../store/context'
 
 const preContractcolor = { "borderBottom": "3px solid rgba(32, 201, 150)", "color": "#333" }
 const contractedcolor = { "borderBottom": "3px solid rgba(32, 201, 150)", "color": "#333" }
 
 const PreContract = (props) => {
-    // const [data, setData] = useState([]);
+    const [qty, setqty] = useState([]);
+    const [Time, setTime] = useState(0);
     const [cancle, setCancle] = useState(0)
     const {state,dispatch} = useContext(Store)
+    console.log(state.now_number)
+    console.log( props.tabBtn+1)
+    let dataArr = []
 
-    // if(bsState change){
-    //     const Change = e => {
 
-    //         const response = await fetch("http://localhost:3003/api/coin/contract",{ 
-    //         method: "POST",
-    //         headers: {
-    //         'Content-type': 'application/json'
-    //     }, 
-    //         body: JSON.stringify({
-    //         userid: state.userid,
-    //         id:"0"
-    //       })
-    //     });
-    //     const data = await response.json()
-    //     dispatch({ type: 'precontract', preContractArr:data.data})
+    if(state.now_number != props.tabBtn+1){
+     
+        async function Update(){
+            console.log('contract 장부 업데이트 하겠습니다')
+            const response = await fetch("http://localhost:3003/api/coin/contract",{ 
+                method: "POST",
+                headers: {
+                'Content-type': 'application/json'
+            }, 
+                body: JSON.stringify({
+                userid: state.userid,
+                id:"0"
+            })
+            });
+            const data = await response.json()
+   
+            setTime(data.data.length)
+            console.log(qty)
+            setqty(String(data.data))
+            console.log(`dispatch 전까지는 되나?:${data.data.length}`)
+        }
+       
 
-    //     }
-    // }
-
+        Update()
+    }
+        
+    useEffect(() => {
+        console.log(`넘긴 함수에서:${props.tabBtn}`)
+        
+    }, []);
+    
     useEffect(async () => {
         const response = await fetch("http://localhost:3003/api/coin/contract",{ 
             method: "POST",
@@ -41,7 +58,6 @@ const PreContract = (props) => {
           })
         });
         const data = await response.json()
-        dispatch({ type: 'precontract', preContractArr:data.data})
         }, []);
 
     let preContractData = state.precontract.map((v,k)=>{
@@ -73,7 +89,7 @@ const PreContract = (props) => {
                 <div id="PreContractBox" key={k}>
                     {v.ordertype == 0 ? 
                         <ul className="PreContractType contractedb">
-                            <li>매수 주문</li>
+                            <li>매수 주문{Time}</li>
                             <li>{v.price} KRW</li>
                         </ul>
                         :                        
@@ -106,23 +122,31 @@ const PreContract = (props) => {
 
 }
 
-const Contracted = () =>{
+const Contracted = (props) =>{
     const [data, setData] = useState([]);
     const {state,dispatch} = useContext(Store)
     useEffect(async () => {
-        const response = await fetch("http://localhost:3003/api/coin/search_deal",{ 
-            method: "POST",
-            headers: {
-            'Content-type': 'application/json'
-        }, 
-            body: JSON.stringify({
-            userid: state.userid,
-            id:"1"
-          })
-        });
-        const data = await response.json()
-        setData(data.deal);
-        console.log(data.deal)
+        if(state.now_number != props.tabBtn+1){
+            const Change = async (e) => {
+                console.log('contract 장부 업데이트 하겠습니다')
+    
+                const response = await fetch("http://localhost:3003/api/coin/contract",{ 
+                method: "POST",
+                headers: {
+                'Content-type': 'application/json'
+            }, 
+                body: JSON.stringify({
+                userid: state.userid,
+                id:"0"
+              })
+            });
+            const data = await response.json()
+            dispatch({ type: 'precontract', preContractArr:data.data})
+    
+            }
+    
+            Change()
+        }
       }, []);
 
     const contractedData = data.map((v,k)=>{
@@ -160,7 +184,7 @@ const Contracted = () =>{
     )
 }
 
-const contract = () =>{
+const contract = (props) =>{
     const [contract,setContract] = useState(false)
 
     const preContract = () =>{
@@ -179,8 +203,8 @@ const contract = () =>{
                 </div>
                 {
                     contract === false
-                        ? <PreContract />
-                        : <Contracted />
+                        ? <PreContract tabBtn = {props.tabBtn}/>
+                        : <Contracted tabBtn = {props.tabBtn} />
                 }
 
             </div>

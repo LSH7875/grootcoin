@@ -1,12 +1,11 @@
 import Link from 'next/link'
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Store from '../store/context'
+import useLocalStorage from "../store/useLocalStorage";
 
 const header = ()=>{
-
+      
     const {state,dispatch} = useContext(Store)
-    console.log(state.login_boolean == false)
-
     return(
         <div id="header">
             <div>
@@ -20,11 +19,12 @@ const header = ()=>{
                     <li><Link href={`/coin/coinInfo`}><a>ⓘgrootcoin</a></Link></li>
                 </ul>
             </div>
-            { state.login_boolean === 0 ? 
-                <>
-                    <Link href={`/login`}><a className="login Btn">로그인</a></Link>
-                    <Link href={`/joinAgree`}><a className="join Btn">회원가입</a></Link>
-                </>
+            { state.login_boolean == true? 
+             <>
+             <Link href={`/login`}><a className="login Btn">로그인</a></Link>
+             <Link href={`/joinAgree`}><a className="join Btn">회원가입</a></Link>
+         </>
+                   
                 :
                 <Link href={`/logout`}><a className="logout Btn">로그아웃</a></Link>
                                 

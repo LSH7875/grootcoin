@@ -4,18 +4,21 @@ import Deposit from './content/deposit'
 import Usehistory from './content/usehistory'
 
 const AssetNavi = ()=>{
-        const [tabBtn, setTabBtn] = useState(1)
+        const [tabBtn, setTabBtn] = useState(2)
 
         const btn1 = () => {
             setTabBtn(1)
+            console.log(`원래 함수에서${tabBtn}`)
         }
     
         const btn2 = () => {
             setTabBtn(2)
+            console.log(`원래 함수에서${tabBtn}`)
         }
 
         const btn3 = () => {
             setTabBtn(3)
+            console.log(`원래 함수에서${tabBtn}`)
         }
     
         return (
@@ -31,9 +34,9 @@ const AssetNavi = ()=>{
                         <div className = "asserts_navi_right">
                             {
                                 tabBtn === 1
-                                    ? <Asset />
+                                    ? <Asset tabBtn = {tabBtn}/>
                                     : ( tabBtn === 2
-                                        ? <Deposit />
+                                        ? <Deposit tabBtn = {tabBtn}/>
                                         : <Usehistory />
                                         )
                             }                        

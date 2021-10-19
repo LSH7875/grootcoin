@@ -348,11 +348,6 @@ async function wsinit() {
             half_last:6592
           }
         ]
-<<<<<<< HEAD
-=======
-
-
->>>>>>> ecf1f4c722ce7f35b1429ccbd8c405ecf4447092
         // let ckeck_data = await connection.query(`select * from transaction ORDER BY regdate ASC`)
         // if (ckeck_data[0][0] !== undefined) {
         //     // 하루전까지 데이터가 있는지 체크  없으면 마지막 기점으로 24시간 거래 체크 

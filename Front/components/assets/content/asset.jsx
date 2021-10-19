@@ -1,7 +1,7 @@
 import React,{ useState, useRef, useEffect, useContext } from 'react'
 import Store from '../../../store/context'
 import {user_url} from '../../../store/Allurl'
-const asset = () =>{
+const asset = (props) => {
 
     const {state,dispatch} = useContext(Store)
 
@@ -14,7 +14,7 @@ const asset = () =>{
         ws.current= new WebSocket('ws://127.0.0.1:8080');
         ws.current.onopen=(e)=>{
         }
-
+        console.log(`넘긴 함수에서:${props.tabBtn}`)
 
         return () => {
             ws.current.close();

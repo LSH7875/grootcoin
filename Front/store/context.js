@@ -1,7 +1,7 @@
 import {createContext} from 'react'
 
 export const initialState={
-    login_boolean:0,
+    login_boolean:true,
     userid:'',
     userpw:'',
     username:'',
@@ -11,7 +11,8 @@ export const initialState={
     upload_Arr:[],
     graph:[],
     precontract:[],
-    length:0
+    length:0,
+    now_number:0
 };
 
 

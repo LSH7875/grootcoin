@@ -1,7 +1,7 @@
 import History from '../components/history'
 import OrderBook from '../components/orderBook'
 import Chart from '../components/chart'
-import BsContract from '../components/bscontract'
+import BsContract from '../components/bscontract/bscontract'
 import Footer from '../components/footer' 
 
 const main = ()=>{

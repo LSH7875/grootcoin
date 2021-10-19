@@ -1,9 +1,9 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Income from './deposit/income'
 import Outcome from './deposit/outcome'
 import Deposithistory from './deposit/history'
 
-const deposit = () =>{
+const deposit = (props) =>{
 
     const [tabBtn, setTabBtn] = useState(1)
 
@@ -18,6 +18,11 @@ const deposit = () =>{
     const btn3 = () => {
         setTabBtn(3)
     }
+
+    useEffect(async () => {
+        console.log(`넘긴 함수에서:${props.tabBtn}`)
+
+    }, []);
 
     return(
         <>

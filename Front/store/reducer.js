@@ -14,7 +14,6 @@ const reducer = (state,action)=>{
             console.log(action.payload)
             return {
                 ...state,
-                login_boolean: action.payload,
                 userid: action.userid,
                 username: action.username,
                 userpw: action.userpw,
@@ -39,7 +38,7 @@ const reducer = (state,action)=>{
 
             return {
                 ...state,
-                login_boolean: 0,
+                login_boolean: action.payload,
                 userid:'',
                 userpw:'',
                 username:'',
@@ -74,6 +73,11 @@ const reducer = (state,action)=>{
             return {
                 ...state,
                 preContractArr:action.preContractArr
+            }
+        case "login_boolean_true_middle":
+            return {
+                ...state,
+                login_boolean:action.payload
             }
     }
 }
