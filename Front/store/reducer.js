@@ -12,6 +12,7 @@ const reducer = (state,action)=>{
             console.log(action.payload)
             return {
                 ...state,
+                login_boolean:true,
                 userid: action.userid,
                 username: action.username,
                 userpw: action.userpw,

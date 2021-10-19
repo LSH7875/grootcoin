@@ -4,9 +4,7 @@ import Store from '../store/context'
 
 const header = ()=>{
 
-    const {state,dispatch} = useContext(Store)
-    console.log(state.login_boolean == false)
-
+    const {state} = useContext(Store)
     return(
         <div id="headerBar">
             <div id="header">
@@ -21,7 +19,7 @@ const header = ()=>{
                         <li><Link href={`/coin/coinInfo`}><a>ⓘgrootcoin</a></Link></li>
                     </ul>
                 </div>
-                { state.login_boolean === 0 ? 
+                { state.login_boolean === false ? 
                     <>
                         <Link href={`/login`}><a className="login Btn">로그인</a></Link>
                         <Link href={`/joinAgree`}><a className="join Btn">회원가입</a></Link>

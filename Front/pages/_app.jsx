@@ -25,9 +25,11 @@ const App=({Component,pageProps})=>{
     const globalStore = useContext(Store)
     // const [state, dispatch] = useReducer(reducer, globalStore);
 
-    const [state, dispatch] = useReducer(reducer, globalStore);
+    const [state, dispatch] = usePersistedReducer(
+        useReducer(reducer, globalStore),
+        localstorageKey
+    )
 
-    
     useEffect(() => {
         console.log(localStorage.getItem(localstorageKey))
         if (JSON.parse(localStorage.getItem(localstorageKey))) { 
@@ -37,10 +39,6 @@ const App=({Component,pageProps})=>{
             });
         }
     }, []);
-
-    useEffect(()=>{
-            localStorage.setItem(localstorageKey,JSON.stringify(state))
-    },[state])
  
     return (
         <>
