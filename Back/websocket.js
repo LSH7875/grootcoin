@@ -20,10 +20,6 @@ async function wsinit() {
     for (let i = 0; i < assets[0].length; i++) {
       assetsArr.push(assets[0][i])
     }
-    // for (let i = 0; i < assets[0].length; i++) {
-    //   // assets_result = assets_result + assets[0][i].input
-    //   // assets_result = assets_result - assets[0][i].output
-    // }
 
     let buy_total = await connection.query(`select sum(rest) as buy from coin_orderbook where rest != "0" AND ordertype = "0"`)
     let sell_total = await connection.query(`select sum(rest) as sell from coin_orderbook where rest != "0" AND ordertype = "1"`)
@@ -110,17 +106,9 @@ async function join() {
   let assets = await connection.query(`select * from assets`)
 
   let assetsArr = []
-  let assets_result = 0
-
   for (let i = 0; i < assets[0].length; i++) {
-    assets_result = assets_result + assets[0][i].input
-    // assets_result = assets_result - assets[0][i].output
+    assetsArr.push(assets[0][i])
   }
-  for (let i = 0; i < assets[0].length; i++) {
-    // assets_result = assets_result + assets[0][i].input
-    // assets_result = assets_result - assets[0][i].output
-  }
-  assetsArr.push(assets_result)
 
   let coin_orderbook = await connection.query(`select * from coin_orderbook`)
 
