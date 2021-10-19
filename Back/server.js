@@ -7,6 +7,8 @@ const router = require('./routers/index');
 const ws = require('./websocket');
 const cookieParser = require('cookie-parser');
 const expressSession = require('express-session')
+const { pool } = require('./pool')
+const { getransaction } = require('./rpc')
 
 app.use(cors({ origin: true, credentials: true }));
 
@@ -39,13 +41,30 @@ require('dotenv');
 // })
 // connection.connect();
 
-app.get('/',(req,res)=>{
+app.get('/', (req, res) => {
     // res.cookie('userid', 'userid');
     res.send('백 서버')
 })
 
-app.listen(PORT,()=>{
+let check_rpc = async () => {
+    let connection = await pool.getConnection(async conn => conn);
+    let result = await connection.query(`select * from transaction where txid_state = "0"`)
+    if (result[0].length > 0) {
+        for (let i = 0; i < result[0].length; i++) {
+            let transaction = result[0][i]
+            if (transaction.txid_state == "0") {
+                getransaction(transaction.txid)
+            }
+        }
+    }
+}
+
+
+
+
+app.listen(PORT, () => {
     console.log(`server port ${PORT}`)
 })
+
 
 ws.wsinit();
