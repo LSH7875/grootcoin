@@ -39,7 +39,9 @@ const App=({Component,pageProps})=>{
     }, []);
 
     useEffect(()=>{
-            localStorage.setItem(localstorageKey,JSON.stringify(state))
+            
+        localStorage.setItem(localstorageKey,JSON.stringify(state))
+    
     },[state])
  
     return (
