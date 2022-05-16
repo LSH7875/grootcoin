@@ -1,11 +1,11 @@
 import { useState,useEffect } from "react"
 import axios from "axios";
-
+import {user_url} from '../store/Allurl'
 
 const coinNews = () =>{
     const [data, setData] = useState([]);
     useEffect(async () => {
-        const response = await fetch("http://localhost:3003/api/coin/coinNews");
+        const response = await fetch(`${user_url}/coin/coinNews`);
         const data = await response.json()
         setData(data.data);
       }, []);

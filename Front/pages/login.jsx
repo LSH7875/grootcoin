@@ -41,8 +41,8 @@ const login = ()=>{
             },
         }
         // const response = await fetch(`${user_url}/login_success?userid=${loginuserid}&userpw=${loginuserpw}`,options) //restful api 
-        console.log(`${user_url}`)
-        const response = await axios.post(`http://localhost:3003/api/user/login_success/`,options)
+       
+        const response = await axios.post(`${user_url}/user/login_success/`,options)
 
         // let result = await response.json()
         let result = response.data;

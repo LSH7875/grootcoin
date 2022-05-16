@@ -2,6 +2,7 @@ import { useEffect, useState, useContext, Component} from 'react'
 import Link from 'next/link'
 import axios from 'axios';
 import Store from '../store/context'
+import {user_url} from '../store/Allurl'
 
 const buycolor = { "background": "rgba(225,35,67)", "color": "#fff" }
 const sellcolor = { "background": "rgba(23,99,182)", "color": "#fff" }
@@ -34,7 +35,7 @@ const Buy = (props) => {
     }
 
     const buyApi = () =>{
-        axios.post("http://localhost:3003/api/coin/buy_order", {
+        axios.post(`${user_url}/coin/buy_order`, {
             userid: state.userid,
             price: buyPrice,
             qty: volume,
@@ -155,7 +156,7 @@ const Sell = (props) =>{
     }
 
     const sellApi = () =>{
-        axios.post("http://localhost:3003/api/coin/sell_order", {
+        axios.post(`${user_url}/coin/sell_order`, {
             userid: state.userid,
             price: sellPrice,
             qty: volume,

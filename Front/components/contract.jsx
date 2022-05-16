@@ -1,6 +1,7 @@
 import { useState, useEffect, useContext } from 'react'
 import axios from 'axios';
 import Store from '../store/context'
+import {user_url} from '../store/Allurl'
 
 const preContractcolor = { "borderBottom": "3px solid rgba(32, 201, 150)", "color": "#333" }
 const contractedcolor = { "borderBottom": "3px solid rgba(32, 201, 150)", "color": "#333" }
@@ -20,7 +21,7 @@ const PreContract = (props) => {
 
         const DeleteApi = () =>{
             setCancle(cancle+1)
-            axios.post("http://localhost:3003/api/coin/coin_cancle", {
+            axios.post(`${user_url}/coin/coin_cancle`, {
                 pk:v.pk
             },{ 
                 headers:{ 

@@ -142,7 +142,7 @@ const join = () => {
             method:'GET'
         }
 
-        const response = await fetch(`${user_url}/login_check?userid=${userid.value}`,options) //restful api 
+        const response = await fetch(`${user_url}/user/login_check?userid=${userid.value}`,options) //restful api 
         const result = await response.json()
         console.log(response)
         setLoginCheck(result)
