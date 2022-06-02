@@ -2,7 +2,7 @@ import {useState, useContext, useEffect} from 'react'
 import BuyAndSell from "./buyAndSell"
 import Contract from "./contract"
 import Store from '../store/context'
-
+import {user_url} from '../store/Allurl'
 
 
 const EventEmitter = require('events');
@@ -17,7 +17,7 @@ const BsContract =  ()=>{
     const [conArr,setConArr] = useState([]);
 
     useEffect(async () => {
-        const response = await fetch("http://localhost:3003/api/coin/contract",{ 
+        const response = await fetch(`${user_url}/coin/contract`,{ 
             method: "POST",
             headers: {
                 'Content-type': 'application/json'
@@ -37,7 +37,7 @@ const BsContract =  ()=>{
     }
 
     useEffect(async () => {
-        const response = await fetch("http://localhost:3003/api/coin/search_deal",{ 
+        const response = await fetch(`${user_url}/coin/search_deal`,{ 
             method: "POST",
             headers: {
             'Content-type': 'application/json'

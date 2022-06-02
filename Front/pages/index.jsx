@@ -32,7 +32,7 @@ const index = ()=>{
                 method:'GET',
             }
         
-            const response = await fetch(`${user_url}/login_success?userid=${loginuserid}&userpw=${loginuserpw}`,options) //restful api 
+            const response = await fetch(`${user_url}/user/login_success?userid=${loginuserid}&userpw=${loginuserpw}`,options) //restful api 
             let result = await response.json()
             setloginresult(result)
         

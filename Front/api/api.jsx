@@ -11,6 +11,6 @@ export const join_success = async (body) => {
     }
 
     const response = await fetch(`${user_url}/join_success`,options) //restful api 
-    console.log(response,"++++++++++++")
+
 
 }
