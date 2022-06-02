@@ -11,7 +11,7 @@ const chart = () => {
 
 
   useEffect(() => {
-    ws.current= new WebSocket('ws://127.0.0.1:8080');
+    ws.current= new WebSocket('ws://localhost:8080');
     ws.current.onopen=()=>{
         setSocket(true)
     }

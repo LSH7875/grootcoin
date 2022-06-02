@@ -118,7 +118,7 @@ const join = () => {
         }
     }
 
-    const handleSubmit = e => {
+    const handleSubmit = async(e) => {
         e.preventDefault()
 
         if (userpw.value !== pwChk) {
@@ -128,7 +128,8 @@ const join = () => {
             setPwError(false)
         }
 
-        join_success({userid:userid.value, username:username.value, userpw:userpw.value, account:accountNo.value, wallet:"info"})
+       const test = await join_success({userid:userid.value, username:username.value, userpw:userpw.value, account:accountNo.value, wallet:"info"})
+        console.log(test,"+++++++++++++++++++");
         Router.push('/')
     }
 

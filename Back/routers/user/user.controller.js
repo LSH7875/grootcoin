@@ -9,7 +9,7 @@ let join_success = async (req, res, next) => {
     connection = await pool.getConnection(async conn => conn);
 
     const {userid, username, userpw, account} = req.body
-    const wallet = ''
+    let wallet = ''
     const jwtuserpw = createPW(userpw);
 
     headers={"Content-type": "application/json"};
@@ -24,14 +24,27 @@ let join_success = async (req, res, next) => {
         headers,
         body
     }
-    const callback = async (err,response,data)=>{
+    try{
+        let join_success = await connection.query(`insert into user (userid, username, userpw, account, wallet) values ('${userid}', '${username}', '${jwtuserpw}', '${account}', '${wallet}')`)
+        res.json({success:true,data:join_success})
 
-            console.log(`코인 빌드 성공`)
-            console.log(JSON.parse(data).result)
+    }catch(e){
+        res.json({success:false})
+    }
+   
 
-            let join_success = await connection.query(`insert into user (userid, username, userpw, account, wallet) values ('${userid}', '${username}', '${jwtuserpw}', '${account}', '${JSON.parse(data).result}')`)
-        }
-    request(options,callback)
+    // const callback = async (err,response,data)=>{
+
+    //         console.log(`코인 빌드 성공`)
+
+    //         if(JSON.parse(data).result){
+    //             wallet = JSON.parse(data).result
+    //         }else{
+    //             wallet = "null"
+    //         }
+
+    //     }
+    // request(options,callback)
     
     
     
